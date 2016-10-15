@@ -311,6 +311,8 @@ int main(void)
 	ExpTime.second=0;
 	//отображаем его
 	flagLCD|=(1<<LCD_UPD)|(1<<LCD_CUR_TIME);
+	
+
 
 
 	sei();

@@ -52,6 +52,7 @@ static void LCDMix_4Bit(uint8_t data)
   if((data)&(0b00010000)) LDPD4 |=1<<LCD_D4;
     else LDPD4 &=~(1<<LCD_D4);	
 }
+
 #endif
 #ifdef LCD_8BIT_M
 static void LCDMix_8Bit(uint8_t data)

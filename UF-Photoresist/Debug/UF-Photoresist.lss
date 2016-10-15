@@ -17,7 +17,7 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   6 .debug_abbrev 000003aa  00000000  00000000  00001d1e  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000063e  00000000  00000000  000020c8  2**0
+  7 .debug_line   00000640  00000000  00000000  000020c8  2**0
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_frame  000002e4  00000000  00000000  00002708  2**2
                   CONTENTS, READONLY, DEBUGGING
@@ -1160,6 +1160,8 @@ int main(void)
  58a:	80 91 03 01 	lds	r24, 0x0103
  58e:	80 63       	ori	r24, 0x30	; 48
  590:	80 93 03 01 	sts	0x0103, r24
+	
+
 
 
 	sei();
