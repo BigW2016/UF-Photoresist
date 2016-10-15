@@ -262,8 +262,6 @@ void checkTime(void)
 int main(void)
 {
 
-	uint8_t txt[16];
-	uint8_t i;
 	char pos;
 
 	cli();
@@ -294,6 +292,7 @@ int main(void)
 	LCDclr();
 	
 	//выводим квадраты для теста дисплея
+/*
 	for(i=0;i<16;i++) txt[i]=0xFF;
 	LCDGotoXY(0,0);
 	LCDstring((uint8_t*)txt,16);
@@ -301,6 +300,7 @@ int main(void)
 	LCDstring((uint8_t*)txt,16);
 	_delay_ms(500);
 	LCDclr();
+*/
 	
 	//инициализация порта MOSFET
 	//устанавливаем в 0
@@ -357,7 +357,6 @@ int main(void)
 
 				}
 			}
-
 
 			//Крутим против часовой
 			if (EncStep<-1) 

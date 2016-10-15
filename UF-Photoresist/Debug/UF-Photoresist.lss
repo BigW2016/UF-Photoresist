@@ -3,31 +3,31 @@ UF-Photoresist.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000002  00800100  0000081a  000008ae  2**0
+  0 .data         00000002  00800100  000007cc  00000860  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000081a  00000000  00000000  00000094  2**1
+  1 .text         000007cc  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000009  00800102  00800102  000008b0  2**0
+  2 .bss          00000009  00800102  00800102  00000862  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  000008b0  2**0
+  3 .comment      00000030  00000000  00000000  00000862  2**0
                   CONTENTS, READONLY
-  4 .debug_aranges 00000108  00000000  00000000  000008e0  2**0
+  4 .debug_aranges 00000108  00000000  00000000  00000892  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   000013fd  00000000  00000000  000009e8  2**0
+  5 .debug_info   000012cd  00000000  00000000  0000099a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000003ad  00000000  00000000  00001de5  2**0
+  6 .debug_abbrev 0000039e  00000000  00000000  00001c67  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000814  00000000  00000000  00002192  2**0
+  7 .debug_line   000007ec  00000000  00000000  00002005  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000002e4  00000000  00000000  000029a8  2**2
+  8 .debug_frame  000002d4  00000000  00000000  000027f4  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000851c  00000000  00000000  00002c8c  2**0
+  9 .debug_str    0000851c  00000000  00000000  00002ac8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000b0c  00000000  00000000  0000b1a8  2**0
+ 10 .debug_loc    00000ab1  00000000  00000000  0000afe4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 000000f8  00000000  00000000  0000bcb4  2**0
+ 11 .debug_ranges 000000f8  00000000  00000000  0000ba95  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  000027b5  00000000  00000000  0000bdac  2**0
+ 12 .debug_macro  000027b5  00000000  00000000  0000bb8d  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -75,8 +75,8 @@ Disassembly of section .text:
   50:	11 e0       	ldi	r17, 0x01	; 1
   52:	a0 e0       	ldi	r26, 0x00	; 0
   54:	b1 e0       	ldi	r27, 0x01	; 1
-  56:	ea e1       	ldi	r30, 0x1A	; 26
-  58:	f8 e0       	ldi	r31, 0x08	; 8
+  56:	ec ec       	ldi	r30, 0xCC	; 204
+  58:	f7 e0       	ldi	r31, 0x07	; 7
   5a:	02 c0       	rjmp	.+4      	; 0x60 <__do_copy_data+0x10>
   5c:	05 90       	lpm	r0, Z+
   5e:	0d 92       	st	X+, r0
@@ -98,7 +98,7 @@ Disassembly of section .text:
   72:	b2 07       	cpc	r27, r18
   74:	e1 f7       	brne	.-8      	; 0x6e <.do_clear_bss_loop>
   76:	48 d2       	rcall	.+1168   	; 0x508 <main>
-  78:	ce c3       	rjmp	.+1948   	; 0x816 <_exit>
+  78:	a7 c3       	rjmp	.+1870   	; 0x7c8 <_exit>
 
 0000007a <__bad_interrupt>:
   7a:	c2 cf       	rjmp	.-124    	; 0x0 <__vectors>
@@ -939,7 +939,7 @@ void showTime(void)
  43a:	67 5f       	subi	r22, 0xF7	; 247
  43c:	7f 4f       	sbci	r23, 0xFF	; 255
  43e:	90 e0       	ldi	r25, 0x00	; 0
- 440:	b7 d1       	rcall	.+878    	; 0x7b0 <__itoa_ncheck>
+ 440:	90 d1       	rcall	.+800    	; 0x762 <__itoa_ncheck>
 	fillZero(digit);
  442:	ce 01       	movw	r24, r28
  444:	09 96       	adiw	r24, 0x09	; 9
@@ -960,7 +960,7 @@ void showTime(void)
  45c:	67 5f       	subi	r22, 0xF7	; 247
  45e:	7f 4f       	sbci	r23, 0xFF	; 255
  460:	90 e0       	ldi	r25, 0x00	; 0
- 462:	a6 d1       	rcall	.+844    	; 0x7b0 <__itoa_ncheck>
+ 462:	7f d1       	rcall	.+766    	; 0x762 <__itoa_ncheck>
 	fillZero(digit);
  464:	ce 01       	movw	r24, r28
  466:	09 96       	adiw	r24, 0x09	; 9
@@ -980,7 +980,7 @@ void showTime(void)
  47c:	67 5f       	subi	r22, 0xF7	; 247
  47e:	7f 4f       	sbci	r23, 0xFF	; 255
  480:	90 e0       	ldi	r25, 0x00	; 0
- 482:	96 d1       	rcall	.+812    	; 0x7b0 <__itoa_ncheck>
+ 482:	6f d1       	rcall	.+734    	; 0x762 <__itoa_ncheck>
 	fillZero(digit);
  484:	ce 01       	movw	r24, r28
  486:	09 96       	adiw	r24, 0x09	; 9
@@ -1056,619 +1056,567 @@ void checkTime(void)
  506:	08 95       	ret
 
 00000508 <main>:
-
-}
-
-
 int main(void)
 {
- 508:	cf 93       	push	r28
- 50a:	df 93       	push	r29
- 50c:	cd b7       	in	r28, 0x3d	; 61
- 50e:	de b7       	in	r29, 0x3e	; 62
- 510:	60 97       	sbiw	r28, 0x10	; 16
- 512:	0f b6       	in	r0, 0x3f	; 63
- 514:	f8 94       	cli
- 516:	de bf       	out	0x3e, r29	; 62
- 518:	0f be       	out	0x3f, r0	; 63
- 51a:	cd bf       	out	0x3d, r28	; 61
 
-	uint8_t txt[16];
-	uint8_t i;
 	char pos;
 
 	cli();
- 51c:	f8 94       	cli
+ 508:	f8 94       	cli
 	//инициализация портов //сделать инициализацию энкодера отдельной функцией
 	DDRC=0;
- 51e:	17 b8       	out	0x07, r1	; 7
+ 50a:	17 b8       	out	0x07, r1	; 7
 	PORTC=0xFF;
- 520:	8f ef       	ldi	r24, 0xFF	; 255
- 522:	88 b9       	out	0x08, r24	; 8
+ 50c:	8f ef       	ldi	r24, 0xFF	; 255
+ 50e:	88 b9       	out	0x08, r24	; 8
 	DDRB=0;
- 524:	14 b8       	out	0x04, r1	; 4
+ 510:	14 b8       	out	0x04, r1	; 4
 	PORTB=0xFF;
- 526:	85 b9       	out	0x05, r24	; 5
+ 512:	85 b9       	out	0x05, r24	; 5
 	//DDRD=0;
 	//PORTD=0xFF;
 	
 	//инициализируем кнопки
 	DDRD&=~((1<<TACT1_PIN)|(1<<TACT2_PIN));//пин 2,3 на вход
- 528:	8a b1       	in	r24, 0x0a	; 10
- 52a:	83 7f       	andi	r24, 0xF3	; 243
- 52c:	8a b9       	out	0x0a, r24	; 10
+ 514:	8a b1       	in	r24, 0x0a	; 10
+ 516:	83 7f       	andi	r24, 0xF3	; 243
+ 518:	8a b9       	out	0x0a, r24	; 10
 	PORTD|=((1<<TACT1_PIN)|(1<<TACT2_PIN));//подтяжку на пины
- 52e:	8b b1       	in	r24, 0x0b	; 11
- 530:	8c 60       	ori	r24, 0x0C	; 12
- 532:	8b b9       	out	0x0b, r24	; 11
+ 51a:	8b b1       	in	r24, 0x0b	; 11
+ 51c:	8c 60       	ori	r24, 0x0C	; 12
+ 51e:	8b b9       	out	0x0b, r24	; 11
 	//настраиваем прерывания INT0, INT1
 	EICRA=(0<<ISC11)|(1<<ISC10)|(0<<ISC01)|(1<<ISC00);//по спадающему фронту
- 534:	85 e0       	ldi	r24, 0x05	; 5
- 536:	80 93 69 00 	sts	0x0069, r24
+ 520:	85 e0       	ldi	r24, 0x05	; 5
+ 522:	80 93 69 00 	sts	0x0069, r24
 	EIMSK=(1<<INT1)|(1<<INT0);
- 53a:	83 e0       	ldi	r24, 0x03	; 3
- 53c:	8d bb       	out	0x1d, r24	; 29
+ 526:	83 e0       	ldi	r24, 0x03	; 3
+ 528:	8d bb       	out	0x1d, r24	; 29
 	
 	//инициализируем порт и пин буззера
 	PORTD&=~(1<<BUZZ_PIN);
- 53e:	58 98       	cbi	0x0b, 0	; 11
+ 52a:	58 98       	cbi	0x0b, 0	; 11
 	DDRD|=1<<BUZZ_PIN;
- 540:	50 9a       	sbi	0x0a, 0	; 10
+ 52c:	50 9a       	sbi	0x0a, 0	; 10
 	
 	//тестовый пик
 	//buzz(7);
 	
 	//инициализируем экран
 	LCDinit();
- 542:	01 de       	rcall	.-1022   	; 0x146 <LCDinit>
+ 52e:	0b de       	rcall	.-1002   	; 0x146 <LCDinit>
 	LCDclr();
- 544:	58 de       	rcall	.-848    	; 0x1f6 <LCDclr>
- 546:	fe 01       	movw	r30, r28
- 548:	31 96       	adiw	r30, 0x01	; 1
- 54a:	9e 01       	movw	r18, r28
- 54c:	2f 5e       	subi	r18, 0xEF	; 239
- 54e:	3f 4f       	sbci	r19, 0xFF	; 255
- 550:	6f 01       	movw	r12, r30
-	
-	//выводим квадраты для теста дисплея
-	for(i=0;i<16;i++) txt[i]=0xFF;
- 552:	8f ef       	ldi	r24, 0xFF	; 255
- 554:	81 93       	st	Z+, r24
- 556:	e2 17       	cp	r30, r18
- 558:	f3 07       	cpc	r31, r19
- 55a:	e1 f7       	brne	.-8      	; 0x554 <main+0x4c>
- 55c:	80 e8       	ldi	r24, 0x80	; 128
- 55e:	cd dd       	rcall	.-1126   	; 0xfa <LCDsendCommand>
-	LCDGotoXY(0,0);
-	LCDstring((uint8_t*)txt,16);
- 560:	60 e1       	ldi	r22, 0x10	; 16
- 562:	c6 01       	movw	r24, r12
- 564:	57 de       	rcall	.-850    	; 0x214 <LCDstring>
- 566:	80 ec       	ldi	r24, 0xC0	; 192
- 568:	c8 dd       	rcall	.-1136   	; 0xfa <LCDsendCommand>
-	LCDGotoXY(0,1);
-	LCDstring((uint8_t*)txt,16);
- 56a:	60 e1       	ldi	r22, 0x10	; 16
- 56c:	c6 01       	movw	r24, r12
- 56e:	52 de       	rcall	.-860    	; 0x214 <LCDstring>
- 570:	2f ef       	ldi	r18, 0xFF	; 255
- 572:	84 e3       	ldi	r24, 0x34	; 52
- 574:	9c e0       	ldi	r25, 0x0C	; 12
- 576:	21 50       	subi	r18, 0x01	; 1
- 578:	80 40       	sbci	r24, 0x00	; 0
- 57a:	90 40       	sbci	r25, 0x00	; 0
- 57c:	e1 f7       	brne	.-8      	; 0x576 <main+0x6e>
- 57e:	00 c0       	rjmp	.+0      	; 0x580 <main+0x78>
- 580:	00 00       	nop
-	_delay_ms(500);
+ 530:	62 de       	rcall	.-828    	; 0x1f6 <LCDclr>
 	LCDclr();
- 582:	39 de       	rcall	.-910    	; 0x1f6 <LCDclr>
+*/
 	
 	//инициализация порта MOSFET
 	//устанавливаем в 0
 	MOSFET_PORT&=~(1<<MOSFET_GATE);
- 584:	5f 98       	cbi	0x0b, 7	; 11
+ 532:	5f 98       	cbi	0x0b, 7	; 11
 	//выход
 	MOSFET_DDR|=(1<<MOSFET_GATE);
- 586:	57 9a       	sbi	0x0a, 7	; 10
+ 534:	57 9a       	sbi	0x0a, 7	; 10
 	
 	//обнуляем время
 	ExpTime.hour=0;
- 588:	10 92 0a 01 	sts	0x010A, r1
+ 536:	10 92 0a 01 	sts	0x010A, r1
 	ExpTime.minute=0;
- 58c:	10 92 09 01 	sts	0x0109, r1
+ 53a:	10 92 09 01 	sts	0x0109, r1
 	ExpTime.second=0;
- 590:	10 92 08 01 	sts	0x0108, r1
+ 53e:	10 92 08 01 	sts	0x0108, r1
 	//отображаем его
 	flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
- 594:	80 91 03 01 	lds	r24, 0x0103
- 598:	80 63       	ori	r24, 0x30	; 48
- 59a:	80 93 03 01 	sts	0x0103, r24
+ 542:	80 91 03 01 	lds	r24, 0x0103
+ 546:	80 63       	ori	r24, 0x30	; 48
+ 548:	80 93 03 01 	sts	0x0103, r24
 	
 
 	sei();
- 59e:	78 94       	sei
+ 54c:	78 94       	sei
 				if ((flagWork&(1<<CUR_TIME)) && (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S))))
 				{
 					//отображаем мигающий курсор под изменяемой позицией
 						
 					pos=3*((flagWork&(1<<BLINK_H))>>BLINK_H)+3*((flagWork&(1<<BLINK_M))>>BLINK_M);
 					LCDGotoXY(4+(8-pos),0);
- 5a0:	5c e0       	ldi	r21, 0x0C	; 12
- 5a2:	c5 2e       	mov	r12, r21
+ 54e:	5c e0       	ldi	r21, 0x0C	; 12
+ 550:	e5 2e       	mov	r14, r21
 				}
 				encPushDown=0;
 			}
 			else
 			{
 				encPushDown=1;
- 5a4:	dd 24       	eor	r13, r13
- 5a6:	d3 94       	inc	r13
+ 552:	ff 24       	eor	r15, r15
+ 554:	f3 94       	inc	r15
 						}
 						else
 						{
 							encCount=1;
 							//очищаем флаг экрана + обновляем экран
 							flagWork=(1<<LCD_UPD)|(1<<CUR_TIME);
- 5a8:	60 e3       	ldi	r22, 0x30	; 48
- 5aa:	b6 2e       	mov	r11, r22
+ 556:	60 e3       	ldi	r22, 0x30	; 48
+ 558:	d6 2e       	mov	r13, r22
 	
 	
     while(1)
     {
 		//если не идет обратный отсчет то работаем с энкодером
 		if (!(flagWork&(1<<WORK_TIME)))
- 5ac:	80 91 03 01 	lds	r24, 0x0103
- 5b0:	87 fd       	sbrc	r24, 7
- 5b2:	5f c0       	rjmp	.+190    	; 0x672 <main+0x16a>
+ 55a:	80 91 03 01 	lds	r24, 0x0103
+ 55e:	87 fd       	sbrc	r24, 7
+ 560:	5f c0       	rjmp	.+190    	; 0x620 <main+0x118>
 		{
 			//определяем положение энкодера
 			EncStep += encPollDelta(encCurState);
- 5b4:	a0 90 02 01 	lds	r10, 0x0102
- 5b8:	80 91 07 01 	lds	r24, 0x0107
- 5bc:	90 e0       	ldi	r25, 0x00	; 0
- 5be:	ff de       	rcall	.-514    	; 0x3be <encPollDelta>
- 5c0:	8a 0d       	add	r24, r10
- 5c2:	80 93 02 01 	sts	0x0102, r24
+ 562:	c0 90 02 01 	lds	r12, 0x0102
+ 566:	80 91 07 01 	lds	r24, 0x0107
+ 56a:	90 e0       	ldi	r25, 0x00	; 0
+ 56c:	28 df       	rcall	.-432    	; 0x3be <encPollDelta>
+ 56e:	8c 0d       	add	r24, r12
+ 570:	80 93 02 01 	sts	0x0102, r24
 	
 			//Крутим по часовой
 			if (EncStep>1) 
- 5c6:	82 30       	cpi	r24, 0x02	; 2
- 5c8:	44 f1       	brlt	.+80     	; 0x61a <main+0x112>
+ 574:	82 30       	cpi	r24, 0x02	; 2
+ 576:	44 f1       	brlt	.+80     	; 0x5c8 <main+0xc0>
 			{
 				EncStep=0;
- 5ca:	10 92 02 01 	sts	0x0102, r1
+ 578:	10 92 02 01 	sts	0x0102, r1
 		
 				//если в режиме изменения времени, то меняем время
 				//при первоначальном отображении после инициализации не реагирует
 				//т.к. encCount=1
 				if (flagWork&(1<<CUR_TIME))
- 5ce:	80 91 03 01 	lds	r24, 0x0103
- 5d2:	84 ff       	sbrs	r24, 4
- 5d4:	1b c0       	rjmp	.+54     	; 0x60c <main+0x104>
+ 57c:	80 91 03 01 	lds	r24, 0x0103
+ 580:	84 ff       	sbrs	r24, 4
+ 582:	1b c0       	rjmp	.+54     	; 0x5ba <main+0xb2>
 				{
 					switch (encCount&0x0E)
- 5d6:	80 91 00 01 	lds	r24, 0x0100
- 5da:	8e 70       	andi	r24, 0x0E	; 14
- 5dc:	84 30       	cpi	r24, 0x04	; 4
- 5de:	51 f0       	breq	.+20     	; 0x5f4 <main+0xec>
- 5e0:	88 30       	cpi	r24, 0x08	; 8
- 5e2:	71 f0       	breq	.+28     	; 0x600 <main+0xf8>
- 5e4:	82 30       	cpi	r24, 0x02	; 2
- 5e6:	89 f4       	brne	.+34     	; 0x60a <main+0x102>
+ 584:	80 91 00 01 	lds	r24, 0x0100
+ 588:	8e 70       	andi	r24, 0x0E	; 14
+ 58a:	84 30       	cpi	r24, 0x04	; 4
+ 58c:	51 f0       	breq	.+20     	; 0x5a2 <main+0x9a>
+ 58e:	88 30       	cpi	r24, 0x08	; 8
+ 590:	71 f0       	breq	.+28     	; 0x5ae <main+0xa6>
+ 592:	82 30       	cpi	r24, 0x02	; 2
+ 594:	89 f4       	brne	.+34     	; 0x5b8 <main+0xb0>
 					{
 						case 2: ExpTime.second--;break;
- 5e8:	80 91 08 01 	lds	r24, 0x0108
- 5ec:	81 50       	subi	r24, 0x01	; 1
- 5ee:	80 93 08 01 	sts	0x0108, r24
- 5f2:	0b c0       	rjmp	.+22     	; 0x60a <main+0x102>
+ 596:	80 91 08 01 	lds	r24, 0x0108
+ 59a:	81 50       	subi	r24, 0x01	; 1
+ 59c:	80 93 08 01 	sts	0x0108, r24
+ 5a0:	0b c0       	rjmp	.+22     	; 0x5b8 <main+0xb0>
 						case 4: ExpTime.minute--;break;
- 5f4:	80 91 09 01 	lds	r24, 0x0109
- 5f8:	81 50       	subi	r24, 0x01	; 1
- 5fa:	80 93 09 01 	sts	0x0109, r24
- 5fe:	05 c0       	rjmp	.+10     	; 0x60a <main+0x102>
+ 5a2:	80 91 09 01 	lds	r24, 0x0109
+ 5a6:	81 50       	subi	r24, 0x01	; 1
+ 5a8:	80 93 09 01 	sts	0x0109, r24
+ 5ac:	05 c0       	rjmp	.+10     	; 0x5b8 <main+0xb0>
 						case 8: ExpTime.hour--;
- 600:	80 91 0a 01 	lds	r24, 0x010A
- 604:	81 50       	subi	r24, 0x01	; 1
- 606:	80 93 0a 01 	sts	0x010A, r24
+ 5ae:	80 91 0a 01 	lds	r24, 0x010A
+ 5b2:	81 50       	subi	r24, 0x01	; 1
+ 5b4:	80 93 0a 01 	sts	0x010A, r24
 		
 					}
 
 					checkTime();
- 60a:	51 df       	rcall	.-350    	; 0x4ae <checkTime>
+ 5b8:	7a df       	rcall	.-268    	; 0x4ae <checkTime>
 				}
 				//если в режиме выбора пресета - меняем пресеты
 				if (flagWork&(1<<PRESET))
- 60c:	80 91 03 01 	lds	r24, 0x0103
- 610:	86 ff       	sbrs	r24, 6
- 612:	03 c0       	rjmp	.+6      	; 0x61a <main+0x112>
+ 5ba:	80 91 03 01 	lds	r24, 0x0103
+ 5be:	86 ff       	sbrs	r24, 6
+ 5c0:	03 c0       	rjmp	.+6      	; 0x5c8 <main+0xc0>
 				{
 					//код
 				
 					//обновляем экран
 					flagWork|=(1<<LCD_UPD);
- 614:	80 62       	ori	r24, 0x20	; 32
- 616:	80 93 03 01 	sts	0x0103, r24
+ 5c2:	80 62       	ori	r24, 0x20	; 32
+ 5c4:	80 93 03 01 	sts	0x0103, r24
+
 				}
 			}
 
-
 			//Крутим против часовой
 			if (EncStep<-1) 
- 61a:	80 91 02 01 	lds	r24, 0x0102
- 61e:	8f 3f       	cpi	r24, 0xFF	; 255
- 620:	44 f5       	brge	.+80     	; 0x672 <main+0x16a>
+ 5c8:	80 91 02 01 	lds	r24, 0x0102
+ 5cc:	8f 3f       	cpi	r24, 0xFF	; 255
+ 5ce:	44 f5       	brge	.+80     	; 0x620 <main+0x118>
 			{
 				EncStep=0;
- 622:	10 92 02 01 	sts	0x0102, r1
+ 5d0:	10 92 02 01 	sts	0x0102, r1
 
 				//если в режиме изменения времени, то меняем время
 				if (flagWork&(1<<CUR_TIME))
- 626:	80 91 03 01 	lds	r24, 0x0103
- 62a:	84 ff       	sbrs	r24, 4
- 62c:	1b c0       	rjmp	.+54     	; 0x664 <main+0x15c>
+ 5d4:	80 91 03 01 	lds	r24, 0x0103
+ 5d8:	84 ff       	sbrs	r24, 4
+ 5da:	1b c0       	rjmp	.+54     	; 0x612 <main+0x10a>
 				{
 					switch (encCount&0x0E)
- 62e:	80 91 00 01 	lds	r24, 0x0100
- 632:	8e 70       	andi	r24, 0x0E	; 14
- 634:	84 30       	cpi	r24, 0x04	; 4
- 636:	51 f0       	breq	.+20     	; 0x64c <main+0x144>
- 638:	88 30       	cpi	r24, 0x08	; 8
- 63a:	71 f0       	breq	.+28     	; 0x658 <main+0x150>
- 63c:	82 30       	cpi	r24, 0x02	; 2
- 63e:	89 f4       	brne	.+34     	; 0x662 <main+0x15a>
+ 5dc:	80 91 00 01 	lds	r24, 0x0100
+ 5e0:	8e 70       	andi	r24, 0x0E	; 14
+ 5e2:	84 30       	cpi	r24, 0x04	; 4
+ 5e4:	51 f0       	breq	.+20     	; 0x5fa <main+0xf2>
+ 5e6:	88 30       	cpi	r24, 0x08	; 8
+ 5e8:	71 f0       	breq	.+28     	; 0x606 <main+0xfe>
+ 5ea:	82 30       	cpi	r24, 0x02	; 2
+ 5ec:	89 f4       	brne	.+34     	; 0x610 <main+0x108>
 					{
 						case 2: ExpTime.second++;break;
- 640:	80 91 08 01 	lds	r24, 0x0108
- 644:	8f 5f       	subi	r24, 0xFF	; 255
- 646:	80 93 08 01 	sts	0x0108, r24
- 64a:	0b c0       	rjmp	.+22     	; 0x662 <main+0x15a>
+ 5ee:	80 91 08 01 	lds	r24, 0x0108
+ 5f2:	8f 5f       	subi	r24, 0xFF	; 255
+ 5f4:	80 93 08 01 	sts	0x0108, r24
+ 5f8:	0b c0       	rjmp	.+22     	; 0x610 <main+0x108>
 						case 4: ExpTime.minute++;break;
- 64c:	80 91 09 01 	lds	r24, 0x0109
- 650:	8f 5f       	subi	r24, 0xFF	; 255
- 652:	80 93 09 01 	sts	0x0109, r24
- 656:	05 c0       	rjmp	.+10     	; 0x662 <main+0x15a>
+ 5fa:	80 91 09 01 	lds	r24, 0x0109
+ 5fe:	8f 5f       	subi	r24, 0xFF	; 255
+ 600:	80 93 09 01 	sts	0x0109, r24
+ 604:	05 c0       	rjmp	.+10     	; 0x610 <main+0x108>
 						case 8: ExpTime.hour++;
- 658:	80 91 0a 01 	lds	r24, 0x010A
- 65c:	8f 5f       	subi	r24, 0xFF	; 255
- 65e:	80 93 0a 01 	sts	0x010A, r24
+ 606:	80 91 0a 01 	lds	r24, 0x010A
+ 60a:	8f 5f       	subi	r24, 0xFF	; 255
+ 60c:	80 93 0a 01 	sts	0x010A, r24
 		
 					}
 					checkTime();
- 662:	25 df       	rcall	.-438    	; 0x4ae <checkTime>
+ 610:	4e df       	rcall	.-356    	; 0x4ae <checkTime>
 				}
 				//если в режиме выбора пресета - меняем пресеты
 				if (flagWork&(1<<PRESET))
- 664:	80 91 03 01 	lds	r24, 0x0103
- 668:	86 ff       	sbrs	r24, 6
- 66a:	03 c0       	rjmp	.+6      	; 0x672 <main+0x16a>
+ 612:	80 91 03 01 	lds	r24, 0x0103
+ 616:	86 ff       	sbrs	r24, 6
+ 618:	03 c0       	rjmp	.+6      	; 0x620 <main+0x118>
 				{
 					//код
 					
 					//обновляем экран
 					flagWork|=(1<<LCD_UPD);
- 66c:	80 62       	ori	r24, 0x20	; 32
- 66e:	80 93 03 01 	sts	0x0103, r24
+ 61a:	80 62       	ori	r24, 0x20	; 32
+ 61c:	80 93 03 01 	sts	0x0103, r24
 			}
 		}
 			
 					
 		//определяем нажат ли энкодер (притянут к 0)
 		if (!GET_PORT_DATA(ENCPOLL_BUTT_PORT,ENCPOLL_BUTT_PIN)) 
- 672:	4e 99       	sbic	0x09, 6	; 9
- 674:	2d c0       	rjmp	.+90     	; 0x6d0 <main+0x1c8>
- 676:	8f e3       	ldi	r24, 0x3F	; 63
- 678:	9c e9       	ldi	r25, 0x9C	; 156
- 67a:	01 97       	sbiw	r24, 0x01	; 1
- 67c:	f1 f7       	brne	.-4      	; 0x67a <main+0x172>
- 67e:	00 c0       	rjmp	.+0      	; 0x680 <main+0x178>
- 680:	00 00       	nop
+ 620:	4e 99       	sbic	0x09, 6	; 9
+ 622:	2d c0       	rjmp	.+90     	; 0x67e <main+0x176>
+ 624:	8f e3       	ldi	r24, 0x3F	; 63
+ 626:	9c e9       	ldi	r25, 0x9C	; 156
+ 628:	01 97       	sbiw	r24, 0x01	; 1
+ 62a:	f1 f7       	brne	.-4      	; 0x628 <main+0x120>
+ 62c:	00 c0       	rjmp	.+0      	; 0x62e <main+0x126>
+ 62e:	00 00       	nop
 		{
 			_delay_ms(20);
 			if (!GET_PORT_DATA(ENCPOLL_BUTT_PORT,ENCPOLL_BUTT_PIN)) //точно нажат!
- 682:	4e 99       	sbic	0x09, 6	; 9
- 684:	23 c0       	rjmp	.+70     	; 0x6cc <main+0x1c4>
+ 630:	4e 99       	sbic	0x09, 6	; 9
+ 632:	23 c0       	rjmp	.+70     	; 0x67a <main+0x172>
 			{
 				
 				if (encPushDown) //если нажат впервые
- 686:	80 91 01 01 	lds	r24, 0x0101
- 68a:	88 23       	and	r24, r24
- 68c:	e1 f0       	breq	.+56     	; 0x6c6 <main+0x1be>
+ 634:	80 91 01 01 	lds	r24, 0x0101
+ 638:	88 23       	and	r24, r24
+ 63a:	e1 f0       	breq	.+56     	; 0x674 <main+0x16c>
 				{
 					
 					if (!(flagWork&(1<<WORK_TIME)))//если не идет обратный отсчет
- 68e:	90 91 03 01 	lds	r25, 0x0103
- 692:	97 fd       	sbrc	r25, 7
- 694:	18 c0       	rjmp	.+48     	; 0x6c6 <main+0x1be>
+ 63c:	90 91 03 01 	lds	r25, 0x0103
+ 640:	97 fd       	sbrc	r25, 7
+ 642:	18 c0       	rjmp	.+48     	; 0x674 <main+0x16c>
 					{
 						//снимем флаг предустановки, если он был
 						
 						flagWork&=~(1<<PRESET);
- 696:	9f 7b       	andi	r25, 0xBF	; 191
- 698:	90 93 03 01 	sts	0x0103, r25
+ 644:	9f 7b       	andi	r25, 0xBF	; 191
+ 646:	90 93 03 01 	sts	0x0103, r25
 						
 						encCount=((encCount<<1)&0x0F);
- 69c:	80 91 00 01 	lds	r24, 0x0100
- 6a0:	88 0f       	add	r24, r24
- 6a2:	8e 70       	andi	r24, 0x0E	; 14
- 6a4:	80 93 00 01 	sts	0x0100, r24
+ 64a:	80 91 00 01 	lds	r24, 0x0100
+ 64e:	88 0f       	add	r24, r24
+ 650:	8e 70       	andi	r24, 0x0E	; 14
+ 652:	80 93 00 01 	sts	0x0100, r24
 						//если не обнулился т.е. в пределах 2-F.Меньше 2 быть не может т.к. начальное 1 и 
 						//в предыдущей строке еще сдвиг влево
 						if (encCount)
- 6a8:	80 91 00 01 	lds	r24, 0x0100
- 6ac:	88 23       	and	r24, r24
- 6ae:	39 f0       	breq	.+14     	; 0x6be <main+0x1b6>
+ 656:	80 91 00 01 	lds	r24, 0x0100
+ 65a:	88 23       	and	r24, r24
+ 65c:	39 f0       	breq	.+14     	; 0x66c <main+0x164>
 						{
 							//
 							flagWork|=((1<<LCD_UPD)|(1<<CUR_TIME)|(encCount));
- 6b0:	80 91 00 01 	lds	r24, 0x0100
- 6b4:	80 63       	ori	r24, 0x30	; 48
- 6b6:	89 2b       	or	r24, r25
- 6b8:	80 93 03 01 	sts	0x0103, r24
- 6bc:	04 c0       	rjmp	.+8      	; 0x6c6 <main+0x1be>
+ 65e:	80 91 00 01 	lds	r24, 0x0100
+ 662:	80 63       	ori	r24, 0x30	; 48
+ 664:	89 2b       	or	r24, r25
+ 666:	80 93 03 01 	sts	0x0103, r24
+ 66a:	04 c0       	rjmp	.+8      	; 0x674 <main+0x16c>
 						}
 						else
 						{
 							encCount=1;
- 6be:	d0 92 00 01 	sts	0x0100, r13
+ 66c:	f0 92 00 01 	sts	0x0100, r15
 							//очищаем флаг экрана + обновляем экран
 							flagWork=(1<<LCD_UPD)|(1<<CUR_TIME);
- 6c2:	b0 92 03 01 	sts	0x0103, r11
+ 670:	d0 92 03 01 	sts	0x0103, r13
 						}
 					}
 					
 					
 				}
 				encPushDown=0;
- 6c6:	10 92 01 01 	sts	0x0101, r1
- 6ca:	02 c0       	rjmp	.+4      	; 0x6d0 <main+0x1c8>
+ 674:	10 92 01 01 	sts	0x0101, r1
+ 678:	02 c0       	rjmp	.+4      	; 0x67e <main+0x176>
 			}
 			else
 			{
 				encPushDown=1;
- 6cc:	d0 92 01 01 	sts	0x0101, r13
+ 67a:	f0 92 01 01 	sts	0x0101, r15
 
 		}
 
 
 		//нажата кнопка 1 - выбора пресета - флаг в прерывании INT0
 		if (flagTact1)
- 6d0:	80 91 06 01 	lds	r24, 0x0106
- 6d4:	88 23       	and	r24, r24
- 6d6:	99 f0       	breq	.+38     	; 0x6fe <main+0x1f6>
+ 67e:	80 91 06 01 	lds	r24, 0x0106
+ 682:	88 23       	and	r24, r24
+ 684:	99 f0       	breq	.+38     	; 0x6ac <main+0x1a4>
 		{
 			//кнопка была нажата, отпустили
 			flagTact1=0;
- 6d8:	10 92 06 01 	sts	0x0106, r1
+ 686:	10 92 06 01 	sts	0x0106, r1
 			LCDclr();
- 6dc:	8c dd       	rcall	.-1256   	; 0x1f6 <LCDclr>
- 6de:	80 e8       	ldi	r24, 0x80	; 128
- 6e0:	0c dd       	rcall	.-1512   	; 0xfa <LCDsendCommand>
+ 68a:	b5 dd       	rcall	.-1174   	; 0x1f6 <LCDclr>
+ 68c:	80 e8       	ldi	r24, 0x80	; 128
+ 68e:	35 dd       	rcall	.-1430   	; 0xfa <LCDsendCommand>
 			LCDGotoXY(0,0);
 			LCDsendChar(0x2B);//"+"
- 6e2:	8b e2       	ldi	r24, 0x2B	; 43
- 6e4:	e0 dc       	rcall	.-1600   	; 0xa6 <LCDsendChar>
- 6e6:	9f ef       	ldi	r25, 0xFF	; 255
- 6e8:	20 e7       	ldi	r18, 0x70	; 112
- 6ea:	82 e0       	ldi	r24, 0x02	; 2
- 6ec:	91 50       	subi	r25, 0x01	; 1
- 6ee:	20 40       	sbci	r18, 0x00	; 0
- 6f0:	80 40       	sbci	r24, 0x00	; 0
- 6f2:	e1 f7       	brne	.-8      	; 0x6ec <main+0x1e4>
- 6f4:	00 c0       	rjmp	.+0      	; 0x6f6 <main+0x1ee>
- 6f6:	00 00       	nop
+ 690:	8b e2       	ldi	r24, 0x2B	; 43
+ 692:	09 dd       	rcall	.-1518   	; 0xa6 <LCDsendChar>
+ 694:	9f ef       	ldi	r25, 0xFF	; 255
+ 696:	20 e7       	ldi	r18, 0x70	; 112
+ 698:	82 e0       	ldi	r24, 0x02	; 2
+ 69a:	91 50       	subi	r25, 0x01	; 1
+ 69c:	20 40       	sbci	r18, 0x00	; 0
+ 69e:	80 40       	sbci	r24, 0x00	; 0
+ 6a0:	e1 f7       	brne	.-8      	; 0x69a <main+0x192>
+ 6a2:	00 c0       	rjmp	.+0      	; 0x6a4 <main+0x19c>
+ 6a4:	00 00       	nop
 			_delay_ms(100);
 			LCDclr();
- 6f8:	7e dd       	rcall	.-1284   	; 0x1f6 <LCDclr>
+ 6a6:	a7 dd       	rcall	.-1202   	; 0x1f6 <LCDclr>
 			encCount=1;
- 6fa:	d0 92 00 01 	sts	0x0100, r13
+ 6a8:	f0 92 00 01 	sts	0x0100, r15
 		}
 
 		//нажата кнопка 2 - старта засветки - флаг в прерывании INT1
 		if (flagTact2)
- 6fe:	80 91 05 01 	lds	r24, 0x0105
- 702:	88 23       	and	r24, r24
- 704:	a9 f0       	breq	.+42     	; 0x730 <main+0x228>
+ 6ac:	80 91 05 01 	lds	r24, 0x0105
+ 6b0:	88 23       	and	r24, r24
+ 6b2:	a9 f0       	breq	.+42     	; 0x6de <main+0x1d6>
 		{
 			//кнопка была нажата, отпустили
 			flagTact2=0;
- 706:	10 92 05 01 	sts	0x0105, r1
+ 6b4:	10 92 05 01 	sts	0x0105, r1
 			encCount=1;
- 70a:	d0 92 00 01 	sts	0x0100, r13
+ 6b8:	f0 92 00 01 	sts	0x0100, r15
 			
 			//если время не 0 (чтоб не моргало)
 			if (ExpTime.hour|ExpTime.minute|ExpTime.second)
- 70e:	80 91 09 01 	lds	r24, 0x0109
- 712:	90 91 0a 01 	lds	r25, 0x010A
- 716:	89 2b       	or	r24, r25
- 718:	90 91 08 01 	lds	r25, 0x0108
- 71c:	89 2b       	or	r24, r25
- 71e:	41 f0       	breq	.+16     	; 0x730 <main+0x228>
+ 6bc:	80 91 09 01 	lds	r24, 0x0109
+ 6c0:	90 91 0a 01 	lds	r25, 0x010A
+ 6c4:	89 2b       	or	r24, r25
+ 6c6:	90 91 08 01 	lds	r25, 0x0108
+ 6ca:	89 2b       	or	r24, r25
+ 6cc:	41 f0       	breq	.+16     	; 0x6de <main+0x1d6>
 			{
 				flagWork|=(1<<WORK_TIME);
 				//что бы затереть ненужные флаги(LCD_CUR_TIME и хвост..), 
 				//но оставить отображение предустановки
 				flagWork&=(1<<PRESET)|(1<<WORK_TIME);
- 720:	80 91 03 01 	lds	r24, 0x0103
- 724:	80 7c       	andi	r24, 0xC0	; 192
- 726:	80 68       	ori	r24, 0x80	; 128
- 728:	80 93 03 01 	sts	0x0103, r24
+ 6ce:	80 91 03 01 	lds	r24, 0x0103
+ 6d2:	80 7c       	andi	r24, 0xC0	; 192
+ 6d4:	80 68       	ori	r24, 0x80	; 128
+ 6d6:	80 93 03 01 	sts	0x0103, r24
 				initTimer2();
- 72c:	02 de       	rcall	.-1020   	; 0x332 <initTimer2>
+ 6da:	2b de       	rcall	.-938    	; 0x332 <initTimer2>
 				//запускаем MOSFET
 				MOSFET_PORT|=(1<<MOSFET_GATE);
- 72e:	5f 9a       	sbi	0x0b, 7	; 11
+ 6dc:	5f 9a       	sbi	0x0b, 7	; 11
 			}
 			
 		}
 		
 		//если время кончилось
 		if (flagTimeStop)
- 730:	80 91 04 01 	lds	r24, 0x0104
- 734:	88 23       	and	r24, r24
- 736:	89 f0       	breq	.+34     	; 0x75a <main+0x252>
+ 6de:	80 91 04 01 	lds	r24, 0x0104
+ 6e2:	88 23       	and	r24, r24
+ 6e4:	89 f0       	breq	.+34     	; 0x708 <main+0x200>
 		{
 			cli();
- 738:	f8 94       	cli
+ 6e6:	f8 94       	cli
 			flagTimeStop=0;
- 73a:	10 92 04 01 	sts	0x0104, r1
+ 6e8:	10 92 04 01 	sts	0x0104, r1
 			
 			//обнуляем флаг экрана
 			flagWork=0;
- 73e:	10 92 03 01 	sts	0x0103, r1
+ 6ec:	10 92 03 01 	sts	0x0103, r1
 			//LCDclr();
 			ExpTime.hour=0;
- 742:	10 92 0a 01 	sts	0x010A, r1
+ 6f0:	10 92 0a 01 	sts	0x010A, r1
 			ExpTime.minute=0;
- 746:	10 92 09 01 	sts	0x0109, r1
+ 6f4:	10 92 09 01 	sts	0x0109, r1
 			ExpTime.second=0;
- 74a:	10 92 08 01 	sts	0x0108, r1
+ 6f8:	10 92 08 01 	sts	0x0108, r1
 			//вырубаем MOSFET
 			MOSFET_PORT&=~(1<<MOSFET_GATE);
- 74e:	5f 98       	cbi	0x0b, 7	; 11
+ 6fc:	5f 98       	cbi	0x0b, 7	; 11
 			
 			//пищим
 			buzz(40);
- 750:	88 e2       	ldi	r24, 0x28	; 40
- 752:	90 e0       	ldi	r25, 0x00	; 0
- 754:	20 de       	rcall	.-960    	; 0x396 <buzz>
+ 6fe:	88 e2       	ldi	r24, 0x28	; 40
+ 700:	90 e0       	ldi	r25, 0x00	; 0
+ 702:	49 de       	rcall	.-878    	; 0x396 <buzz>
 			
 			
 			//выключаем прерывание
 			disableTimer2();
- 756:	0d de       	rcall	.-998    	; 0x372 <disableTimer2>
+ 704:	36 de       	rcall	.-916    	; 0x372 <disableTimer2>
 			sei();			
- 758:	78 94       	sei
+ 706:	78 94       	sei
 		}
 		
 		//если выставлен флаг обновления экрана
 		if (flagWork&(1<<LCD_UPD))
- 75a:	80 91 03 01 	lds	r24, 0x0103
- 75e:	85 ff       	sbrs	r24, 5
- 760:	25 cf       	rjmp	.-438    	; 0x5ac <main+0xa4>
+ 708:	80 91 03 01 	lds	r24, 0x0103
+ 70c:	85 ff       	sbrs	r24, 5
+ 70e:	25 cf       	rjmp	.-438    	; 0x55a <main+0x52>
 		{
 			//снимаем его
 			flagWork&=~(1<<LCD_UPD);
- 762:	98 2f       	mov	r25, r24
- 764:	9f 7d       	andi	r25, 0xDF	; 223
- 766:	90 93 03 01 	sts	0x0103, r25
+ 710:	98 2f       	mov	r25, r24
+ 712:	9f 7d       	andi	r25, 0xDF	; 223
+ 714:	90 93 03 01 	sts	0x0103, r25
 			
 			if (flagWork&(1<<CUR_TIME))
- 76a:	84 ff       	sbrs	r24, 4
- 76c:	1b c0       	rjmp	.+54     	; 0x7a4 <main+0x29c>
+ 718:	84 ff       	sbrs	r24, 4
+ 71a:	1d c0       	rjmp	.+58     	; 0x756 <main+0x24e>
 			{
 				//отображаем текущее установленное время 
 				showTime();
- 76e:	53 de       	rcall	.-858    	; 0x416 <showTime>
+ 71c:	7c de       	rcall	.-776    	; 0x416 <showTime>
 				//если установка времени - включаем курсор под текущим разрядом
 				if ((flagWork&(1<<CUR_TIME)) && (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S))))
- 770:	80 91 03 01 	lds	r24, 0x0103
- 774:	84 ff       	sbrs	r24, 4
- 776:	16 c0       	rjmp	.+44     	; 0x7a4 <main+0x29c>
- 778:	98 2f       	mov	r25, r24
- 77a:	9e 70       	andi	r25, 0x0E	; 14
- 77c:	99 f0       	breq	.+38     	; 0x7a4 <main+0x29c>
+ 71e:	80 91 03 01 	lds	r24, 0x0103
+ 722:	84 ff       	sbrs	r24, 4
+ 724:	18 c0       	rjmp	.+48     	; 0x756 <main+0x24e>
+ 726:	98 2f       	mov	r25, r24
+ 728:	9e 70       	andi	r25, 0x0E	; 14
+ 72a:	a9 f0       	breq	.+42     	; 0x756 <main+0x24e>
 				{
 					//отображаем мигающий курсор под изменяемой позицией
 						
 					pos=3*((flagWork&(1<<BLINK_H))>>BLINK_H)+3*((flagWork&(1<<BLINK_M))>>BLINK_M);
- 77e:	83 fb       	bst	r24, 3
- 780:	00 27       	eor	r16, r16
- 782:	00 f9       	bld	r16, 0
- 784:	10 e0       	ldi	r17, 0x00	; 0
- 786:	82 fb       	bst	r24, 2
- 788:	ee 24       	eor	r14, r14
- 78a:	e0 f8       	bld	r14, 0
- 78c:	f1 2c       	mov	r15, r1
- 78e:	0e 0d       	add	r16, r14
- 790:	1f 1d       	adc	r17, r15
- 792:	80 2f       	mov	r24, r16
- 794:	88 0f       	add	r24, r24
- 796:	80 0f       	add	r24, r16
+ 72c:	83 fb       	bst	r24, 3
+ 72e:	99 27       	eor	r25, r25
+ 730:	90 f9       	bld	r25, 0
+ 732:	c9 2f       	mov	r28, r25
+ 734:	20 e0       	ldi	r18, 0x00	; 0
+ 736:	d2 2f       	mov	r29, r18
+ 738:	82 fb       	bst	r24, 2
+ 73a:	00 27       	eor	r16, r16
+ 73c:	00 f9       	bld	r16, 0
+ 73e:	10 e0       	ldi	r17, 0x00	; 0
+ 740:	c0 0f       	add	r28, r16
+ 742:	d1 1f       	adc	r29, r17
+ 744:	8c 2f       	mov	r24, r28
+ 746:	88 0f       	add	r24, r24
+ 748:	8c 0f       	add	r24, r28
 					LCDGotoXY(4+(8-pos),0);
- 798:	9c 2d       	mov	r25, r12
- 79a:	98 1b       	sub	r25, r24
- 79c:	89 2f       	mov	r24, r25
- 79e:	80 68       	ori	r24, 0x80	; 128
- 7a0:	ac dc       	rcall	.-1704   	; 0xfa <LCDsendCommand>
+ 74a:	2e 2d       	mov	r18, r14
+ 74c:	28 1b       	sub	r18, r24
+ 74e:	82 2f       	mov	r24, r18
+ 750:	80 68       	ori	r24, 0x80	; 128
+ 752:	d3 dc       	rcall	.-1626   	; 0xfa <LCDsendCommand>
 					LCDcursorOnBlink();
- 7a2:	59 dd       	rcall	.-1358   	; 0x256 <LCDcursorOnBlink>
+ 754:	80 dd       	rcall	.-1280   	; 0x256 <LCDcursorOnBlink>
 						
 				}
 
 			}
 			
 			if (flagWork&(1<<WORK_TIME))
- 7a4:	80 91 03 01 	lds	r24, 0x0103
- 7a8:	87 ff       	sbrs	r24, 7
- 7aa:	00 cf       	rjmp	.-512    	; 0x5ac <main+0xa4>
+ 756:	80 91 03 01 	lds	r24, 0x0103
+ 75a:	87 ff       	sbrs	r24, 7
+ 75c:	fe ce       	rjmp	.-516    	; 0x55a <main+0x52>
 			{
 				//отображаем текущее время
 				showTime();
- 7ac:	34 de       	rcall	.-920    	; 0x416 <showTime>
- 7ae:	fe ce       	rjmp	.-516    	; 0x5ac <main+0xa4>
+ 75e:	5b de       	rcall	.-842    	; 0x416 <showTime>
+ 760:	fc ce       	rjmp	.-520    	; 0x55a <main+0x52>
 
-000007b0 <__itoa_ncheck>:
- 7b0:	bb 27       	eor	r27, r27
- 7b2:	4a 30       	cpi	r20, 0x0A	; 10
- 7b4:	31 f4       	brne	.+12     	; 0x7c2 <__itoa_ncheck+0x12>
- 7b6:	99 23       	and	r25, r25
- 7b8:	22 f4       	brpl	.+8      	; 0x7c2 <__itoa_ncheck+0x12>
- 7ba:	bd e2       	ldi	r27, 0x2D	; 45
- 7bc:	90 95       	com	r25
- 7be:	81 95       	neg	r24
- 7c0:	9f 4f       	sbci	r25, 0xFF	; 255
- 7c2:	01 c0       	rjmp	.+2      	; 0x7c6 <__utoa_common>
+00000762 <__itoa_ncheck>:
+ 762:	bb 27       	eor	r27, r27
+ 764:	4a 30       	cpi	r20, 0x0A	; 10
+ 766:	31 f4       	brne	.+12     	; 0x774 <__itoa_ncheck+0x12>
+ 768:	99 23       	and	r25, r25
+ 76a:	22 f4       	brpl	.+8      	; 0x774 <__itoa_ncheck+0x12>
+ 76c:	bd e2       	ldi	r27, 0x2D	; 45
+ 76e:	90 95       	com	r25
+ 770:	81 95       	neg	r24
+ 772:	9f 4f       	sbci	r25, 0xFF	; 255
+ 774:	01 c0       	rjmp	.+2      	; 0x778 <__utoa_common>
 
-000007c4 <__utoa_ncheck>:
- 7c4:	bb 27       	eor	r27, r27
+00000776 <__utoa_ncheck>:
+ 776:	bb 27       	eor	r27, r27
 
-000007c6 <__utoa_common>:
- 7c6:	fb 01       	movw	r30, r22
- 7c8:	55 27       	eor	r21, r21
- 7ca:	aa 27       	eor	r26, r26
- 7cc:	88 0f       	add	r24, r24
- 7ce:	99 1f       	adc	r25, r25
- 7d0:	aa 1f       	adc	r26, r26
- 7d2:	a4 17       	cp	r26, r20
- 7d4:	10 f0       	brcs	.+4      	; 0x7da <__utoa_common+0x14>
- 7d6:	a4 1b       	sub	r26, r20
- 7d8:	83 95       	inc	r24
- 7da:	50 51       	subi	r21, 0x10	; 16
- 7dc:	b9 f7       	brne	.-18     	; 0x7cc <__utoa_common+0x6>
- 7de:	a0 5d       	subi	r26, 0xD0	; 208
- 7e0:	aa 33       	cpi	r26, 0x3A	; 58
- 7e2:	08 f0       	brcs	.+2      	; 0x7e6 <__utoa_common+0x20>
- 7e4:	a9 5d       	subi	r26, 0xD9	; 217
- 7e6:	a1 93       	st	Z+, r26
- 7e8:	00 97       	sbiw	r24, 0x00	; 0
- 7ea:	79 f7       	brne	.-34     	; 0x7ca <__utoa_common+0x4>
- 7ec:	b1 11       	cpse	r27, r1
- 7ee:	b1 93       	st	Z+, r27
- 7f0:	11 92       	st	Z+, r1
- 7f2:	cb 01       	movw	r24, r22
- 7f4:	00 c0       	rjmp	.+0      	; 0x7f6 <strrev>
+00000778 <__utoa_common>:
+ 778:	fb 01       	movw	r30, r22
+ 77a:	55 27       	eor	r21, r21
+ 77c:	aa 27       	eor	r26, r26
+ 77e:	88 0f       	add	r24, r24
+ 780:	99 1f       	adc	r25, r25
+ 782:	aa 1f       	adc	r26, r26
+ 784:	a4 17       	cp	r26, r20
+ 786:	10 f0       	brcs	.+4      	; 0x78c <__utoa_common+0x14>
+ 788:	a4 1b       	sub	r26, r20
+ 78a:	83 95       	inc	r24
+ 78c:	50 51       	subi	r21, 0x10	; 16
+ 78e:	b9 f7       	brne	.-18     	; 0x77e <__utoa_common+0x6>
+ 790:	a0 5d       	subi	r26, 0xD0	; 208
+ 792:	aa 33       	cpi	r26, 0x3A	; 58
+ 794:	08 f0       	brcs	.+2      	; 0x798 <__utoa_common+0x20>
+ 796:	a9 5d       	subi	r26, 0xD9	; 217
+ 798:	a1 93       	st	Z+, r26
+ 79a:	00 97       	sbiw	r24, 0x00	; 0
+ 79c:	79 f7       	brne	.-34     	; 0x77c <__utoa_common+0x4>
+ 79e:	b1 11       	cpse	r27, r1
+ 7a0:	b1 93       	st	Z+, r27
+ 7a2:	11 92       	st	Z+, r1
+ 7a4:	cb 01       	movw	r24, r22
+ 7a6:	00 c0       	rjmp	.+0      	; 0x7a8 <strrev>
 
-000007f6 <strrev>:
- 7f6:	dc 01       	movw	r26, r24
- 7f8:	fc 01       	movw	r30, r24
- 7fa:	67 2f       	mov	r22, r23
- 7fc:	71 91       	ld	r23, Z+
- 7fe:	77 23       	and	r23, r23
- 800:	e1 f7       	brne	.-8      	; 0x7fa <strrev+0x4>
- 802:	32 97       	sbiw	r30, 0x02	; 2
- 804:	04 c0       	rjmp	.+8      	; 0x80e <strrev+0x18>
- 806:	7c 91       	ld	r23, X
- 808:	6d 93       	st	X+, r22
- 80a:	70 83       	st	Z, r23
- 80c:	62 91       	ld	r22, -Z
- 80e:	ae 17       	cp	r26, r30
- 810:	bf 07       	cpc	r27, r31
- 812:	c8 f3       	brcs	.-14     	; 0x806 <strrev+0x10>
- 814:	08 95       	ret
+000007a8 <strrev>:
+ 7a8:	dc 01       	movw	r26, r24
+ 7aa:	fc 01       	movw	r30, r24
+ 7ac:	67 2f       	mov	r22, r23
+ 7ae:	71 91       	ld	r23, Z+
+ 7b0:	77 23       	and	r23, r23
+ 7b2:	e1 f7       	brne	.-8      	; 0x7ac <strrev+0x4>
+ 7b4:	32 97       	sbiw	r30, 0x02	; 2
+ 7b6:	04 c0       	rjmp	.+8      	; 0x7c0 <strrev+0x18>
+ 7b8:	7c 91       	ld	r23, X
+ 7ba:	6d 93       	st	X+, r22
+ 7bc:	70 83       	st	Z, r23
+ 7be:	62 91       	ld	r22, -Z
+ 7c0:	ae 17       	cp	r26, r30
+ 7c2:	bf 07       	cpc	r27, r31
+ 7c4:	c8 f3       	brcs	.-14     	; 0x7b8 <strrev+0x10>
+ 7c6:	08 95       	ret
 
-00000816 <_exit>:
- 816:	f8 94       	cli
+000007c8 <_exit>:
+ 7c8:	f8 94       	cli
 
-00000818 <__stop_program>:
- 818:	ff cf       	rjmp	.-2      	; 0x818 <__stop_program>
+000007ca <__stop_program>:
+ 7ca:	ff cf       	rjmp	.-2      	; 0x7ca <__stop_program>
