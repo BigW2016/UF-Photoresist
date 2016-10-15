@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "UF-Photoresist", "UF-Photoresist\UF-Photoresist.cproj", "{BA46FB52-A760-4D3F-BAC0-CB8961F87CFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA46FB52-A760-4D3F-BAC0-CB8961F87CFD}.Debug|AVR.ActiveCfg = Debug|AVR
+		{BA46FB52-A760-4D3F-BAC0-CB8961F87CFD}.Debug|AVR.Build.0 = Debug|AVR
+		{BA46FB52-A760-4D3F-BAC0-CB8961F87CFD}.Release|AVR.ActiveCfg = Release|AVR
+		{BA46FB52-A760-4D3F-BAC0-CB8961F87CFD}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
