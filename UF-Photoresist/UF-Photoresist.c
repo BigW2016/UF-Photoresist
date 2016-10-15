@@ -23,14 +23,14 @@
 #define TACT2_PIN		3
 #define BUZZ_PIN		0
 
-//константы отрисовки экрана
-#define LCD_TIME		7
-#define LCD_PRESET		6
+//константы для отрисовки экрана
+#define WORK_TIME		7
+#define PRESET			6
 #define LCD_UPD			5
-#define LCD_CUR_TIME	4
-#define LCD_BL_H		3
-#define LCD_BL_M		2
-#define LCD_BL_S		1
+#define CUR_TIME		4
+#define BLINK_H			3
+#define BLINK_M			2
+#define BLINK_S			1
 
 //константы силового транзистора
 #define MOSFET_DDR		DDRD
@@ -57,7 +57,7 @@ volatile uint8_t encPushDown=1;//для работы с кнопкой энкодера
 		 uint8_t flagTact2=0;
 		 uint8_t flagTimeStop=0;//флаг для определения окончания времени
 volatile uint8_t encCount=1;//кол-во нажатий энкодера для определения какую цифру в таймере меняем
-		 uint8_t flagLCD=0;//флаг перерисовки экрана	1 1 1 1 1 1 1 1
+		 uint8_t flagWork=0;//флаг управления			1 1 1 1 1 1 1 1
 							//							^режим отсчета времени 0x80
 							//							  ^режим выбора предустановки 0x40
 							//							    ^необходимо обновить экран 0x20
@@ -99,7 +99,7 @@ ISR(TIMER2_OVF_vect)
 	    }
     }
 	
-	flagLCD|=(1<<LCD_UPD);
+	flagWork|=(1<<LCD_UPD);
 }
 
 //прерывание кнопка1
@@ -220,7 +220,7 @@ void showTime(void)
 {
 	char digit[2];
 	char string[8];
-	uint8_t pos;
+//	uint8_t pos;
 	
 	//LCDclr();
 	LCDcursorOFF();
@@ -247,14 +247,14 @@ void checkTime(void)
 {
 	if (ExpTime.second>150) ExpTime.second=59;
 	if (ExpTime.minute>150) ExpTime.minute=59;
-	if (ExpTime.hour>150) ExpTime.hour=24;
+	if (ExpTime.hour>150) ExpTime.hour=23;
 
 	if (ExpTime.second>59) ExpTime.second=0;
 	if (ExpTime.minute>59) ExpTime.minute=0;
-	if (ExpTime.hour>24) ExpTime.hour=0;
+	if (ExpTime.hour>23) ExpTime.hour=0;
 
 	//обновляем экран	
-	flagLCD|=(1<<LCD_UPD);
+	flagWork|=(1<<LCD_UPD);
 
 }
 
@@ -264,6 +264,7 @@ int main(void)
 
 	uint8_t txt[16];
 	uint8_t i;
+	char pos;
 
 	cli();
 	//инициализация портов //сделать инициализацию энкодера отдельной функцией
@@ -312,7 +313,7 @@ int main(void)
 	ExpTime.minute=0;
 	ExpTime.second=0;
 	//отображаем его
-	flagLCD|=(1<<LCD_UPD)|(1<<LCD_CUR_TIME);
+	flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
 	
 
 	sei();
@@ -321,11 +322,12 @@ int main(void)
     while(1)
     {
 		//если не идет обратный отсчет то работаем с энкодером
-		if (!(flagLCD&(1<<LCD_TIME)))
+		if (!(flagWork&(1<<WORK_TIME)))
 		{
 			//определяем положение энкодера
 			EncStep += encPollDelta(encCurState);
 	
+			//Крутим по часовой
 			if (EncStep>1) 
 			{
 				EncStep=0;
@@ -333,7 +335,7 @@ int main(void)
 				//если в режиме изменения времени, то меняем время
 				//при первоначальном отображении после инициализации не реагирует
 				//т.к. encCount=1
-				if (flagLCD&(1<<LCD_CUR_TIME))
+				if (flagWork&(1<<CUR_TIME))
 				{
 					switch (encCount&0x0E)
 					{
@@ -346,23 +348,24 @@ int main(void)
 					checkTime();
 				}
 				//если в режиме выбора пресета - меняем пресеты
-				if (flagLCD&(1<<LCD_PRESET))
+				if (flagWork&(1<<PRESET))
 				{
 					//код
 				
 					//обновляем экран
-					flagLCD|=(1<<LCD_UPD);
+					flagWork|=(1<<LCD_UPD);
 
 				}
 			}
 
 
+			//Крутим против часовой
 			if (EncStep<-1) 
 			{
 				EncStep=0;
 
 				//если в режиме изменения времени, то меняем время
-				if (flagLCD&(1<<LCD_CUR_TIME))
+				if (flagWork&(1<<CUR_TIME))
 				{
 					switch (encCount&0x0E)
 					{
@@ -374,12 +377,12 @@ int main(void)
 					checkTime();
 				}
 				//если в режиме выбора пресета - меняем пресеты
-				if (flagLCD&(1<<LCD_PRESET))
+				if (flagWork&(1<<PRESET))
 				{
 					//код
 					
 					//обновляем экран
-					flagLCD|=(1<<LCD_UPD);
+					flagWork|=(1<<LCD_UPD);
 
 				}
 				
@@ -397,25 +400,25 @@ int main(void)
 				if (encPushDown) //если нажат впервые
 				{
 					
-					if (!(flagLCD&(1<<LCD_TIME)))//если не идет обратный отсчет
+					if (!(flagWork&(1<<WORK_TIME)))//если не идет обратный отсчет
 					{
 						//снимем флаг предустановки, если он был
 						
-						flagLCD&=~(1<<LCD_PRESET);
+						flagWork&=~(1<<PRESET);
 						
-						encCount=(encCount<<1)&0x0F;
+						encCount=((encCount<<1)&0x0F);
 						//если не обнулился т.е. в пределах 2-F.Меньше 2 быть не может т.к. начальное 1 и 
 						//в предыдущей строке еще сдвиг влево
 						if (encCount)
 						{
 							//
-							flagLCD|=((1<<LCD_UPD)|(1<<LCD_CUR_TIME)|(encCount));
+							flagWork|=((1<<LCD_UPD)|(1<<CUR_TIME)|(encCount));
 						}
 						else
 						{
 							encCount=1;
 							//очищаем флаг экрана + обновляем экран
-							flagLCD=(1<<LCD_UPD);
+							flagWork=(1<<LCD_UPD)|(1<<CUR_TIME);
 
 						}
 					}
@@ -455,10 +458,10 @@ int main(void)
 			//если время не 0 (чтоб не моргало)
 			if (ExpTime.hour|ExpTime.minute|ExpTime.second)
 			{
-				flagLCD|=(1<<LCD_TIME);
+				flagWork|=(1<<WORK_TIME);
 				//что бы затереть ненужные флаги(LCD_CUR_TIME и хвост..), 
 				//но оставить отображение предустановки
-				flagLCD&=(1<<LCD_PRESET)|(1<<LCD_TIME);
+				flagWork&=(1<<PRESET)|(1<<WORK_TIME);
 				initTimer2();
 				//запускаем MOSFET
 				MOSFET_PORT|=(1<<MOSFET_GATE);
@@ -473,7 +476,7 @@ int main(void)
 			flagTimeStop=0;
 			
 			//обнуляем флаг экрана
-			flagLCD=0;
+			flagWork=0;
 			//LCDclr();
 			ExpTime.hour=0;
 			ExpTime.minute=0;
@@ -491,22 +494,21 @@ int main(void)
 		}
 		
 		//если выставлен флаг обновления экрана
-		if (flagLCD&(1<<LCD_UPD))
+		if (flagWork&(1<<LCD_UPD))
 		{
 			//снимаем его
-			flagLCD&=~(1<<LCD_UPD);
+			flagWork&=~(1<<LCD_UPD);
 			
-			if (flagLCD&(1<<LCD_CUR_TIME))
+			if (flagWork&(1<<CUR_TIME))
 			{
 				//отображаем текущее установленное время 
 				showTime();
 				//если установка времени - включаем курсор под текущим разрядом
-				if ((flagLCD&(1<<LCD_CUR_TIME)) && (encCount>>1))
+				if ((flagWork&(1<<CUR_TIME)) && (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S))))
 				{
 					//отображаем мигающий курсор под изменяемой позицией
 						
-					pos=(encCount|0x01);
-					if (pos==8) pos-=2;
+					pos=3*((flagWork&(1<<BLINK_H))>>BLINK_H)+3*((flagWork&(1<<BLINK_M))>>BLINK_M);
 					LCDGotoXY(4+(8-pos),0);
 					LCDcursorOnBlink();
 						
@@ -514,9 +516,9 @@ int main(void)
 
 			}
 			
-			if (flagLCD&(1<<LCD_TIME))
+			if (flagWork&(1<<WORK_TIME))
 			{
-				//отображаем текущее время (передаем указатель на структуру)
+				//отображаем текущее время
 				showTime();
 			}
 			
