@@ -220,8 +220,10 @@ void showTime(void)
 {
 	char digit[2];
 	char string[8];
+	uint8_t pos;
 	
 	//LCDclr();
+	LCDcursorOFF();
 	LCDGotoXY(4,0);
 	itoa(ExpTime.hour,digit,10);
 	fillZero(digit);
@@ -238,7 +240,7 @@ void showTime(void)
 	string[6]=digit[0];
 	string[7]=digit[1];
 	LCDstring((uint8_t*)string,8);
-
+	
 }
 
 void checkTime(void)
@@ -313,8 +315,6 @@ int main(void)
 	flagLCD|=(1<<LCD_UPD)|(1<<LCD_CUR_TIME);
 	
 
-
-
 	sei();
 	
 	
@@ -331,6 +331,8 @@ int main(void)
 				EncStep=0;
 		
 				//если в режиме изменения времени, то меняем время
+				//при первоначальном отображении после инициализации не реагирует
+				//т.к. encCount=1
 				if (flagLCD&(1<<LCD_CUR_TIME))
 				{
 					switch (encCount&0x0E)
@@ -406,12 +408,15 @@ int main(void)
 						//в предыдущей строке еще сдвиг влево
 						if (encCount)
 						{
+							//
 							flagLCD|=((1<<LCD_UPD)|(1<<LCD_CUR_TIME)|(encCount));
 						}
 						else
 						{
 							encCount=1;
-							flagLCD=0;
+							//очищаем флаг экрана + обновляем экран
+							flagLCD=(1<<LCD_UPD);
+
 						}
 					}
 					
@@ -451,6 +456,9 @@ int main(void)
 			if (ExpTime.hour|ExpTime.minute|ExpTime.second)
 			{
 				flagLCD|=(1<<LCD_TIME);
+				//что бы затереть ненужные флаги(LCD_CUR_TIME и хвост..), 
+				//но оставить отображение предустановки
+				flagLCD&=(1<<LCD_PRESET)|(1<<LCD_TIME);
 				initTimer2();
 				//запускаем MOSFET
 				MOSFET_PORT|=(1<<MOSFET_GATE);
@@ -490,8 +498,20 @@ int main(void)
 			
 			if (flagLCD&(1<<LCD_CUR_TIME))
 			{
-				//отображаем текущее установленное время (передаем указатель на структуру)
+				//отображаем текущее установленное время 
 				showTime();
+				//если установка времени - включаем курсор под текущим разрядом
+				if ((flagLCD&(1<<LCD_CUR_TIME)) && (encCount>>1))
+				{
+					//отображаем мигающий курсор под изменяемой позицией
+						
+					pos=(encCount|0x01);
+					if (pos==8) pos-=2;
+					LCDGotoXY(4+(8-pos),0);
+					LCDcursorOnBlink();
+						
+				}
+
 			}
 			
 			if (flagLCD&(1<<LCD_TIME))
