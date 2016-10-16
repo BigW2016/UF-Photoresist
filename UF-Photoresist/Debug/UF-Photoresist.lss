@@ -3,31 +3,31 @@ UF-Photoresist.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000002c  00800100  00000976  00000a0a  2**0
+  0 .data         0000002c  00800100  000009a8  00000a3c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000976  00000000  00000000  00000094  2**1
+  1 .text         000009a8  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000013  0080012c  0080012c  00000a36  2**0
+  2 .bss          00000013  0080012c  0080012c  00000a68  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000a36  2**0
+  3 .comment      00000030  00000000  00000000  00000a68  2**0
                   CONTENTS, READONLY
-  4 .debug_aranges 00000110  00000000  00000000  00000a66  2**0
+  4 .debug_aranges 00000110  00000000  00000000  00000a98  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00001524  00000000  00000000  00000b76  2**0
+  5 .debug_info   00001567  00000000  00000000  00000ba8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000003eb  00000000  00000000  0000209a  2**0
+  6 .debug_abbrev 000003eb  00000000  00000000  0000210f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000859  00000000  00000000  00002485  2**0
+  7 .debug_line   0000086a  00000000  00000000  000024fa  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000002f8  00000000  00000000  00002ce0  2**2
+  8 .debug_frame  000002f8  00000000  00000000  00002d64  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00008bbb  00000000  00000000  00002fd8  2**0
+  9 .debug_str    00008bbb  00000000  00000000  0000305c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000b69  00000000  00000000  0000bb93  2**0
+ 10 .debug_loc    00000bb1  00000000  00000000  0000bc17  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000100  00000000  00000000  0000c6fc  2**0
+ 11 .debug_ranges 00000100  00000000  00000000  0000c7c8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  0000290f  00000000  00000000  0000c7fc  2**0
+ 12 .debug_macro  0000290f  00000000  00000000  0000c8c8  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -75,7 +75,7 @@ Disassembly of section .text:
   50:	11 e0       	ldi	r17, 0x01	; 1
   52:	a0 e0       	ldi	r26, 0x00	; 0
   54:	b1 e0       	ldi	r27, 0x01	; 1
-  56:	e6 e7       	ldi	r30, 0x76	; 118
+  56:	e8 ea       	ldi	r30, 0xA8	; 168
   58:	f9 e0       	ldi	r31, 0x09	; 9
   5a:	02 c0       	rjmp	.+4      	; 0x60 <__do_copy_data+0x10>
   5c:	05 90       	lpm	r0, Z+
@@ -98,7 +98,7 @@ Disassembly of section .text:
   72:	b2 07       	cpc	r27, r18
   74:	e1 f7       	brne	.-8      	; 0x6e <.do_clear_bss_loop>
   76:	66 d2       	rcall	.+1228   	; 0x544 <main>
-  78:	7c c4       	rjmp	.+2296   	; 0x972 <_exit>
+  78:	95 c4       	rjmp	.+2346   	; 0x9a4 <_exit>
 
 0000007a <__bad_interrupt>:
   7a:	c2 cf       	rjmp	.-124    	; 0x0 <__vectors>
@@ -939,7 +939,7 @@ void showTime(void)
  43a:	67 5f       	subi	r22, 0xF7	; 247
  43c:	7f 4f       	sbci	r23, 0xFF	; 255
  43e:	90 e0       	ldi	r25, 0x00	; 0
- 440:	4f d2       	rcall	.+1182   	; 0x8e0 <__itoa_ncheck>
+ 440:	68 d2       	rcall	.+1232   	; 0x912 <__itoa_ncheck>
 	fillZero(digit);
  442:	ce 01       	movw	r24, r28
  444:	09 96       	adiw	r24, 0x09	; 9
@@ -960,7 +960,7 @@ void showTime(void)
  45c:	67 5f       	subi	r22, 0xF7	; 247
  45e:	7f 4f       	sbci	r23, 0xFF	; 255
  460:	90 e0       	ldi	r25, 0x00	; 0
- 462:	3e d2       	rcall	.+1148   	; 0x8e0 <__itoa_ncheck>
+ 462:	57 d2       	rcall	.+1198   	; 0x912 <__itoa_ncheck>
 	fillZero(digit);
  464:	ce 01       	movw	r24, r28
  466:	09 96       	adiw	r24, 0x09	; 9
@@ -980,7 +980,7 @@ void showTime(void)
  47c:	67 5f       	subi	r22, 0xF7	; 247
  47e:	7f 4f       	sbci	r23, 0xFF	; 255
  480:	90 e0       	ldi	r25, 0x00	; 0
- 482:	2e d2       	rcall	.+1116   	; 0x8e0 <__itoa_ncheck>
+ 482:	47 d2       	rcall	.+1166   	; 0x912 <__itoa_ncheck>
 	fillZero(digit);
  484:	ce 01       	movw	r24, r28
  486:	09 96       	adiw	r24, 0x09	; 9
@@ -1067,7 +1067,7 @@ void loadEpprom(void)
 	{
 		presetTime[i].hour=eeprom_read_byte((uint8_t*)10+i*3);
  50a:	ce 01       	movw	r24, r28
- 50c:	0c d2       	rcall	.+1048   	; 0x926 <__eerd_byte_m88>
+ 50c:	25 d2       	rcall	.+1098   	; 0x958 <__eerd_byte_m88>
  50e:	8e 01       	movw	r16, r28
  510:	0d 5c       	subi	r16, 0xCD	; 205
  512:	1e 4f       	sbci	r17, 0xFE	; 254
@@ -1077,14 +1077,14 @@ void loadEpprom(void)
 		presetTime[i].minute=eeprom_read_byte((uint8_t*)11+i*3);
  51a:	ce 01       	movw	r24, r28
  51c:	01 96       	adiw	r24, 0x01	; 1
- 51e:	03 d2       	rcall	.+1030   	; 0x926 <__eerd_byte_m88>
+ 51e:	1c d2       	rcall	.+1080   	; 0x958 <__eerd_byte_m88>
  520:	f8 01       	movw	r30, r16
  522:	39 97       	sbiw	r30, 0x09	; 9
  524:	80 83       	st	Z, r24
 		presetTime[i].second=eeprom_read_byte((uint8_t*)12+i*3);
  526:	ce 01       	movw	r24, r28
  528:	02 96       	adiw	r24, 0x02	; 2
- 52a:	fd d1       	rcall	.+1018   	; 0x926 <__eerd_byte_m88>
+ 52a:	16 d2       	rcall	.+1068   	; 0x958 <__eerd_byte_m88>
  52c:	f8 01       	movw	r30, r16
  52e:	3a 97       	sbiw	r30, 0x0a	; 10
  530:	80 83       	st	Z, r24
@@ -1224,12 +1224,12 @@ int main(void)
 							flagWork=(1<<LCD_UPD)|(1<<CUR_TIME);
  598:	f0 e3       	ldi	r31, 0x30	; 48
  59a:	cf 2e       	mov	r12, r31
-					LCDGotoXY(11,1);
-					LCDstring((uint8_t*)(namePreset[3]),5);
+						_delay_ms(500);
+						LCDclr();
 
-				}
+					}
 
-				flagWork=(1<<PRESET);
+					flagWork=(1<<PRESET);
  59c:	a0 e4       	ldi	r26, 0x40	; 64
  59e:	ba 2e       	mov	r11, r26
 	
@@ -1491,413 +1491,447 @@ int main(void)
  712:	80 91 31 01 	lds	r24, 0x0131
  716:	88 23       	and	r24, r24
  718:	09 f4       	brne	.+2      	; 0x71c <main+0x1d8>
- 71a:	58 c0       	rjmp	.+176    	; 0x7cc <main+0x288>
+ 71a:	69 c0       	rjmp	.+210    	; 0x7ee <main+0x2aa>
 		{
 			//кнопка была нажата, отпустили
 			flagTact1=0;
  71c:	10 92 31 01 	sts	0x0131, r1
 			
-			if (flagWork&(1<<PRESET))
+			//если не идет отсчет
+			if (!(flagWork&(1<<WORK_TIME)))
  720:	80 91 2d 01 	lds	r24, 0x012D
- 724:	86 ff       	sbrs	r24, 6
- 726:	04 c0       	rjmp	.+8      	; 0x730 <main+0x1ec>
+ 724:	87 fd       	sbrc	r24, 7
+ 726:	63 c0       	rjmp	.+198    	; 0x7ee <main+0x2aa>
 			{
-				//обнул€ем флаг предустановки
-				flagWork&=~(1<<PRESET);
- 728:	8f 7b       	andi	r24, 0xBF	; 191
- 72a:	80 93 2d 01 	sts	0x012D, r24
- 72e:	4c c0       	rjmp	.+152    	; 0x7c8 <main+0x284>
-				
-			}
-			else
-			{
-				//сохран€ем установленное врем€ если мы его правим сейчас
-				if (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S)))
- 730:	8e 70       	andi	r24, 0x0E	; 14
- 732:	09 f4       	brne	.+2      	; 0x736 <main+0x1f2>
- 734:	47 c0       	rjmp	.+142    	; 0x7c4 <main+0x280>
+
+				if (flagWork&(1<<PRESET))
+ 728:	86 ff       	sbrs	r24, 6
+ 72a:	04 c0       	rjmp	.+8      	; 0x734 <main+0x1f0>
 				{
-					presetTime[presetNameCur]=ExpTime;
- 736:	80 91 2f 01 	lds	r24, 0x012F
- 73a:	28 2f       	mov	r18, r24
- 73c:	33 27       	eor	r19, r19
- 73e:	27 fd       	sbrc	r18, 7
- 740:	30 95       	com	r19
- 742:	f9 01       	movw	r30, r18
- 744:	ee 0f       	add	r30, r30
- 746:	ff 1f       	adc	r31, r31
- 748:	e2 0f       	add	r30, r18
- 74a:	f3 1f       	adc	r31, r19
- 74c:	ed 5c       	subi	r30, 0xCD	; 205
- 74e:	fe 4f       	sbci	r31, 0xFE	; 254
- 750:	20 91 3c 01 	lds	r18, 0x013C
- 754:	30 91 3d 01 	lds	r19, 0x013D
- 758:	40 91 3e 01 	lds	r20, 0x013E
- 75c:	20 83       	st	Z, r18
- 75e:	31 83       	std	Z+1, r19	; 0x01
- 760:	42 83       	std	Z+2, r20	; 0x02
-					
-					eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.hour);
- 762:	23 e0       	ldi	r18, 0x03	; 3
- 764:	82 02       	muls	r24, r18
- 766:	c0 01       	movw	r24, r0
- 768:	11 24       	eor	r1, r1
- 76a:	60 91 3e 01 	lds	r22, 0x013E
- 76e:	0a 96       	adiw	r24, 0x0a	; 10
- 770:	e2 d0       	rcall	.+452    	; 0x936 <__eewr_byte_m88>
-					eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.minute);
- 772:	80 91 2f 01 	lds	r24, 0x012F
- 776:	23 e0       	ldi	r18, 0x03	; 3
- 778:	82 02       	muls	r24, r18
- 77a:	c0 01       	movw	r24, r0
- 77c:	11 24       	eor	r1, r1
- 77e:	60 91 3d 01 	lds	r22, 0x013D
- 782:	0a 96       	adiw	r24, 0x0a	; 10
- 784:	d8 d0       	rcall	.+432    	; 0x936 <__eewr_byte_m88>
-					eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.second);
- 786:	80 91 2f 01 	lds	r24, 0x012F
- 78a:	23 e0       	ldi	r18, 0x03	; 3
- 78c:	82 02       	muls	r24, r18
- 78e:	c0 01       	movw	r24, r0
- 790:	11 24       	eor	r1, r1
- 792:	60 91 3c 01 	lds	r22, 0x013C
- 796:	0a 96       	adiw	r24, 0x0a	; 10
- 798:	ce d0       	rcall	.+412    	; 0x936 <__eewr_byte_m88>
-					showTime();
- 79a:	3d de       	rcall	.-902    	; 0x416 <showTime>
- 79c:	82 ec       	ldi	r24, 0xC2	; 194
- 79e:	ad dc       	rcall	.-1702   	; 0xfa <LCDsendCommand>
-					LCDGotoXY(2,1);
-					LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
- 7a0:	e0 91 2f 01 	lds	r30, 0x012F
- 7a4:	ee 0f       	add	r30, r30
- 7a6:	ff 0b       	sbc	r31, r31
- 7a8:	ee 5f       	subi	r30, 0xFE	; 254
- 7aa:	fe 4f       	sbci	r31, 0xFE	; 254
- 7ac:	68 e0       	ldi	r22, 0x08	; 8
- 7ae:	80 81       	ld	r24, Z
- 7b0:	91 81       	ldd	r25, Z+1	; 0x01
- 7b2:	30 dd       	rcall	.-1440   	; 0x214 <LCDstring>
- 7b4:	8b ec       	ldi	r24, 0xCB	; 203
- 7b6:	a1 dc       	rcall	.-1726   	; 0xfa <LCDsendCommand>
-					LCDGotoXY(11,1);
-					LCDstring((uint8_t*)(namePreset[3]),5);
- 7b8:	65 e0       	ldi	r22, 0x05	; 5
- 7ba:	80 91 08 01 	lds	r24, 0x0108
- 7be:	90 91 09 01 	lds	r25, 0x0109
- 7c2:	28 dd       	rcall	.-1456   	; 0x214 <LCDstring>
-
+					//обнул€ем флаг предустановки
+					flagWork&=~(1<<PRESET);
+ 72c:	8f 7b       	andi	r24, 0xBF	; 191
+ 72e:	80 93 2d 01 	sts	0x012D, r24
+ 732:	56 c0       	rjmp	.+172    	; 0x7e0 <main+0x29c>
+		
 				}
+				else
+				{
+					//сохран€ем установленное врем€ если мы его правим сейчас
+					if (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S)))
+ 734:	8e 70       	andi	r24, 0x0E	; 14
+ 736:	09 f4       	brne	.+2      	; 0x73a <main+0x1f6>
+ 738:	51 c0       	rjmp	.+162    	; 0x7dc <main+0x298>
+					{
+						presetTime[presetNameCur]=ExpTime;
+ 73a:	80 91 2f 01 	lds	r24, 0x012F
+ 73e:	28 2f       	mov	r18, r24
+ 740:	33 27       	eor	r19, r19
+ 742:	27 fd       	sbrc	r18, 7
+ 744:	30 95       	com	r19
+ 746:	f9 01       	movw	r30, r18
+ 748:	ee 0f       	add	r30, r30
+ 74a:	ff 1f       	adc	r31, r31
+ 74c:	e2 0f       	add	r30, r18
+ 74e:	f3 1f       	adc	r31, r19
+ 750:	ed 5c       	subi	r30, 0xCD	; 205
+ 752:	fe 4f       	sbci	r31, 0xFE	; 254
+ 754:	20 91 3c 01 	lds	r18, 0x013C
+ 758:	30 91 3d 01 	lds	r19, 0x013D
+ 75c:	40 91 3e 01 	lds	r20, 0x013E
+ 760:	20 83       	st	Z, r18
+ 762:	31 83       	std	Z+1, r19	; 0x01
+ 764:	42 83       	std	Z+2, r20	; 0x02
+			
+						eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.hour);
+ 766:	23 e0       	ldi	r18, 0x03	; 3
+ 768:	82 02       	muls	r24, r18
+ 76a:	c0 01       	movw	r24, r0
+ 76c:	11 24       	eor	r1, r1
+ 76e:	60 91 3e 01 	lds	r22, 0x013E
+ 772:	0a 96       	adiw	r24, 0x0a	; 10
+ 774:	f9 d0       	rcall	.+498    	; 0x968 <__eewr_byte_m88>
+						eeprom_write_byte((uint8_t*)11+presetNameCur*3,ExpTime.minute);
+ 776:	80 91 2f 01 	lds	r24, 0x012F
+ 77a:	23 e0       	ldi	r18, 0x03	; 3
+ 77c:	82 02       	muls	r24, r18
+ 77e:	c0 01       	movw	r24, r0
+ 780:	11 24       	eor	r1, r1
+ 782:	60 91 3d 01 	lds	r22, 0x013D
+ 786:	0b 96       	adiw	r24, 0x0b	; 11
+ 788:	ef d0       	rcall	.+478    	; 0x968 <__eewr_byte_m88>
+						eeprom_write_byte((uint8_t*)12+presetNameCur*3,ExpTime.second);
+ 78a:	80 91 2f 01 	lds	r24, 0x012F
+ 78e:	23 e0       	ldi	r18, 0x03	; 3
+ 790:	82 02       	muls	r24, r18
+ 792:	c0 01       	movw	r24, r0
+ 794:	11 24       	eor	r1, r1
+ 796:	60 91 3c 01 	lds	r22, 0x013C
+ 79a:	0c 96       	adiw	r24, 0x0c	; 12
+ 79c:	e5 d0       	rcall	.+458    	; 0x968 <__eewr_byte_m88>
+						showTime();
+ 79e:	3b de       	rcall	.-906    	; 0x416 <showTime>
+ 7a0:	82 ec       	ldi	r24, 0xC2	; 194
+ 7a2:	ab dc       	rcall	.-1706   	; 0xfa <LCDsendCommand>
+						LCDGotoXY(2,1);
+						LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
+ 7a4:	e0 91 2f 01 	lds	r30, 0x012F
+ 7a8:	ee 0f       	add	r30, r30
+ 7aa:	ff 0b       	sbc	r31, r31
+ 7ac:	ee 5f       	subi	r30, 0xFE	; 254
+ 7ae:	fe 4f       	sbci	r31, 0xFE	; 254
+ 7b0:	68 e0       	ldi	r22, 0x08	; 8
+ 7b2:	80 81       	ld	r24, Z
+ 7b4:	91 81       	ldd	r25, Z+1	; 0x01
+ 7b6:	2e dd       	rcall	.-1444   	; 0x214 <LCDstring>
+ 7b8:	8b ec       	ldi	r24, 0xCB	; 203
+ 7ba:	9f dc       	rcall	.-1730   	; 0xfa <LCDsendCommand>
+						LCDGotoXY(11,1);
+						LCDstring((uint8_t*)(namePreset[3]),5);
+ 7bc:	65 e0       	ldi	r22, 0x05	; 5
+ 7be:	80 91 08 01 	lds	r24, 0x0108
+ 7c2:	90 91 09 01 	lds	r25, 0x0109
+ 7c6:	26 dd       	rcall	.-1460   	; 0x214 <LCDstring>
+ 7c8:	8f ef       	ldi	r24, 0xFF	; 255
+ 7ca:	94 e3       	ldi	r25, 0x34	; 52
+ 7cc:	2c e0       	ldi	r18, 0x0C	; 12
+ 7ce:	81 50       	subi	r24, 0x01	; 1
+ 7d0:	90 40       	sbci	r25, 0x00	; 0
+ 7d2:	20 40       	sbci	r18, 0x00	; 0
+ 7d4:	e1 f7       	brne	.-8      	; 0x7ce <main+0x28a>
+ 7d6:	00 c0       	rjmp	.+0      	; 0x7d8 <main+0x294>
+ 7d8:	00 00       	nop
+						_delay_ms(500);
+						LCDclr();
+ 7da:	0d dd       	rcall	.-1510   	; 0x1f6 <LCDclr>
 
-				flagWork=(1<<PRESET);
- 7c4:	b0 92 2d 01 	sts	0x012D, r11
-			LCDGotoXY(0,0);
-			LCDsendChar(0x2B);//"+"
-			_delay_ms(100);
-			LCDclr();
-*/
-			encCount=1;
- 7c8:	f0 92 00 01 	sts	0x0100, r15
+					}
+
+					flagWork=(1<<PRESET);
+ 7dc:	b0 92 2d 01 	sts	0x012D, r11
+				LCDGotoXY(0,0);
+				LCDsendChar(0x2B);//"+"
+				_delay_ms(100);
+				LCDclr();
+				*/
+				flagWork|=(1<<LCD_UPD);
+ 7e0:	80 91 2d 01 	lds	r24, 0x012D
+ 7e4:	80 62       	ori	r24, 0x20	; 32
+ 7e6:	80 93 2d 01 	sts	0x012D, r24
+				encCount=1;
+ 7ea:	f0 92 00 01 	sts	0x0100, r15
+			}
 		}
 
 		//нажата кнопка 2 - старта засветки - флаг в прерывании INT1
 		if (flagTact2)
- 7cc:	80 91 30 01 	lds	r24, 0x0130
- 7d0:	88 23       	and	r24, r24
- 7d2:	d9 f0       	breq	.+54     	; 0x80a <main+0x2c6>
+ 7ee:	80 91 30 01 	lds	r24, 0x0130
+ 7f2:	88 23       	and	r24, r24
+ 7f4:	f1 f0       	breq	.+60     	; 0x832 <main+0x2ee>
 		{
 			//кнопка была нажата, отпустили
 			flagTact2=0;
- 7d4:	10 92 30 01 	sts	0x0130, r1
+ 7f6:	10 92 30 01 	sts	0x0130, r1
 			encCount=1;
- 7d8:	f0 92 00 01 	sts	0x0100, r15
-			
-			//если врем€ не 0 (чтоб не моргало)
-			if (ExpTime.hour|ExpTime.minute|ExpTime.second)
- 7dc:	80 91 3d 01 	lds	r24, 0x013D
- 7e0:	90 91 3e 01 	lds	r25, 0x013E
- 7e4:	89 2b       	or	r24, r25
- 7e6:	90 91 3c 01 	lds	r25, 0x013C
- 7ea:	89 2b       	or	r24, r25
- 7ec:	71 f0       	breq	.+28     	; 0x80a <main+0x2c6>
+ 7fa:	f0 92 00 01 	sts	0x0100, r15
+			//если уже не идет отсчет
+			if (!(flagWork&(1<<WORK_TIME)))			
+ 7fe:	90 91 2d 01 	lds	r25, 0x012D
+ 802:	97 fd       	sbrc	r25, 7
+ 804:	16 c0       	rjmp	.+44     	; 0x832 <main+0x2ee>
 			{
-				flagWork|=(1<<WORK_TIME);
-				//что бы затереть ненужные флаги(LCD_CUR_TIME и хвост..), 
-				//но оставить отображение предустановки
-				flagWork&=(1<<PRESET)|(1<<WORK_TIME);
- 7ee:	80 91 2d 01 	lds	r24, 0x012D
- 7f2:	80 7c       	andi	r24, 0xC0	; 192
- 7f4:	80 68       	ori	r24, 0x80	; 128
- 7f6:	80 93 2d 01 	sts	0x012D, r24
-				//запускаем таймер
-				initTimer2();
- 7fa:	9b dd       	rcall	.-1226   	; 0x332 <initTimer2>
-				//запускаем MOSFET
-				MOSFET_PORT|=(1<<MOSFET_GATE);
- 7fc:	5f 9a       	sbi	0x0b, 7	; 11
-				//очистим экран, что бы убрать надпись saved если была
-				//если выставлен флаг PRESET - название отобразитс€
-				LCDclr();
- 7fe:	fb dc       	rcall	.-1546   	; 0x1f6 <LCDclr>
-				flagWork|=(1<<LCD_UPD);
- 800:	80 91 2d 01 	lds	r24, 0x012D
- 804:	80 62       	ori	r24, 0x20	; 32
- 806:	80 93 2d 01 	sts	0x012D, r24
+				//если врем€ не 0 (чтоб не моргало)
+				if (ExpTime.hour|ExpTime.minute|ExpTime.second)
+ 806:	80 91 3d 01 	lds	r24, 0x013D
+ 80a:	20 91 3e 01 	lds	r18, 0x013E
+ 80e:	82 2b       	or	r24, r18
+ 810:	20 91 3c 01 	lds	r18, 0x013C
+ 814:	82 2b       	or	r24, r18
+ 816:	69 f0       	breq	.+26     	; 0x832 <main+0x2ee>
+				{
+					flagWork|=(1<<WORK_TIME);
+					//что бы затереть ненужные флаги(LCD_CUR_TIME и хвост..),
+					//но оставить отображение предустановки
+					flagWork&=(1<<PRESET)|(1<<WORK_TIME);
+ 818:	89 2f       	mov	r24, r25
+ 81a:	80 7c       	andi	r24, 0xC0	; 192
+ 81c:	80 68       	ori	r24, 0x80	; 128
+ 81e:	80 93 2d 01 	sts	0x012D, r24
+					//запускаем таймер
+					initTimer2();
+ 822:	87 dd       	rcall	.-1266   	; 0x332 <initTimer2>
+					//запускаем MOSFET
+					MOSFET_PORT|=(1<<MOSFET_GATE);
+ 824:	5f 9a       	sbi	0x0b, 7	; 11
+					//очистим экран, что бы убрать надпись saved если была
+					//если выставлен флаг PRESET - название отобразитс€
+					LCDclr();
+ 826:	e7 dc       	rcall	.-1586   	; 0x1f6 <LCDclr>
+					flagWork|=(1<<LCD_UPD);
+ 828:	80 91 2d 01 	lds	r24, 0x012D
+ 82c:	80 62       	ori	r24, 0x20	; 32
+ 82e:	80 93 2d 01 	sts	0x012D, r24
 			}
 			
 		}
 		
 		//если врем€ кончилось
 		if (flagTimeStop)
- 80a:	80 91 2e 01 	lds	r24, 0x012E
- 80e:	88 23       	and	r24, r24
- 810:	89 f0       	breq	.+34     	; 0x834 <main+0x2f0>
+ 832:	80 91 2e 01 	lds	r24, 0x012E
+ 836:	88 23       	and	r24, r24
+ 838:	b1 f0       	breq	.+44     	; 0x866 <main+0x322>
 		{
 			cli();
- 812:	f8 94       	cli
+ 83a:	f8 94       	cli
 			flagTimeStop=0;
- 814:	10 92 2e 01 	sts	0x012E, r1
+ 83c:	10 92 2e 01 	sts	0x012E, r1
 			
 			//обнул€ем флаг экрана
 			flagWork=0;
- 818:	10 92 2d 01 	sts	0x012D, r1
+ 840:	10 92 2d 01 	sts	0x012D, r1
 			//LCDclr();
 			ExpTime.hour=0;
- 81c:	10 92 3e 01 	sts	0x013E, r1
+ 844:	10 92 3e 01 	sts	0x013E, r1
 			ExpTime.minute=0;
- 820:	10 92 3d 01 	sts	0x013D, r1
+ 848:	10 92 3d 01 	sts	0x013D, r1
 			ExpTime.second=0;
- 824:	10 92 3c 01 	sts	0x013C, r1
+ 84c:	10 92 3c 01 	sts	0x013C, r1
 			//вырубаем MOSFET
 			MOSFET_PORT&=~(1<<MOSFET_GATE);
- 828:	5f 98       	cbi	0x0b, 7	; 11
+ 850:	5f 98       	cbi	0x0b, 7	; 11
 			
 			//пищим
 			buzz(40);
- 82a:	88 e2       	ldi	r24, 0x28	; 40
- 82c:	90 e0       	ldi	r25, 0x00	; 0
- 82e:	b3 dd       	rcall	.-1178   	; 0x396 <buzz>
+ 852:	88 e2       	ldi	r24, 0x28	; 40
+ 854:	90 e0       	ldi	r25, 0x00	; 0
+ 856:	9f dd       	rcall	.-1218   	; 0x396 <buzz>
 			
 			
 			//выключаем прерывание
 			disableTimer2();
- 830:	a0 dd       	rcall	.-1216   	; 0x372 <disableTimer2>
-			sei();			
- 832:	78 94       	sei
+ 858:	8c dd       	rcall	.-1256   	; 0x372 <disableTimer2>
+			sei();		
+ 85a:	78 94       	sei
+			//отображаем текущее врем€, т.к. флаг выставл€етс€ при -1 сек, бывают артефакты
+			flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
+ 85c:	80 91 2d 01 	lds	r24, 0x012D
+ 860:	80 63       	ori	r24, 0x30	; 48
+ 862:	80 93 2d 01 	sts	0x012D, r24
+	
 		}
 		
 		//если выставлен флаг обновлени€ экрана
 		if (flagWork&(1<<LCD_UPD))
- 834:	80 91 2d 01 	lds	r24, 0x012D
- 838:	85 ff       	sbrs	r24, 5
- 83a:	b2 ce       	rjmp	.-668    	; 0x5a0 <main+0x5c>
+ 866:	80 91 2d 01 	lds	r24, 0x012D
+ 86a:	85 ff       	sbrs	r24, 5
+ 86c:	99 ce       	rjmp	.-718    	; 0x5a0 <main+0x5c>
 		{
 			//снимаем его
 			flagWork&=~(1<<LCD_UPD);
- 83c:	98 2f       	mov	r25, r24
- 83e:	9f 7d       	andi	r25, 0xDF	; 223
- 840:	90 93 2d 01 	sts	0x012D, r25
+ 86e:	98 2f       	mov	r25, r24
+ 870:	9f 7d       	andi	r25, 0xDF	; 223
+ 872:	90 93 2d 01 	sts	0x012D, r25
 			//LCDclr();
 			
 			if (flagWork&(1<<PRESET))
- 844:	86 ff       	sbrs	r24, 6
- 846:	25 c0       	rjmp	.+74     	; 0x892 <main+0x34e>
+ 876:	86 ff       	sbrs	r24, 6
+ 878:	25 c0       	rjmp	.+74     	; 0x8c4 <main+0x380>
 			{
 				//если не идет обратный отсчет, то загружаем врем€ из пресета
 				if (!(flagWork&(1<<WORK_TIME)))
- 848:	97 fd       	sbrc	r25, 7
- 84a:	17 c0       	rjmp	.+46     	; 0x87a <main+0x336>
+ 87a:	97 fd       	sbrc	r25, 7
+ 87c:	17 c0       	rjmp	.+46     	; 0x8ac <main+0x368>
 				{
 					ExpTime=presetTime[presetNameCur];
- 84c:	80 91 2f 01 	lds	r24, 0x012F
- 850:	99 27       	eor	r25, r25
- 852:	87 fd       	sbrc	r24, 7
- 854:	90 95       	com	r25
- 856:	fc 01       	movw	r30, r24
- 858:	ee 0f       	add	r30, r30
- 85a:	ff 1f       	adc	r31, r31
- 85c:	e8 0f       	add	r30, r24
- 85e:	f9 1f       	adc	r31, r25
- 860:	ed 5c       	subi	r30, 0xCD	; 205
- 862:	fe 4f       	sbci	r31, 0xFE	; 254
- 864:	80 81       	ld	r24, Z
- 866:	91 81       	ldd	r25, Z+1	; 0x01
- 868:	a2 81       	ldd	r26, Z+2	; 0x02
- 86a:	80 93 3c 01 	sts	0x013C, r24
- 86e:	90 93 3d 01 	sts	0x013D, r25
- 872:	a0 93 3e 01 	sts	0x013E, r26
+ 87e:	80 91 2f 01 	lds	r24, 0x012F
+ 882:	99 27       	eor	r25, r25
+ 884:	87 fd       	sbrc	r24, 7
+ 886:	90 95       	com	r25
+ 888:	fc 01       	movw	r30, r24
+ 88a:	ee 0f       	add	r30, r30
+ 88c:	ff 1f       	adc	r31, r31
+ 88e:	e8 0f       	add	r30, r24
+ 890:	f9 1f       	adc	r31, r25
+ 892:	ed 5c       	subi	r30, 0xCD	; 205
+ 894:	fe 4f       	sbci	r31, 0xFE	; 254
+ 896:	80 81       	ld	r24, Z
+ 898:	91 81       	ldd	r25, Z+1	; 0x01
+ 89a:	a2 81       	ldd	r26, Z+2	; 0x02
+ 89c:	80 93 3c 01 	sts	0x013C, r24
+ 8a0:	90 93 3d 01 	sts	0x013D, r25
+ 8a4:	a0 93 3e 01 	sts	0x013E, r26
 					
 					checkTime();
- 876:	1b de       	rcall	.-970    	; 0x4ae <checkTime>
+ 8a8:	02 de       	rcall	.-1020   	; 0x4ae <checkTime>
 					showTime();
- 878:	ce dd       	rcall	.-1124   	; 0x416 <showTime>
- 87a:	84 ec       	ldi	r24, 0xC4	; 196
- 87c:	3e dc       	rcall	.-1924   	; 0xfa <LCDsendCommand>
+ 8aa:	b5 dd       	rcall	.-1174   	; 0x416 <showTime>
+ 8ac:	84 ec       	ldi	r24, 0xC4	; 196
+ 8ae:	25 dc       	rcall	.-1974   	; 0xfa <LCDsendCommand>
 /*
 				LCDstring((uint8_t*)(PGM_P)pgm_read_word(&(namePreset[presetNameCur])),8);
 				
 */
 				LCDGotoXY(4,1);
 				LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
- 87e:	e0 91 2f 01 	lds	r30, 0x012F
- 882:	ee 0f       	add	r30, r30
- 884:	ff 0b       	sbc	r31, r31
- 886:	ee 5f       	subi	r30, 0xFE	; 254
- 888:	fe 4f       	sbci	r31, 0xFE	; 254
- 88a:	68 e0       	ldi	r22, 0x08	; 8
- 88c:	80 81       	ld	r24, Z
- 88e:	91 81       	ldd	r25, Z+1	; 0x01
- 890:	c1 dc       	rcall	.-1662   	; 0x214 <LCDstring>
+ 8b0:	e0 91 2f 01 	lds	r30, 0x012F
+ 8b4:	ee 0f       	add	r30, r30
+ 8b6:	ff 0b       	sbc	r31, r31
+ 8b8:	ee 5f       	subi	r30, 0xFE	; 254
+ 8ba:	fe 4f       	sbci	r31, 0xFE	; 254
+ 8bc:	68 e0       	ldi	r22, 0x08	; 8
+ 8be:	80 81       	ld	r24, Z
+ 8c0:	91 81       	ldd	r25, Z+1	; 0x01
+ 8c2:	a8 dc       	rcall	.-1712   	; 0x214 <LCDstring>
 
 			}
 			
 			if (flagWork&(1<<CUR_TIME))
- 892:	80 91 2d 01 	lds	r24, 0x012D
- 896:	84 ff       	sbrs	r24, 4
- 898:	1d c0       	rjmp	.+58     	; 0x8d4 <main+0x390>
+ 8c4:	80 91 2d 01 	lds	r24, 0x012D
+ 8c8:	84 ff       	sbrs	r24, 4
+ 8ca:	1d c0       	rjmp	.+58     	; 0x906 <main+0x3c2>
 			{
 				//отображаем текущее установленное врем€
 				showTime();
- 89a:	bd dd       	rcall	.-1158   	; 0x416 <showTime>
+ 8cc:	a4 dd       	rcall	.-1208   	; 0x416 <showTime>
 				//если установка времени - включаем курсор под текущим разр€дом
 				if ((flagWork&(1<<CUR_TIME)) && (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S))))
- 89c:	80 91 2d 01 	lds	r24, 0x012D
- 8a0:	84 ff       	sbrs	r24, 4
- 8a2:	18 c0       	rjmp	.+48     	; 0x8d4 <main+0x390>
- 8a4:	98 2f       	mov	r25, r24
- 8a6:	9e 70       	andi	r25, 0x0E	; 14
- 8a8:	a9 f0       	breq	.+42     	; 0x8d4 <main+0x390>
+ 8ce:	80 91 2d 01 	lds	r24, 0x012D
+ 8d2:	84 ff       	sbrs	r24, 4
+ 8d4:	18 c0       	rjmp	.+48     	; 0x906 <main+0x3c2>
+ 8d6:	98 2f       	mov	r25, r24
+ 8d8:	9e 70       	andi	r25, 0x0E	; 14
+ 8da:	a9 f0       	breq	.+42     	; 0x906 <main+0x3c2>
 				{
 					//отображаем мигающий курсор под измен€емой позицией
 					
 					pos=3*((flagWork&(1<<BLINK_H))>>BLINK_H)+3*((flagWork&(1<<BLINK_M))>>BLINK_M);
- 8aa:	83 fb       	bst	r24, 3
- 8ac:	99 27       	eor	r25, r25
- 8ae:	90 f9       	bld	r25, 0
- 8b0:	c9 2f       	mov	r28, r25
- 8b2:	20 e0       	ldi	r18, 0x00	; 0
- 8b4:	d2 2f       	mov	r29, r18
- 8b6:	82 fb       	bst	r24, 2
- 8b8:	00 27       	eor	r16, r16
- 8ba:	00 f9       	bld	r16, 0
- 8bc:	10 e0       	ldi	r17, 0x00	; 0
- 8be:	c0 0f       	add	r28, r16
- 8c0:	d1 1f       	adc	r29, r17
- 8c2:	8c 2f       	mov	r24, r28
- 8c4:	88 0f       	add	r24, r24
- 8c6:	8c 0f       	add	r24, r28
+ 8dc:	83 fb       	bst	r24, 3
+ 8de:	99 27       	eor	r25, r25
+ 8e0:	90 f9       	bld	r25, 0
+ 8e2:	c9 2f       	mov	r28, r25
+ 8e4:	20 e0       	ldi	r18, 0x00	; 0
+ 8e6:	d2 2f       	mov	r29, r18
+ 8e8:	82 fb       	bst	r24, 2
+ 8ea:	00 27       	eor	r16, r16
+ 8ec:	00 f9       	bld	r16, 0
+ 8ee:	10 e0       	ldi	r17, 0x00	; 0
+ 8f0:	c0 0f       	add	r28, r16
+ 8f2:	d1 1f       	adc	r29, r17
+ 8f4:	8c 2f       	mov	r24, r28
+ 8f6:	88 0f       	add	r24, r24
+ 8f8:	8c 0f       	add	r24, r28
 					LCDGotoXY(4+(8-pos),0);
- 8c8:	2e 2d       	mov	r18, r14
- 8ca:	28 1b       	sub	r18, r24
- 8cc:	82 2f       	mov	r24, r18
- 8ce:	80 68       	ori	r24, 0x80	; 128
- 8d0:	14 dc       	rcall	.-2008   	; 0xfa <LCDsendCommand>
+ 8fa:	2e 2d       	mov	r18, r14
+ 8fc:	28 1b       	sub	r18, r24
+ 8fe:	82 2f       	mov	r24, r18
+ 900:	80 68       	ori	r24, 0x80	; 128
+ 902:	fb db       	rcall	.-2058   	; 0xfa <LCDsendCommand>
 					LCDcursorOnBlink();
- 8d2:	c1 dc       	rcall	.-1662   	; 0x256 <LCDcursorOnBlink>
+ 904:	a8 dc       	rcall	.-1712   	; 0x256 <LCDcursorOnBlink>
 					
 				}
 
 			}
 
 			if (flagWork&(1<<WORK_TIME))
- 8d4:	80 91 2d 01 	lds	r24, 0x012D
- 8d8:	87 ff       	sbrs	r24, 7
- 8da:	62 ce       	rjmp	.-828    	; 0x5a0 <main+0x5c>
+ 906:	80 91 2d 01 	lds	r24, 0x012D
+ 90a:	87 ff       	sbrs	r24, 7
+ 90c:	49 ce       	rjmp	.-878    	; 0x5a0 <main+0x5c>
 			{
 				//отображаем текущее врем€
 				showTime();
- 8dc:	9c dd       	rcall	.-1224   	; 0x416 <showTime>
- 8de:	60 ce       	rjmp	.-832    	; 0x5a0 <main+0x5c>
+ 90e:	83 dd       	rcall	.-1274   	; 0x416 <showTime>
+ 910:	47 ce       	rjmp	.-882    	; 0x5a0 <main+0x5c>
 
-000008e0 <__itoa_ncheck>:
- 8e0:	bb 27       	eor	r27, r27
- 8e2:	4a 30       	cpi	r20, 0x0A	; 10
- 8e4:	31 f4       	brne	.+12     	; 0x8f2 <__itoa_ncheck+0x12>
- 8e6:	99 23       	and	r25, r25
- 8e8:	22 f4       	brpl	.+8      	; 0x8f2 <__itoa_ncheck+0x12>
- 8ea:	bd e2       	ldi	r27, 0x2D	; 45
- 8ec:	90 95       	com	r25
- 8ee:	81 95       	neg	r24
- 8f0:	9f 4f       	sbci	r25, 0xFF	; 255
- 8f2:	01 c0       	rjmp	.+2      	; 0x8f6 <__utoa_common>
+00000912 <__itoa_ncheck>:
+ 912:	bb 27       	eor	r27, r27
+ 914:	4a 30       	cpi	r20, 0x0A	; 10
+ 916:	31 f4       	brne	.+12     	; 0x924 <__itoa_ncheck+0x12>
+ 918:	99 23       	and	r25, r25
+ 91a:	22 f4       	brpl	.+8      	; 0x924 <__itoa_ncheck+0x12>
+ 91c:	bd e2       	ldi	r27, 0x2D	; 45
+ 91e:	90 95       	com	r25
+ 920:	81 95       	neg	r24
+ 922:	9f 4f       	sbci	r25, 0xFF	; 255
+ 924:	01 c0       	rjmp	.+2      	; 0x928 <__utoa_common>
 
-000008f4 <__utoa_ncheck>:
- 8f4:	bb 27       	eor	r27, r27
+00000926 <__utoa_ncheck>:
+ 926:	bb 27       	eor	r27, r27
 
-000008f6 <__utoa_common>:
- 8f6:	fb 01       	movw	r30, r22
- 8f8:	55 27       	eor	r21, r21
- 8fa:	aa 27       	eor	r26, r26
- 8fc:	88 0f       	add	r24, r24
- 8fe:	99 1f       	adc	r25, r25
- 900:	aa 1f       	adc	r26, r26
- 902:	a4 17       	cp	r26, r20
- 904:	10 f0       	brcs	.+4      	; 0x90a <__utoa_common+0x14>
- 906:	a4 1b       	sub	r26, r20
- 908:	83 95       	inc	r24
- 90a:	50 51       	subi	r21, 0x10	; 16
- 90c:	b9 f7       	brne	.-18     	; 0x8fc <__utoa_common+0x6>
- 90e:	a0 5d       	subi	r26, 0xD0	; 208
- 910:	aa 33       	cpi	r26, 0x3A	; 58
- 912:	08 f0       	brcs	.+2      	; 0x916 <__utoa_common+0x20>
- 914:	a9 5d       	subi	r26, 0xD9	; 217
- 916:	a1 93       	st	Z+, r26
- 918:	00 97       	sbiw	r24, 0x00	; 0
- 91a:	79 f7       	brne	.-34     	; 0x8fa <__utoa_common+0x4>
- 91c:	b1 11       	cpse	r27, r1
- 91e:	b1 93       	st	Z+, r27
- 920:	11 92       	st	Z+, r1
- 922:	cb 01       	movw	r24, r22
- 924:	16 c0       	rjmp	.+44     	; 0x952 <strrev>
+00000928 <__utoa_common>:
+ 928:	fb 01       	movw	r30, r22
+ 92a:	55 27       	eor	r21, r21
+ 92c:	aa 27       	eor	r26, r26
+ 92e:	88 0f       	add	r24, r24
+ 930:	99 1f       	adc	r25, r25
+ 932:	aa 1f       	adc	r26, r26
+ 934:	a4 17       	cp	r26, r20
+ 936:	10 f0       	brcs	.+4      	; 0x93c <__utoa_common+0x14>
+ 938:	a4 1b       	sub	r26, r20
+ 93a:	83 95       	inc	r24
+ 93c:	50 51       	subi	r21, 0x10	; 16
+ 93e:	b9 f7       	brne	.-18     	; 0x92e <__utoa_common+0x6>
+ 940:	a0 5d       	subi	r26, 0xD0	; 208
+ 942:	aa 33       	cpi	r26, 0x3A	; 58
+ 944:	08 f0       	brcs	.+2      	; 0x948 <__utoa_common+0x20>
+ 946:	a9 5d       	subi	r26, 0xD9	; 217
+ 948:	a1 93       	st	Z+, r26
+ 94a:	00 97       	sbiw	r24, 0x00	; 0
+ 94c:	79 f7       	brne	.-34     	; 0x92c <__utoa_common+0x4>
+ 94e:	b1 11       	cpse	r27, r1
+ 950:	b1 93       	st	Z+, r27
+ 952:	11 92       	st	Z+, r1
+ 954:	cb 01       	movw	r24, r22
+ 956:	16 c0       	rjmp	.+44     	; 0x984 <strrev>
 
-00000926 <__eerd_byte_m88>:
- 926:	f9 99       	sbic	0x1f, 1	; 31
- 928:	fe cf       	rjmp	.-4      	; 0x926 <__eerd_byte_m88>
- 92a:	92 bd       	out	0x22, r25	; 34
- 92c:	81 bd       	out	0x21, r24	; 33
- 92e:	f8 9a       	sbi	0x1f, 0	; 31
- 930:	99 27       	eor	r25, r25
- 932:	80 b5       	in	r24, 0x20	; 32
- 934:	08 95       	ret
+00000958 <__eerd_byte_m88>:
+ 958:	f9 99       	sbic	0x1f, 1	; 31
+ 95a:	fe cf       	rjmp	.-4      	; 0x958 <__eerd_byte_m88>
+ 95c:	92 bd       	out	0x22, r25	; 34
+ 95e:	81 bd       	out	0x21, r24	; 33
+ 960:	f8 9a       	sbi	0x1f, 0	; 31
+ 962:	99 27       	eor	r25, r25
+ 964:	80 b5       	in	r24, 0x20	; 32
+ 966:	08 95       	ret
 
-00000936 <__eewr_byte_m88>:
- 936:	26 2f       	mov	r18, r22
+00000968 <__eewr_byte_m88>:
+ 968:	26 2f       	mov	r18, r22
 
-00000938 <__eewr_r18_m88>:
- 938:	f9 99       	sbic	0x1f, 1	; 31
- 93a:	fe cf       	rjmp	.-4      	; 0x938 <__eewr_r18_m88>
- 93c:	1f ba       	out	0x1f, r1	; 31
- 93e:	92 bd       	out	0x22, r25	; 34
- 940:	81 bd       	out	0x21, r24	; 33
- 942:	20 bd       	out	0x20, r18	; 32
- 944:	0f b6       	in	r0, 0x3f	; 63
- 946:	f8 94       	cli
- 948:	fa 9a       	sbi	0x1f, 2	; 31
- 94a:	f9 9a       	sbi	0x1f, 1	; 31
- 94c:	0f be       	out	0x3f, r0	; 63
- 94e:	01 96       	adiw	r24, 0x01	; 1
- 950:	08 95       	ret
+0000096a <__eewr_r18_m88>:
+ 96a:	f9 99       	sbic	0x1f, 1	; 31
+ 96c:	fe cf       	rjmp	.-4      	; 0x96a <__eewr_r18_m88>
+ 96e:	1f ba       	out	0x1f, r1	; 31
+ 970:	92 bd       	out	0x22, r25	; 34
+ 972:	81 bd       	out	0x21, r24	; 33
+ 974:	20 bd       	out	0x20, r18	; 32
+ 976:	0f b6       	in	r0, 0x3f	; 63
+ 978:	f8 94       	cli
+ 97a:	fa 9a       	sbi	0x1f, 2	; 31
+ 97c:	f9 9a       	sbi	0x1f, 1	; 31
+ 97e:	0f be       	out	0x3f, r0	; 63
+ 980:	01 96       	adiw	r24, 0x01	; 1
+ 982:	08 95       	ret
 
-00000952 <strrev>:
- 952:	dc 01       	movw	r26, r24
- 954:	fc 01       	movw	r30, r24
- 956:	67 2f       	mov	r22, r23
- 958:	71 91       	ld	r23, Z+
- 95a:	77 23       	and	r23, r23
- 95c:	e1 f7       	brne	.-8      	; 0x956 <strrev+0x4>
- 95e:	32 97       	sbiw	r30, 0x02	; 2
- 960:	04 c0       	rjmp	.+8      	; 0x96a <strrev+0x18>
- 962:	7c 91       	ld	r23, X
- 964:	6d 93       	st	X+, r22
- 966:	70 83       	st	Z, r23
- 968:	62 91       	ld	r22, -Z
- 96a:	ae 17       	cp	r26, r30
- 96c:	bf 07       	cpc	r27, r31
- 96e:	c8 f3       	brcs	.-14     	; 0x962 <strrev+0x10>
- 970:	08 95       	ret
+00000984 <strrev>:
+ 984:	dc 01       	movw	r26, r24
+ 986:	fc 01       	movw	r30, r24
+ 988:	67 2f       	mov	r22, r23
+ 98a:	71 91       	ld	r23, Z+
+ 98c:	77 23       	and	r23, r23
+ 98e:	e1 f7       	brne	.-8      	; 0x988 <strrev+0x4>
+ 990:	32 97       	sbiw	r30, 0x02	; 2
+ 992:	04 c0       	rjmp	.+8      	; 0x99c <strrev+0x18>
+ 994:	7c 91       	ld	r23, X
+ 996:	6d 93       	st	X+, r22
+ 998:	70 83       	st	Z, r23
+ 99a:	62 91       	ld	r22, -Z
+ 99c:	ae 17       	cp	r26, r30
+ 99e:	bf 07       	cpc	r27, r31
+ 9a0:	c8 f3       	brcs	.-14     	; 0x994 <strrev+0x10>
+ 9a2:	08 95       	ret
 
-00000972 <_exit>:
- 972:	f8 94       	cli
+000009a4 <_exit>:
+ 9a4:	f8 94       	cli
 
-00000974 <__stop_program>:
- 974:	ff cf       	rjmp	.-2      	; 0x974 <__stop_program>
+000009a6 <__stop_program>:
+ 9a6:	ff cf       	rjmp	.-2      	; 0x9a6 <__stop_program>

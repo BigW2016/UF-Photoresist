@@ -514,13 +514,15 @@ int main(void)
 						presetTime[presetNameCur]=ExpTime;
 			
 						eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.hour);
-						eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.minute);
-						eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.second);
+						eeprom_write_byte((uint8_t*)11+presetNameCur*3,ExpTime.minute);
+						eeprom_write_byte((uint8_t*)12+presetNameCur*3,ExpTime.second);
 						showTime();
 						LCDGotoXY(2,1);
 						LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
 						LCDGotoXY(11,1);
 						LCDstring((uint8_t*)(namePreset[3]),5);
+						_delay_ms(500);
+						LCDclr();
 
 					}
 
@@ -535,6 +537,7 @@ int main(void)
 				_delay_ms(100);
 				LCDclr();
 				*/
+				flagWork|=(1<<LCD_UPD);
 				encCount=1;
 			}
 		}
@@ -590,7 +593,10 @@ int main(void)
 			
 			//выключаем прерывание
 			disableTimer2();
-			sei();			
+			sei();		
+			//отображаем текущее время, т.к. флаг выставляется при -1 сек, бывают артефакты
+			flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
+	
 		}
 		
 		//если выставлен флаг обновления экрана
