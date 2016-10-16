@@ -38,7 +38,6 @@
 #define MOSFET_GATE		7
 
 
-
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include <util/delay.h>
@@ -48,13 +47,46 @@
 #include "Lcd_lib.c"
 #include <stdlib.h>
 #include <string.h>
+#include <avr/eeprom.h>
 
+
+//константы наименований предустановок
+#define MAX_PRESET 3
+
+/*
+const char string1[] PROGMEM = "preset-1";
+const char string2[] PROGMEM = "preset-2";
+const char string3[] PROGMEM = "preset-3";
+const char string4[] PROGMEM = " saved";
+
+PGM_P namePreset[] = 
+{
+	string1,
+	string2,
+	string3,
+	string4
+};
+*/
+
+const char string1[] = "preset-1";
+const char string2[] = "preset-2";
+const char string3[] = "preset-3";
+const char string4[] = "saved";
+
+const char* namePreset[] =
+{
+	string1,
+	string2,
+	string3,
+	string4
+};
 
 //переменные
 volatile uint8_t encCurState=0;//содержится состояние энкодера, нужно хранить для определения направления вращения
 volatile uint8_t encPushDown=1;//для работы с кнопкой энкодера
 		 uint8_t flagTact1=0;
 		 uint8_t flagTact2=0;
+		 int8_t presetNameCur=0;//текущий пресет
 		 uint8_t flagTimeStop=0;//флаг для определения окончания времени
 volatile uint8_t encCount=1;//кол-во нажатий энкодера для определения какую цифру в таймере меняем
 		 uint8_t flagWork=0;//флаг управления			1 1 1 1 1 1 1 1
@@ -73,9 +105,11 @@ typedef struct{
 	unsigned char hour;
 }time;
 
-//структура времени
+//структура текущего времени
 time ExpTime;
 
+//набор времени для пресетов
+time presetTime[3];
 
 int8_t EncStep =0; //счетчик кол-ва шагов
 
@@ -253,9 +287,19 @@ void checkTime(void)
 	if (ExpTime.minute>59) ExpTime.minute=0;
 	if (ExpTime.hour>23) ExpTime.hour=0;
 
-	//обновляем экран	
-	flagWork|=(1<<LCD_UPD);
+}
 
+void loadEpprom(void)
+{
+	uint8_t i;
+	
+	for (i=0;i<3;i++)
+	{
+		presetTime[i].hour=eeprom_read_byte((uint8_t*)10+i*3);
+		presetTime[i].minute=eeprom_read_byte((uint8_t*)11+i*3);
+		presetTime[i].second=eeprom_read_byte((uint8_t*)12+i*3);
+	}
+	
 }
 
 
@@ -315,8 +359,11 @@ int main(void)
 	//отображаем его
 	flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
 	
-
+	//читаем предустановки
+	loadEpprom();
+	
 	sei();
+	
 	
 	
     while(1)
@@ -346,12 +393,16 @@ int main(void)
 					}
 
 					checkTime();
+					//обновляем экран
+					flagWork|=(1<<LCD_UPD);
+
 				}
 				//если в режиме выбора пресета - меняем пресеты
 				if (flagWork&(1<<PRESET))
 				{
-					//код
-				
+					//уменьшаем номер предустановки, если меньше 0 - снова 4
+					if (--presetNameCur<0) presetNameCur=MAX_PRESET-1;
+					LCDclr();
 					//обновляем экран
 					flagWork|=(1<<LCD_UPD);
 
@@ -374,12 +425,16 @@ int main(void)
 		
 					}
 					checkTime();
+					//обновляем экран
+					flagWork|=(1<<LCD_UPD);
 				}
 				//если в режиме выбора пресета - меняем пресеты
 				if (flagWork&(1<<PRESET))
 				{
-					//код
+					//увеличиваем номер предустановки, если больше4 - снова 0
+					if (++presetNameCur==MAX_PRESET) presetNameCur=0;
 					
+					LCDclr();
 					//обновляем экран
 					flagWork|=(1<<LCD_UPD);
 
@@ -402,7 +457,8 @@ int main(void)
 					if (!(flagWork&(1<<WORK_TIME)))//если не идет обратный отсчет
 					{
 						//снимем флаг предустановки, если он был
-						
+						//очищаем экран что бы убрать имя пресета, если было
+						LCDclr();
 						flagWork&=~(1<<PRESET);
 						
 						encCount=((encCount<<1)&0x0F);
@@ -439,12 +495,48 @@ int main(void)
 		{
 			//кнопка была нажата, отпустили
 			flagTact1=0;
-			LCDclr();
-			LCDGotoXY(0,0);
-			LCDsendChar(0x2B);//"+"
-			_delay_ms(100);
-			LCDclr();
-			encCount=1;
+			
+			//если не идет отсчет
+			if (!(flagWork&(1<<WORK_TIME)))
+			{
+
+				if (flagWork&(1<<PRESET))
+				{
+					//обнуляем флаг предустановки
+					flagWork&=~(1<<PRESET);
+		
+				}
+				else
+				{
+					//сохраняем установленное время если мы его правим сейчас
+					if (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S)))
+					{
+						presetTime[presetNameCur]=ExpTime;
+			
+						eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.hour);
+						eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.minute);
+						eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.second);
+						showTime();
+						LCDGotoXY(2,1);
+						LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
+						LCDGotoXY(11,1);
+						LCDstring((uint8_t*)(namePreset[3]),5);
+
+					}
+
+					flagWork=(1<<PRESET);
+				}
+
+
+				/*
+				LCDclr();
+				LCDGotoXY(0,0);
+				LCDsendChar(0x2B);//"+"
+				_delay_ms(100);
+				LCDclr();
+				*/
+				encCount=1;
+			}
 		}
 
 		//нажата кнопка 2 - старта засветки - флаг в прерывании INT1
@@ -453,17 +545,26 @@ int main(void)
 			//кнопка была нажата, отпустили
 			flagTact2=0;
 			encCount=1;
-			
-			//если время не 0 (чтоб не моргало)
-			if (ExpTime.hour|ExpTime.minute|ExpTime.second)
+			//если уже не идет отсчет
+			if (!(flagWork&(1<<WORK_TIME)))			
 			{
-				flagWork|=(1<<WORK_TIME);
-				//что бы затереть ненужные флаги(LCD_CUR_TIME и хвост..), 
-				//но оставить отображение предустановки
-				flagWork&=(1<<PRESET)|(1<<WORK_TIME);
-				initTimer2();
-				//запускаем MOSFET
-				MOSFET_PORT|=(1<<MOSFET_GATE);
+				//если время не 0 (чтоб не моргало)
+				if (ExpTime.hour|ExpTime.minute|ExpTime.second)
+				{
+					flagWork|=(1<<WORK_TIME);
+					//что бы затереть ненужные флаги(LCD_CUR_TIME и хвост..),
+					//но оставить отображение предустановки
+					flagWork&=(1<<PRESET)|(1<<WORK_TIME);
+					//запускаем таймер
+					initTimer2();
+					//запускаем MOSFET
+					MOSFET_PORT|=(1<<MOSFET_GATE);
+					//очистим экран, что бы убрать надпись saved если была
+					//если выставлен флаг PRESET - название отобразится
+					LCDclr();
+					flagWork|=(1<<LCD_UPD);
+
+				}
 			}
 			
 		}
@@ -497,24 +598,50 @@ int main(void)
 		{
 			//снимаем его
 			flagWork&=~(1<<LCD_UPD);
+			//LCDclr();
+			
+			if (flagWork&(1<<PRESET))
+			{
+				//если не идет обратный отсчет, то загружаем время из пресета
+				if (!(flagWork&(1<<WORK_TIME)))
+				{
+					ExpTime=presetTime[presetNameCur];
+					
+					checkTime();
+					showTime();
+				}
+				//отображаем имя пресета
+/*
+				LCDclr();
+				LCDGotoXY(presetNameCur+5,1);
+				LCDsendChar(0x57);
+*/
+/*
+				LCDstring((uint8_t*)(PGM_P)pgm_read_word(&(namePreset[presetNameCur])),8);
+				
+*/
+				LCDGotoXY(4,1);
+				LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
+
+			}
 			
 			if (flagWork&(1<<CUR_TIME))
 			{
-				//отображаем текущее установленное время 
+				//отображаем текущее установленное время
 				showTime();
 				//если установка времени - включаем курсор под текущим разрядом
 				if ((flagWork&(1<<CUR_TIME)) && (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S))))
 				{
 					//отображаем мигающий курсор под изменяемой позицией
-						
+					
 					pos=3*((flagWork&(1<<BLINK_H))>>BLINK_H)+3*((flagWork&(1<<BLINK_M))>>BLINK_M);
 					LCDGotoXY(4+(8-pos),0);
 					LCDcursorOnBlink();
-						
+					
 				}
 
 			}
-			
+
 			if (flagWork&(1<<WORK_TIME))
 			{
 				//отображаем текущее время
