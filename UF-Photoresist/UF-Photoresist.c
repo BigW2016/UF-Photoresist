@@ -376,74 +376,9 @@ int main(void)
 		{
 			//определяем положение энкодера
 			EncStep += encPollDelta(encCurState);
+			//если покрутили - флаг на обновление экрана
+			if ((EncStep>1) || (EncStep<-1)) flagWork|=(1<<LCD_UPD);
 	
-			//Крутим по часовой
-			if (EncStep>1) 
-			{
-				EncStep=0;
-		
-				//если в режиме изменения времени, то меняем время
-				//при первоначальном отображении после инициализации не реагирует
-				//т.к. encCount=1
-				if (flagWork&(1<<CUR_TIME))
-				{
-					switch (encCount&0x0E)
-					{
-						case 2: ExpTime.second--;break;
-						case 4: ExpTime.minute--;break;
-						case 8: ExpTime.hour--;
-		
-					}
-
-					checkTime();
-					//обновляем экран
-					flagWork|=(1<<LCD_UPD);
-
-				}
-				//если в режиме выбора пресета - меняем пресеты
-				if (flagWork&(1<<PRESET))
-				{
-					//уменьшаем номер предустановки, если меньше 0 - снова 4
-					if (--presetNameCur<0) presetNameCur=MAX_PRESET-1;
-					LCDclr();
-					//обновляем экран
-					flagWork|=(1<<LCD_UPD);
-
-				}
-			}
-
-			//Крутим против часовой
-			if (EncStep<-1) 
-			{
-				EncStep=0;
-
-				//если в режиме изменения времени, то меняем время
-				if (flagWork&(1<<CUR_TIME))
-				{
-					switch (encCount&0x0E)
-					{
-						case 2: ExpTime.second++;break;
-						case 4: ExpTime.minute++;break;
-						case 8: ExpTime.hour++;
-		
-					}
-					checkTime();
-					//обновляем экран
-					flagWork|=(1<<LCD_UPD);
-				}
-				//если в режиме выбора пресета - меняем пресеты
-				if (flagWork&(1<<PRESET))
-				{
-					//увеличиваем номер предустановки, если больше4 - снова 0
-					if (++presetNameCur==MAX_PRESET) presetNameCur=0;
-					
-					LCDclr();
-					//обновляем экран
-					flagWork|=(1<<LCD_UPD);
-
-				}
-				
-			}
 		}
 			
 					
@@ -464,6 +399,7 @@ int main(void)
 						LCDclr();
 						flagWork&=~(1<<PRESET);
 						
+						//подсвечиваем сегмент
 						encCount=((encCount<<1)&0x0F);
 						//если не обнулился т.е. в пределах 2-F.Меньше 2 быть не может т.к. начальное 1 и 
 						//в предыдущей строке еще сдвиг влево
@@ -533,14 +469,8 @@ int main(void)
 				}
 
 
-				/*
-				LCDclr();
-				LCDGotoXY(0,0);
-				LCDsendChar(0x2B);//"+"
-				_delay_ms(100);
-				LCDclr();
-				*/
 				flagWork|=(1<<LCD_UPD);
+				//сбрасываем положение энкодера
 				encCount=1;
 			}
 		}
@@ -621,6 +551,7 @@ int main(void)
 	
 		}
 		
+/*LCD_UPD Блок ниже выполняется только при поднятов флаге*/
 		//если выставлен флаг обновления экрана
 		if (flagWork&(1<<LCD_UPD))
 		{
@@ -628,52 +559,123 @@ int main(void)
 			flagWork&=~(1<<LCD_UPD);
 			//LCDclr();
 			
-			if (flagWork&(1<<PRESET))
-			{
-				//если не идет обратный отсчет, то загружаем время из пресета
-				if (!(flagWork&(1<<WORK_TIME)))
-				{
-					ExpTime=presetTime[presetNameCur];
-					
-					checkTime();
-					showTime();
-				}
-				//отображаем имя пресета
-/*
-				LCDclr();
-				LCDGotoXY(presetNameCur+5,1);
-				LCDsendChar(0x57);
-*/
-/*
-				LCDstring((uint8_t*)(PGM_P)pgm_read_word(&(namePreset[presetNameCur])),8);
-				
-*/
-				LCDGotoXY(4,1);
-				LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
 
-			}
-			
-			if (flagWork&(1<<CUR_TIME))
-			{
-				//отображаем текущее установленное время
-				showTime();
-				//если установка времени - включаем курсор под текущим разрядом
-				if ((flagWork&(1<<CUR_TIME)) && (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S))))
-				{
-					//отображаем мигающий курсор под изменяемой позицией
-					
-					pos=3*((flagWork&(1<<BLINK_H))>>BLINK_H)+3*((flagWork&(1<<BLINK_M))>>BLINK_M);
-					LCDGotoXY(4+(8-pos),0);
-					LCDcursorOnBlink();
-					
-				}
 
-			}
+/*WORK_TIME Засветка*/
 
 			if (flagWork&(1<<WORK_TIME))
 			{
 				//отображаем текущее время
 				showTime();
+			}
+			else
+			{
+//если не засветка, то обрабатываем остальное
+/*PRESET Работа с предустановками*/
+				if (flagWork&(1<<PRESET))
+				{
+				
+					//Энкодер - Крутим по часовой
+					if (EncStep>1)
+					{	
+						EncStep=0;
+						//уменьшаем номер предустановки, если меньше 0 - снова 4
+						if (--presetNameCur<0) presetNameCur=MAX_PRESET-1;
+						//обновляем экран
+						//flagWork|=(1<<LCD_UPD);
+					}				
+
+					//Энкодер - Крутим против часовой
+					if (EncStep<-1)
+					{
+						EncStep=0;
+						//увеличиваем номер предустановки, если больше4 - снова 0
+						if (++presetNameCur==MAX_PRESET) presetNameCur=0;
+					
+						//LCDclr();
+						//обновляем экран
+						//flagWork|=(1<<LCD_UPD);
+
+					}
+				
+					//загружаем время из пресета
+					ExpTime=presetTime[presetNameCur];
+					LCDclr();
+					checkTime();
+					showTime();
+					//отображаем имя пресета
+	/*
+					LCDclr();
+					LCDGotoXY(presetNameCur+5,1);
+					LCDsendChar(0x57);
+	*/
+	/*
+					LCDstring((uint8_t*)(PGM_P)pgm_read_word(&(namePreset[presetNameCur])),8);
+				
+	*/
+					LCDGotoXY(4,1);
+					LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
+
+				}
+			
+/*CUR_TIME Отображение текущего времени*/
+				if (flagWork&(1<<CUR_TIME))
+				{
+
+					//Энкодер - по часовой
+					if (EncStep>1)
+					{
+						EncStep=0;
+						//меняем время. При первоначальном отображении после инициализации не реагирует
+						//т.к. encCount=1
+						switch (encCount&0x0E)
+						{
+							case 2: ExpTime.second--;break;
+							case 4: ExpTime.minute--;break;
+							case 8: ExpTime.hour--;
+						
+						}
+
+						checkTime();
+						//обновляем экран
+						//flagWork|=(1<<LCD_UPD);
+					}
+
+					//Энкодер - против часовой
+					if (EncStep<-1)
+					{
+						EncStep=0;
+
+						switch (encCount&0x0E)
+						{
+							case 2: ExpTime.second++;break;
+							case 4: ExpTime.minute++;break;
+							case 8: ExpTime.hour++;
+						
+						}
+						checkTime();
+						//обновляем экран
+						//flagWork|=(1<<LCD_UPD);
+
+						
+					}
+					
+					//отображаем текущее установленное время
+					showTime();
+					//если установка времени - включаем курсор под текущим разрядом
+					if ((flagWork&(1<<CUR_TIME)) && (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S))))
+					{
+						//отображаем мигающий курсор под изменяемой позицией
+					
+						pos=3*((flagWork&(1<<BLINK_H))>>BLINK_H)+3*((flagWork&(1<<BLINK_M))>>BLINK_M);
+						LCDGotoXY(4+(8-pos),0);
+						LCDcursorOnBlink();
+					
+					}
+
+
+
+				}
 			}
 			
 		}
