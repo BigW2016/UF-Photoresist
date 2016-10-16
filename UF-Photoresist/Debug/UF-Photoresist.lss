@@ -3,31 +3,31 @@ UF-Photoresist.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         0000002c  00800100  000009a8  00000a3c  2**0
+  0 .data         00000036  00800100  000009ea  00000a7e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000009a8  00000000  00000000  00000094  2**1
+  1 .text         000009ea  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000013  0080012c  0080012c  00000a68  2**0
+  2 .bss          00000013  00800136  00800136  00000ab4  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000a68  2**0
+  3 .comment      00000030  00000000  00000000  00000ab4  2**0
                   CONTENTS, READONLY
-  4 .debug_aranges 00000110  00000000  00000000  00000a98  2**0
+  4 .debug_aranges 00000110  00000000  00000000  00000ae4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   00001567  00000000  00000000  00000ba8  2**0
+  5 .debug_info   00001620  00000000  00000000  00000bf4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000003eb  00000000  00000000  0000210f  2**0
+  6 .debug_abbrev 000003eb  00000000  00000000  00002214  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000086a  00000000  00000000  000024fa  2**0
+  7 .debug_line   0000088b  00000000  00000000  000025ff  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  000002f8  00000000  00000000  00002d64  2**2
+  8 .debug_frame  000002f8  00000000  00000000  00002e8c  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00008bbb  00000000  00000000  0000305c  2**0
+  9 .debug_str    00008bc3  00000000  00000000  00003184  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000bb1  00000000  00000000  0000bc17  2**0
+ 10 .debug_loc    00000c36  00000000  00000000  0000bd47  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000100  00000000  00000000  0000c7c8  2**0
+ 11 .debug_ranges 00000100  00000000  00000000  0000c97d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  0000290f  00000000  00000000  0000c8c8  2**0
+ 12 .debug_macro  0000290f  00000000  00000000  0000ca7d  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -75,18 +75,18 @@ Disassembly of section .text:
   50:	11 e0       	ldi	r17, 0x01	; 1
   52:	a0 e0       	ldi	r26, 0x00	; 0
   54:	b1 e0       	ldi	r27, 0x01	; 1
-  56:	e8 ea       	ldi	r30, 0xA8	; 168
+  56:	ea ee       	ldi	r30, 0xEA	; 234
   58:	f9 e0       	ldi	r31, 0x09	; 9
   5a:	02 c0       	rjmp	.+4      	; 0x60 <__do_copy_data+0x10>
   5c:	05 90       	lpm	r0, Z+
   5e:	0d 92       	st	X+, r0
-  60:	ac 32       	cpi	r26, 0x2C	; 44
+  60:	a6 33       	cpi	r26, 0x36	; 54
   62:	b1 07       	cpc	r27, r17
   64:	d9 f7       	brne	.-10     	; 0x5c <__do_copy_data+0xc>
 
 00000066 <__do_clear_bss>:
   66:	21 e0       	ldi	r18, 0x01	; 1
-  68:	ac e2       	ldi	r26, 0x2C	; 44
+  68:	a6 e3       	ldi	r26, 0x36	; 54
   6a:	b1 e0       	ldi	r27, 0x01	; 1
   6c:	01 c0       	rjmp	.+2      	; 0x70 <.do_clear_bss_start>
 
@@ -94,11 +94,11 @@ Disassembly of section .text:
   6e:	1d 92       	st	X+, r1
 
 00000070 <.do_clear_bss_start>:
-  70:	af 33       	cpi	r26, 0x3F	; 63
+  70:	a9 34       	cpi	r26, 0x49	; 73
   72:	b2 07       	cpc	r27, r18
   74:	e1 f7       	brne	.-8      	; 0x6e <.do_clear_bss_loop>
   76:	66 d2       	rcall	.+1228   	; 0x544 <main>
-  78:	95 c4       	rjmp	.+2346   	; 0x9a4 <_exit>
+  78:	b6 c4       	rjmp	.+2412   	; 0x9e6 <_exit>
 
 0000007a <__bad_interrupt>:
   7a:	c2 cf       	rjmp	.-124    	; 0x0 <__vectors>
@@ -569,44 +569,44 @@ ISR(TIMER2_OVF_vect)
  26a:	9f 93       	push	r25
 	//уменьшаем на 1 сек/мин/час, если предыдущий ушел меньше 0
     if (--ExpTime.second==255)    //из примера + доработано
- 26c:	80 91 3c 01 	lds	r24, 0x013C
+ 26c:	80 91 46 01 	lds	r24, 0x0146
  270:	81 50       	subi	r24, 0x01	; 1
- 272:	80 93 3c 01 	sts	0x013C, r24
+ 272:	80 93 46 01 	sts	0x0146, r24
  276:	8f 3f       	cpi	r24, 0xFF	; 255
  278:	b1 f4       	brne	.+44     	; 0x2a6 <__vector_9+0x48>
     {
 	    ExpTime.second=59;
  27a:	9b e3       	ldi	r25, 0x3B	; 59
- 27c:	90 93 3c 01 	sts	0x013C, r25
+ 27c:	90 93 46 01 	sts	0x0146, r25
 	    
 	    if (--ExpTime.minute==255)
- 280:	80 91 3d 01 	lds	r24, 0x013D
+ 280:	80 91 47 01 	lds	r24, 0x0147
  284:	81 50       	subi	r24, 0x01	; 1
- 286:	80 93 3d 01 	sts	0x013D, r24
+ 286:	80 93 47 01 	sts	0x0147, r24
  28a:	8f 3f       	cpi	r24, 0xFF	; 255
  28c:	61 f4       	brne	.+24     	; 0x2a6 <__vector_9+0x48>
 	    {
 		    ExpTime.minute=59;
- 28e:	90 93 3d 01 	sts	0x013D, r25
+ 28e:	90 93 47 01 	sts	0x0147, r25
 
 		    if (--ExpTime.hour==255)
- 292:	80 91 3e 01 	lds	r24, 0x013E
+ 292:	80 91 48 01 	lds	r24, 0x0148
  296:	81 50       	subi	r24, 0x01	; 1
- 298:	80 93 3e 01 	sts	0x013E, r24
+ 298:	80 93 48 01 	sts	0x0148, r24
  29c:	8f 3f       	cpi	r24, 0xFF	; 255
  29e:	19 f4       	brne	.+6      	; 0x2a6 <__vector_9+0x48>
 		    {
 			    flagTimeStop=1;
  2a0:	81 e0       	ldi	r24, 0x01	; 1
- 2a2:	80 93 2e 01 	sts	0x012E, r24
+ 2a2:	80 93 38 01 	sts	0x0138, r24
 		    }
 	    }
     }
 	
 	flagWork|=(1<<LCD_UPD);
- 2a6:	80 91 2d 01 	lds	r24, 0x012D
+ 2a6:	80 91 37 01 	lds	r24, 0x0137
  2aa:	80 62       	ori	r24, 0x20	; 32
- 2ac:	80 93 2d 01 	sts	0x012D, r24
+ 2ac:	80 93 37 01 	sts	0x0137, r24
 }
  2b0:	9f 91       	pop	r25
  2b2:	8f 91       	pop	r24
@@ -647,7 +647,7 @@ ISR(INT0_vect)
 		//кнопка нажата
 		flagTact1=1;
  2e2:	81 e0       	ldi	r24, 0x01	; 1
- 2e4:	80 93 31 01 	sts	0x0131, r24
+ 2e4:	80 93 3b 01 	sts	0x013B, r24
 		{
 			//кнопка была нажата
 			Flag_tact1=0;
@@ -695,7 +695,7 @@ ISR(INT1_vect)
 		//кнопка нажата
 		flagTact2=1;
  31c:	81 e0       	ldi	r24, 0x01	; 1
- 31e:	80 93 30 01 	sts	0x0130, r24
+ 31e:	80 93 3a 01 	sts	0x013A, r24
 		{
 			//кнопка была нажата
 			Flag_tact2=0;
@@ -841,16 +841,16 @@ int8_t	encPollDelta()//вычисляем смещение энкодера и направление
 {
 	
 	encCurState <<= 2;
- 3be:	20 91 32 01 	lds	r18, 0x0132
+ 3be:	20 91 3c 01 	lds	r18, 0x013C
  3c2:	22 0f       	add	r18, r18
  3c4:	22 0f       	add	r18, r18
- 3c6:	20 93 32 01 	sts	0x0132, r18
+ 3c6:	20 93 3c 01 	sts	0x013C, r18
 	encCurState &= 0b00001100;
- 3ca:	20 91 32 01 	lds	r18, 0x0132
+ 3ca:	20 91 3c 01 	lds	r18, 0x013C
  3ce:	2c 70       	andi	r18, 0x0C	; 12
- 3d0:	20 93 32 01 	sts	0x0132, r18
+ 3d0:	20 93 3c 01 	sts	0x013C, r18
 	encCurState += (GET_ENCODER_PORT_DATA(ENCPOLL_A_PORT, ENCPOLL_A_PIN)<<1)|GET_ENCODER_PORT_DATA(ENCPOLL_B_PORT, ENCPOLL_B_PIN);
- 3d4:	20 91 32 01 	lds	r18, 0x0132
+ 3d4:	20 91 3c 01 	lds	r18, 0x013C
  3d8:	49 b1       	in	r20, 0x09	; 9
  3da:	39 b1       	in	r19, 0x09	; 9
  3dc:	44 fb       	bst	r20, 4
@@ -864,10 +864,10 @@ int8_t	encPollDelta()//вычисляем смещение энкодера и направление
  3ec:	90 f9       	bld	r25, 0
  3ee:	89 2b       	or	r24, r25
  3f0:	82 0f       	add	r24, r18
- 3f2:	80 93 32 01 	sts	0x0132, r24
+ 3f2:	80 93 3c 01 	sts	0x013C, r24
 	
 	return pgm_read_byte(&(EncState[encCurState]));
- 3f6:	e0 91 32 01 	lds	r30, 0x0132
+ 3f6:	e0 91 3c 01 	lds	r30, 0x013C
  3fa:	f0 e0       	ldi	r31, 0x00	; 0
  3fc:	ec 5c       	subi	r30, 0xCC	; 204
  3fe:	ff 4f       	sbci	r31, 0xFF	; 255
@@ -927,7 +927,7 @@ void showTime(void)
  430:	64 de       	rcall	.-824    	; 0xfa <LCDsendCommand>
 	LCDGotoXY(4,0);
 	itoa(ExpTime.hour,digit,10);
- 432:	80 91 3e 01 	lds	r24, 0x013E
+ 432:	80 91 48 01 	lds	r24, 0x0148
     } else if (__radix < 2 || __radix > 36) {
 	*__s = 0;
 	return __s;
@@ -939,7 +939,7 @@ void showTime(void)
  43a:	67 5f       	subi	r22, 0xF7	; 247
  43c:	7f 4f       	sbci	r23, 0xFF	; 255
  43e:	90 e0       	ldi	r25, 0x00	; 0
- 440:	68 d2       	rcall	.+1232   	; 0x912 <__itoa_ncheck>
+ 440:	89 d2       	rcall	.+1298   	; 0x954 <__itoa_ncheck>
 	fillZero(digit);
  442:	ce 01       	movw	r24, r28
  444:	09 96       	adiw	r24, 0x09	; 9
@@ -954,13 +954,13 @@ void showTime(void)
  450:	1a e3       	ldi	r17, 0x3A	; 58
  452:	1b 83       	std	Y+3, r17	; 0x03
 	itoa(ExpTime.minute,digit,10);
- 454:	80 91 3d 01 	lds	r24, 0x013D
+ 454:	80 91 47 01 	lds	r24, 0x0147
  458:	4a e0       	ldi	r20, 0x0A	; 10
  45a:	be 01       	movw	r22, r28
  45c:	67 5f       	subi	r22, 0xF7	; 247
  45e:	7f 4f       	sbci	r23, 0xFF	; 255
  460:	90 e0       	ldi	r25, 0x00	; 0
- 462:	57 d2       	rcall	.+1198   	; 0x912 <__itoa_ncheck>
+ 462:	78 d2       	rcall	.+1264   	; 0x954 <__itoa_ncheck>
 	fillZero(digit);
  464:	ce 01       	movw	r24, r28
  466:	09 96       	adiw	r24, 0x09	; 9
@@ -974,13 +974,13 @@ void showTime(void)
 	string[5]=0x3A;//":"
  472:	1e 83       	std	Y+6, r17	; 0x06
 	itoa(ExpTime.second,digit,10);
- 474:	80 91 3c 01 	lds	r24, 0x013C
+ 474:	80 91 46 01 	lds	r24, 0x0146
  478:	4a e0       	ldi	r20, 0x0A	; 10
  47a:	be 01       	movw	r22, r28
  47c:	67 5f       	subi	r22, 0xF7	; 247
  47e:	7f 4f       	sbci	r23, 0xFF	; 255
  480:	90 e0       	ldi	r25, 0x00	; 0
- 482:	47 d2       	rcall	.+1166   	; 0x912 <__itoa_ncheck>
+ 482:	68 d2       	rcall	.+1232   	; 0x954 <__itoa_ncheck>
 	fillZero(digit);
  484:	ce 01       	movw	r24, r28
  486:	09 96       	adiw	r24, 0x09	; 9
@@ -1014,39 +1014,39 @@ void showTime(void)
 void checkTime(void)
 {
 	if (ExpTime.second>150) ExpTime.second=59;
- 4ae:	80 91 3c 01 	lds	r24, 0x013C
+ 4ae:	80 91 46 01 	lds	r24, 0x0146
  4b2:	87 39       	cpi	r24, 0x97	; 151
  4b4:	18 f0       	brcs	.+6      	; 0x4bc <checkTime+0xe>
  4b6:	8b e3       	ldi	r24, 0x3B	; 59
- 4b8:	80 93 3c 01 	sts	0x013C, r24
+ 4b8:	80 93 46 01 	sts	0x0146, r24
 	if (ExpTime.minute>150) ExpTime.minute=59;
- 4bc:	80 91 3d 01 	lds	r24, 0x013D
+ 4bc:	80 91 47 01 	lds	r24, 0x0147
  4c0:	87 39       	cpi	r24, 0x97	; 151
  4c2:	18 f0       	brcs	.+6      	; 0x4ca <checkTime+0x1c>
  4c4:	8b e3       	ldi	r24, 0x3B	; 59
- 4c6:	80 93 3d 01 	sts	0x013D, r24
+ 4c6:	80 93 47 01 	sts	0x0147, r24
 	if (ExpTime.hour>150) ExpTime.hour=23;
- 4ca:	80 91 3e 01 	lds	r24, 0x013E
+ 4ca:	80 91 48 01 	lds	r24, 0x0148
  4ce:	87 39       	cpi	r24, 0x97	; 151
  4d0:	18 f0       	brcs	.+6      	; 0x4d8 <checkTime+0x2a>
  4d2:	87 e1       	ldi	r24, 0x17	; 23
- 4d4:	80 93 3e 01 	sts	0x013E, r24
+ 4d4:	80 93 48 01 	sts	0x0148, r24
 
 	if (ExpTime.second>59) ExpTime.second=0;
- 4d8:	80 91 3c 01 	lds	r24, 0x013C
+ 4d8:	80 91 46 01 	lds	r24, 0x0146
  4dc:	8c 33       	cpi	r24, 0x3C	; 60
  4de:	10 f0       	brcs	.+4      	; 0x4e4 <checkTime+0x36>
- 4e0:	10 92 3c 01 	sts	0x013C, r1
+ 4e0:	10 92 46 01 	sts	0x0146, r1
 	if (ExpTime.minute>59) ExpTime.minute=0;
- 4e4:	80 91 3d 01 	lds	r24, 0x013D
+ 4e4:	80 91 47 01 	lds	r24, 0x0147
  4e8:	8c 33       	cpi	r24, 0x3C	; 60
  4ea:	10 f0       	brcs	.+4      	; 0x4f0 <checkTime+0x42>
- 4ec:	10 92 3d 01 	sts	0x013D, r1
+ 4ec:	10 92 47 01 	sts	0x0147, r1
 	if (ExpTime.hour>23) ExpTime.hour=0;
- 4f0:	80 91 3e 01 	lds	r24, 0x013E
+ 4f0:	80 91 48 01 	lds	r24, 0x0148
  4f4:	88 31       	cpi	r24, 0x18	; 24
  4f6:	10 f0       	brcs	.+4      	; 0x4fc <checkTime+0x4e>
- 4f8:	10 92 3e 01 	sts	0x013E, r1
+ 4f8:	10 92 48 01 	sts	0x0148, r1
  4fc:	08 95       	ret
 
 000004fe <loadEpprom>:
@@ -1067,9 +1067,9 @@ void loadEpprom(void)
 	{
 		presetTime[i].hour=eeprom_read_byte((uint8_t*)10+i*3);
  50a:	ce 01       	movw	r24, r28
- 50c:	25 d2       	rcall	.+1098   	; 0x958 <__eerd_byte_m88>
+ 50c:	46 d2       	rcall	.+1164   	; 0x99a <__eerd_byte_m88>
  50e:	8e 01       	movw	r16, r28
- 510:	0d 5c       	subi	r16, 0xCD	; 205
+ 510:	03 5c       	subi	r16, 0xC3	; 195
  512:	1e 4f       	sbci	r17, 0xFE	; 254
  514:	f8 01       	movw	r30, r16
  516:	38 97       	sbiw	r30, 0x08	; 8
@@ -1077,14 +1077,14 @@ void loadEpprom(void)
 		presetTime[i].minute=eeprom_read_byte((uint8_t*)11+i*3);
  51a:	ce 01       	movw	r24, r28
  51c:	01 96       	adiw	r24, 0x01	; 1
- 51e:	1c d2       	rcall	.+1080   	; 0x958 <__eerd_byte_m88>
+ 51e:	3d d2       	rcall	.+1146   	; 0x99a <__eerd_byte_m88>
  520:	f8 01       	movw	r30, r16
  522:	39 97       	sbiw	r30, 0x09	; 9
  524:	80 83       	st	Z, r24
 		presetTime[i].second=eeprom_read_byte((uint8_t*)12+i*3);
  526:	ce 01       	movw	r24, r28
  528:	02 96       	adiw	r24, 0x02	; 2
- 52a:	16 d2       	rcall	.+1068   	; 0x958 <__eerd_byte_m88>
+ 52a:	37 d2       	rcall	.+1134   	; 0x99a <__eerd_byte_m88>
  52c:	f8 01       	movw	r30, r16
  52e:	3a 97       	sbiw	r30, 0x0a	; 10
  530:	80 83       	st	Z, r24
@@ -1175,16 +1175,16 @@ int main(void)
 	
 	//обнуляем время
 	ExpTime.hour=0;
- 572:	10 92 3e 01 	sts	0x013E, r1
+ 572:	10 92 48 01 	sts	0x0148, r1
 	ExpTime.minute=0;
- 576:	10 92 3d 01 	sts	0x013D, r1
+ 576:	10 92 47 01 	sts	0x0147, r1
 	ExpTime.second=0;
- 57a:	10 92 3c 01 	sts	0x013C, r1
+ 57a:	10 92 46 01 	sts	0x0146, r1
 	//отображаем его
 	flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
- 57e:	80 91 2d 01 	lds	r24, 0x012D
+ 57e:	80 91 37 01 	lds	r24, 0x0137
  582:	80 63       	ori	r24, 0x30	; 48
- 584:	80 93 2d 01 	sts	0x012D, r24
+ 584:	80 93 37 01 	sts	0x0137, r24
 	
 	//читаем предустановки
 	loadEpprom();
@@ -1238,18 +1238,18 @@ int main(void)
     {
 		//если не идет обратный отсчет то работаем с энкодером
 		if (!(flagWork&(1<<WORK_TIME)))
- 5a0:	80 91 2d 01 	lds	r24, 0x012D
+ 5a0:	80 91 37 01 	lds	r24, 0x0137
  5a4:	87 fd       	sbrc	r24, 7
  5a6:	83 c0       	rjmp	.+262    	; 0x6ae <main+0x16a>
 		{
 			//определяем положение энкодера
 			EncStep += encPollDelta(encCurState);
- 5a8:	a0 90 2c 01 	lds	r10, 0x012C
- 5ac:	80 91 32 01 	lds	r24, 0x0132
+ 5a8:	a0 90 36 01 	lds	r10, 0x0136
+ 5ac:	80 91 3c 01 	lds	r24, 0x013C
  5b0:	90 e0       	ldi	r25, 0x00	; 0
  5b2:	05 df       	rcall	.-502    	; 0x3be <encPollDelta>
  5b4:	8a 0d       	add	r24, r10
- 5b6:	80 93 2c 01 	sts	0x012C, r24
+ 5b6:	80 93 36 01 	sts	0x0136, r24
 	
 			//Крутим по часовой
 			if (EncStep>1) 
@@ -1257,13 +1257,13 @@ int main(void)
  5bc:	d4 f1       	brlt	.+116    	; 0x632 <main+0xee>
 			{
 				EncStep=0;
- 5be:	10 92 2c 01 	sts	0x012C, r1
+ 5be:	10 92 36 01 	sts	0x0136, r1
 		
 				//если в режиме изменения времени, то меняем время
 				//при первоначальном отображении после инициализации не реагирует
 				//т.к. encCount=1
 				if (flagWork&(1<<CUR_TIME))
- 5c2:	80 91 2d 01 	lds	r24, 0x012D
+ 5c2:	80 91 37 01 	lds	r24, 0x0137
  5c6:	84 ff       	sbrs	r24, 4
  5c8:	20 c0       	rjmp	.+64     	; 0x60a <main+0xc6>
 				{
@@ -1278,19 +1278,19 @@ int main(void)
  5da:	89 f4       	brne	.+34     	; 0x5fe <main+0xba>
 					{
 						case 2: ExpTime.second--;break;
- 5dc:	80 91 3c 01 	lds	r24, 0x013C
+ 5dc:	80 91 46 01 	lds	r24, 0x0146
  5e0:	81 50       	subi	r24, 0x01	; 1
- 5e2:	80 93 3c 01 	sts	0x013C, r24
+ 5e2:	80 93 46 01 	sts	0x0146, r24
  5e6:	0b c0       	rjmp	.+22     	; 0x5fe <main+0xba>
 						case 4: ExpTime.minute--;break;
- 5e8:	80 91 3d 01 	lds	r24, 0x013D
+ 5e8:	80 91 47 01 	lds	r24, 0x0147
  5ec:	81 50       	subi	r24, 0x01	; 1
- 5ee:	80 93 3d 01 	sts	0x013D, r24
+ 5ee:	80 93 47 01 	sts	0x0147, r24
  5f2:	05 c0       	rjmp	.+10     	; 0x5fe <main+0xba>
 						case 8: ExpTime.hour--;
- 5f4:	80 91 3e 01 	lds	r24, 0x013E
+ 5f4:	80 91 48 01 	lds	r24, 0x0148
  5f8:	81 50       	subi	r24, 0x01	; 1
- 5fa:	80 93 3e 01 	sts	0x013E, r24
+ 5fa:	80 93 48 01 	sts	0x0148, r24
 		
 					}
 
@@ -1298,49 +1298,49 @@ int main(void)
  5fe:	57 df       	rcall	.-338    	; 0x4ae <checkTime>
 					//обновляем экран
 					flagWork|=(1<<LCD_UPD);
- 600:	80 91 2d 01 	lds	r24, 0x012D
+ 600:	80 91 37 01 	lds	r24, 0x0137
  604:	80 62       	ori	r24, 0x20	; 32
- 606:	80 93 2d 01 	sts	0x012D, r24
+ 606:	80 93 37 01 	sts	0x0137, r24
 
 				}
 				//если в режиме выбора пресета - меняем пресеты
 				if (flagWork&(1<<PRESET))
- 60a:	80 91 2d 01 	lds	r24, 0x012D
+ 60a:	80 91 37 01 	lds	r24, 0x0137
  60e:	86 ff       	sbrs	r24, 6
  610:	10 c0       	rjmp	.+32     	; 0x632 <main+0xee>
 				{
 					//уменьшаем номер предустановки, если меньше 0 - снова 4
 					if (--presetNameCur<0) presetNameCur=MAX_PRESET-1;
- 612:	80 91 2f 01 	lds	r24, 0x012F
+ 612:	80 91 39 01 	lds	r24, 0x0139
  616:	81 50       	subi	r24, 0x01	; 1
  618:	87 fd       	sbrc	r24, 7
  61a:	03 c0       	rjmp	.+6      	; 0x622 <main+0xde>
- 61c:	80 93 2f 01 	sts	0x012F, r24
+ 61c:	80 93 39 01 	sts	0x0139, r24
  620:	02 c0       	rjmp	.+4      	; 0x626 <main+0xe2>
- 622:	d0 92 2f 01 	sts	0x012F, r13
+ 622:	d0 92 39 01 	sts	0x0139, r13
 					LCDclr();
  626:	e7 dd       	rcall	.-1074   	; 0x1f6 <LCDclr>
 					//обновляем экран
 					flagWork|=(1<<LCD_UPD);
- 628:	80 91 2d 01 	lds	r24, 0x012D
+ 628:	80 91 37 01 	lds	r24, 0x0137
  62c:	80 62       	ori	r24, 0x20	; 32
- 62e:	80 93 2d 01 	sts	0x012D, r24
+ 62e:	80 93 37 01 	sts	0x0137, r24
 
 				}
 			}
 
 			//Крутим против часовой
 			if (EncStep<-1) 
- 632:	80 91 2c 01 	lds	r24, 0x012C
+ 632:	80 91 36 01 	lds	r24, 0x0136
  636:	8f 3f       	cpi	r24, 0xFF	; 255
  638:	d4 f5       	brge	.+116    	; 0x6ae <main+0x16a>
 			{
 				EncStep=0;
- 63a:	10 92 2c 01 	sts	0x012C, r1
+ 63a:	10 92 36 01 	sts	0x0136, r1
 
 				//если в режиме изменения времени, то меняем время
 				if (flagWork&(1<<CUR_TIME))
- 63e:	80 91 2d 01 	lds	r24, 0x012D
+ 63e:	80 91 37 01 	lds	r24, 0x0137
  642:	84 ff       	sbrs	r24, 4
  644:	20 c0       	rjmp	.+64     	; 0x686 <main+0x142>
 				{
@@ -1355,52 +1355,52 @@ int main(void)
  656:	89 f4       	brne	.+34     	; 0x67a <main+0x136>
 					{
 						case 2: ExpTime.second++;break;
- 658:	80 91 3c 01 	lds	r24, 0x013C
+ 658:	80 91 46 01 	lds	r24, 0x0146
  65c:	8f 5f       	subi	r24, 0xFF	; 255
- 65e:	80 93 3c 01 	sts	0x013C, r24
+ 65e:	80 93 46 01 	sts	0x0146, r24
  662:	0b c0       	rjmp	.+22     	; 0x67a <main+0x136>
 						case 4: ExpTime.minute++;break;
- 664:	80 91 3d 01 	lds	r24, 0x013D
+ 664:	80 91 47 01 	lds	r24, 0x0147
  668:	8f 5f       	subi	r24, 0xFF	; 255
- 66a:	80 93 3d 01 	sts	0x013D, r24
+ 66a:	80 93 47 01 	sts	0x0147, r24
  66e:	05 c0       	rjmp	.+10     	; 0x67a <main+0x136>
 						case 8: ExpTime.hour++;
- 670:	80 91 3e 01 	lds	r24, 0x013E
+ 670:	80 91 48 01 	lds	r24, 0x0148
  674:	8f 5f       	subi	r24, 0xFF	; 255
- 676:	80 93 3e 01 	sts	0x013E, r24
+ 676:	80 93 48 01 	sts	0x0148, r24
 		
 					}
 					checkTime();
  67a:	19 df       	rcall	.-462    	; 0x4ae <checkTime>
 					//обновляем экран
 					flagWork|=(1<<LCD_UPD);
- 67c:	80 91 2d 01 	lds	r24, 0x012D
+ 67c:	80 91 37 01 	lds	r24, 0x0137
  680:	80 62       	ori	r24, 0x20	; 32
- 682:	80 93 2d 01 	sts	0x012D, r24
+ 682:	80 93 37 01 	sts	0x0137, r24
 				}
 				//если в режиме выбора пресета - меняем пресеты
 				if (flagWork&(1<<PRESET))
- 686:	80 91 2d 01 	lds	r24, 0x012D
+ 686:	80 91 37 01 	lds	r24, 0x0137
  68a:	86 ff       	sbrs	r24, 6
  68c:	10 c0       	rjmp	.+32     	; 0x6ae <main+0x16a>
 				{
 					//увеличиваем номер предустановки, если больше4 - снова 0
 					if (++presetNameCur==MAX_PRESET) presetNameCur=0;
- 68e:	80 91 2f 01 	lds	r24, 0x012F
+ 68e:	80 91 39 01 	lds	r24, 0x0139
  692:	8f 5f       	subi	r24, 0xFF	; 255
  694:	83 30       	cpi	r24, 0x03	; 3
  696:	19 f0       	breq	.+6      	; 0x69e <main+0x15a>
- 698:	80 93 2f 01 	sts	0x012F, r24
+ 698:	80 93 39 01 	sts	0x0139, r24
  69c:	02 c0       	rjmp	.+4      	; 0x6a2 <main+0x15e>
- 69e:	10 92 2f 01 	sts	0x012F, r1
+ 69e:	10 92 39 01 	sts	0x0139, r1
 					
 					LCDclr();
  6a2:	a9 dd       	rcall	.-1198   	; 0x1f6 <LCDclr>
 					//обновляем экран
 					flagWork|=(1<<LCD_UPD);
- 6a4:	80 91 2d 01 	lds	r24, 0x012D
+ 6a4:	80 91 37 01 	lds	r24, 0x0137
  6a8:	80 62       	ori	r24, 0x20	; 32
- 6aa:	80 93 2d 01 	sts	0x012D, r24
+ 6aa:	80 93 37 01 	sts	0x0137, r24
 			}
 		}
 			
@@ -1429,7 +1429,7 @@ int main(void)
 				{
 					
 					if (!(flagWork&(1<<WORK_TIME)))//если не идет обратный отсчет
- 6ca:	80 91 2d 01 	lds	r24, 0x012D
+ 6ca:	80 91 37 01 	lds	r24, 0x0137
  6ce:	87 fd       	sbrc	r24, 7
  6d0:	1b c0       	rjmp	.+54     	; 0x708 <main+0x1c4>
 					{
@@ -1438,9 +1438,9 @@ int main(void)
 						LCDclr();
  6d2:	91 dd       	rcall	.-1246   	; 0x1f6 <LCDclr>
 						flagWork&=~(1<<PRESET);
- 6d4:	90 91 2d 01 	lds	r25, 0x012D
+ 6d4:	90 91 37 01 	lds	r25, 0x0137
  6d8:	9f 7b       	andi	r25, 0xBF	; 191
- 6da:	90 93 2d 01 	sts	0x012D, r25
+ 6da:	90 93 37 01 	sts	0x0137, r25
 						
 						encCount=((encCount<<1)&0x0F);
  6de:	80 91 00 01 	lds	r24, 0x0100
@@ -1459,7 +1459,7 @@ int main(void)
  6f2:	80 91 00 01 	lds	r24, 0x0100
  6f6:	80 63       	ori	r24, 0x30	; 48
  6f8:	89 2b       	or	r24, r25
- 6fa:	80 93 2d 01 	sts	0x012D, r24
+ 6fa:	80 93 37 01 	sts	0x0137, r24
  6fe:	04 c0       	rjmp	.+8      	; 0x708 <main+0x1c4>
 						}
 						else
@@ -1468,7 +1468,7 @@ int main(void)
  700:	f0 92 00 01 	sts	0x0100, r15
 							//очищаем флаг экрана + обновляем экран
 							flagWork=(1<<LCD_UPD)|(1<<CUR_TIME);
- 704:	c0 92 2d 01 	sts	0x012D, r12
+ 704:	c0 92 37 01 	sts	0x0137, r12
 						}
 					}
 					
@@ -1488,18 +1488,18 @@ int main(void)
 
 		//нажата кнопка 1 - выбора пресета - флаг в прерывании INT0
 		if (flagTact1)
- 712:	80 91 31 01 	lds	r24, 0x0131
+ 712:	80 91 3b 01 	lds	r24, 0x013B
  716:	88 23       	and	r24, r24
  718:	09 f4       	brne	.+2      	; 0x71c <main+0x1d8>
  71a:	69 c0       	rjmp	.+210    	; 0x7ee <main+0x2aa>
 		{
 			//кнопка была нажата, отпустили
 			flagTact1=0;
- 71c:	10 92 31 01 	sts	0x0131, r1
+ 71c:	10 92 3b 01 	sts	0x013B, r1
 			
 			//если не идет отсчет
 			if (!(flagWork&(1<<WORK_TIME)))
- 720:	80 91 2d 01 	lds	r24, 0x012D
+ 720:	80 91 37 01 	lds	r24, 0x0137
  724:	87 fd       	sbrc	r24, 7
  726:	63 c0       	rjmp	.+198    	; 0x7ee <main+0x2aa>
 			{
@@ -1511,7 +1511,7 @@ int main(void)
 					//обнуляем флаг предустановки
 					flagWork&=~(1<<PRESET);
  72c:	8f 7b       	andi	r24, 0xBF	; 191
- 72e:	80 93 2d 01 	sts	0x012D, r24
+ 72e:	80 93 37 01 	sts	0x0137, r24
  732:	56 c0       	rjmp	.+172    	; 0x7e0 <main+0x29c>
 		
 				}
@@ -1524,7 +1524,7 @@ int main(void)
  738:	51 c0       	rjmp	.+162    	; 0x7dc <main+0x298>
 					{
 						presetTime[presetNameCur]=ExpTime;
- 73a:	80 91 2f 01 	lds	r24, 0x012F
+ 73a:	80 91 39 01 	lds	r24, 0x0139
  73e:	28 2f       	mov	r18, r24
  740:	33 27       	eor	r19, r19
  742:	27 fd       	sbrc	r18, 7
@@ -1534,11 +1534,11 @@ int main(void)
  74a:	ff 1f       	adc	r31, r31
  74c:	e2 0f       	add	r30, r18
  74e:	f3 1f       	adc	r31, r19
- 750:	ed 5c       	subi	r30, 0xCD	; 205
+ 750:	e3 5c       	subi	r30, 0xC3	; 195
  752:	fe 4f       	sbci	r31, 0xFE	; 254
- 754:	20 91 3c 01 	lds	r18, 0x013C
- 758:	30 91 3d 01 	lds	r19, 0x013D
- 75c:	40 91 3e 01 	lds	r20, 0x013E
+ 754:	20 91 46 01 	lds	r18, 0x0146
+ 758:	30 91 47 01 	lds	r19, 0x0147
+ 75c:	40 91 48 01 	lds	r20, 0x0148
  760:	20 83       	st	Z, r18
  762:	31 83       	std	Z+1, r19	; 0x01
  764:	42 83       	std	Z+2, r20	; 0x02
@@ -1548,34 +1548,34 @@ int main(void)
  768:	82 02       	muls	r24, r18
  76a:	c0 01       	movw	r24, r0
  76c:	11 24       	eor	r1, r1
- 76e:	60 91 3e 01 	lds	r22, 0x013E
+ 76e:	60 91 48 01 	lds	r22, 0x0148
  772:	0a 96       	adiw	r24, 0x0a	; 10
- 774:	f9 d0       	rcall	.+498    	; 0x968 <__eewr_byte_m88>
+ 774:	1a d1       	rcall	.+564    	; 0x9aa <__eewr_byte_m88>
 						eeprom_write_byte((uint8_t*)11+presetNameCur*3,ExpTime.minute);
- 776:	80 91 2f 01 	lds	r24, 0x012F
+ 776:	80 91 39 01 	lds	r24, 0x0139
  77a:	23 e0       	ldi	r18, 0x03	; 3
  77c:	82 02       	muls	r24, r18
  77e:	c0 01       	movw	r24, r0
  780:	11 24       	eor	r1, r1
- 782:	60 91 3d 01 	lds	r22, 0x013D
+ 782:	60 91 47 01 	lds	r22, 0x0147
  786:	0b 96       	adiw	r24, 0x0b	; 11
- 788:	ef d0       	rcall	.+478    	; 0x968 <__eewr_byte_m88>
+ 788:	10 d1       	rcall	.+544    	; 0x9aa <__eewr_byte_m88>
 						eeprom_write_byte((uint8_t*)12+presetNameCur*3,ExpTime.second);
- 78a:	80 91 2f 01 	lds	r24, 0x012F
+ 78a:	80 91 39 01 	lds	r24, 0x0139
  78e:	23 e0       	ldi	r18, 0x03	; 3
  790:	82 02       	muls	r24, r18
  792:	c0 01       	movw	r24, r0
  794:	11 24       	eor	r1, r1
- 796:	60 91 3c 01 	lds	r22, 0x013C
+ 796:	60 91 46 01 	lds	r22, 0x0146
  79a:	0c 96       	adiw	r24, 0x0c	; 12
- 79c:	e5 d0       	rcall	.+458    	; 0x968 <__eewr_byte_m88>
+ 79c:	06 d1       	rcall	.+524    	; 0x9aa <__eewr_byte_m88>
 						showTime();
  79e:	3b de       	rcall	.-906    	; 0x416 <showTime>
  7a0:	82 ec       	ldi	r24, 0xC2	; 194
  7a2:	ab dc       	rcall	.-1706   	; 0xfa <LCDsendCommand>
 						LCDGotoXY(2,1);
 						LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
- 7a4:	e0 91 2f 01 	lds	r30, 0x012F
+ 7a4:	e0 91 39 01 	lds	r30, 0x0139
  7a8:	ee 0f       	add	r30, r30
  7aa:	ff 0b       	sbc	r31, r31
  7ac:	ee 5f       	subi	r30, 0xFE	; 254
@@ -1608,16 +1608,16 @@ int main(void)
 					}
 
 					flagWork=(1<<PRESET);
- 7dc:	b0 92 2d 01 	sts	0x012D, r11
+ 7dc:	b0 92 37 01 	sts	0x0137, r11
 				LCDGotoXY(0,0);
 				LCDsendChar(0x2B);//"+"
 				_delay_ms(100);
 				LCDclr();
 				*/
 				flagWork|=(1<<LCD_UPD);
- 7e0:	80 91 2d 01 	lds	r24, 0x012D
+ 7e0:	80 91 37 01 	lds	r24, 0x0137
  7e4:	80 62       	ori	r24, 0x20	; 32
- 7e6:	80 93 2d 01 	sts	0x012D, r24
+ 7e6:	80 93 37 01 	sts	0x0137, r24
 				encCount=1;
  7ea:	f0 92 00 01 	sts	0x0100, r15
 			}
@@ -1625,313 +1625,358 @@ int main(void)
 
 		//нажата кнопка 2 - старта засветки - флаг в прерывании INT1
 		if (flagTact2)
- 7ee:	80 91 30 01 	lds	r24, 0x0130
+ 7ee:	80 91 3a 01 	lds	r24, 0x013A
  7f2:	88 23       	and	r24, r24
- 7f4:	f1 f0       	breq	.+60     	; 0x832 <main+0x2ee>
+ 7f4:	09 f4       	brne	.+2      	; 0x7f8 <main+0x2b4>
+ 7f6:	3e c0       	rjmp	.+124    	; 0x874 <main+0x330>
 		{
 			//кнопка была нажата, отпустили
 			flagTact2=0;
- 7f6:	10 92 30 01 	sts	0x0130, r1
+ 7f8:	10 92 3a 01 	sts	0x013A, r1
 			encCount=1;
- 7fa:	f0 92 00 01 	sts	0x0100, r15
+ 7fc:	f0 92 00 01 	sts	0x0100, r15
 			//если уже не идет отсчет
 			if (!(flagWork&(1<<WORK_TIME)))			
- 7fe:	90 91 2d 01 	lds	r25, 0x012D
- 802:	97 fd       	sbrc	r25, 7
- 804:	16 c0       	rjmp	.+44     	; 0x832 <main+0x2ee>
+ 800:	90 91 37 01 	lds	r25, 0x0137
+ 804:	97 fd       	sbrc	r25, 7
+ 806:	17 c0       	rjmp	.+46     	; 0x836 <main+0x2f2>
 			{
 				//если время не 0 (чтоб не моргало)
 				if (ExpTime.hour|ExpTime.minute|ExpTime.second)
- 806:	80 91 3d 01 	lds	r24, 0x013D
- 80a:	20 91 3e 01 	lds	r18, 0x013E
- 80e:	82 2b       	or	r24, r18
- 810:	20 91 3c 01 	lds	r18, 0x013C
- 814:	82 2b       	or	r24, r18
- 816:	69 f0       	breq	.+26     	; 0x832 <main+0x2ee>
+ 808:	80 91 47 01 	lds	r24, 0x0147
+ 80c:	20 91 48 01 	lds	r18, 0x0148
+ 810:	82 2b       	or	r24, r18
+ 812:	20 91 46 01 	lds	r18, 0x0146
+ 816:	82 2b       	or	r24, r18
+ 818:	69 f1       	breq	.+90     	; 0x874 <main+0x330>
 				{
 					flagWork|=(1<<WORK_TIME);
 					//что бы затереть ненужные флаги(LCD_CUR_TIME и хвост..),
 					//но оставить отображение предустановки
 					flagWork&=(1<<PRESET)|(1<<WORK_TIME);
- 818:	89 2f       	mov	r24, r25
- 81a:	80 7c       	andi	r24, 0xC0	; 192
- 81c:	80 68       	ori	r24, 0x80	; 128
- 81e:	80 93 2d 01 	sts	0x012D, r24
+ 81a:	89 2f       	mov	r24, r25
+ 81c:	80 7c       	andi	r24, 0xC0	; 192
+ 81e:	80 68       	ori	r24, 0x80	; 128
+ 820:	80 93 37 01 	sts	0x0137, r24
 					//запускаем таймер
 					initTimer2();
- 822:	87 dd       	rcall	.-1266   	; 0x332 <initTimer2>
+ 824:	86 dd       	rcall	.-1268   	; 0x332 <initTimer2>
 					//запускаем MOSFET
 					MOSFET_PORT|=(1<<MOSFET_GATE);
- 824:	5f 9a       	sbi	0x0b, 7	; 11
+ 826:	5f 9a       	sbi	0x0b, 7	; 11
 					//очистим экран, что бы убрать надпись saved если была
 					//если выставлен флаг PRESET - название отобразится
 					LCDclr();
- 826:	e7 dc       	rcall	.-1586   	; 0x1f6 <LCDclr>
+ 828:	e6 dc       	rcall	.-1588   	; 0x1f6 <LCDclr>
 					flagWork|=(1<<LCD_UPD);
- 828:	80 91 2d 01 	lds	r24, 0x012D
- 82c:	80 62       	ori	r24, 0x20	; 32
- 82e:	80 93 2d 01 	sts	0x012D, r24
+ 82a:	80 91 37 01 	lds	r24, 0x0137
+ 82e:	80 62       	ori	r24, 0x20	; 32
+ 830:	80 93 37 01 	sts	0x0137, r24
+ 834:	1f c0       	rjmp	.+62     	; 0x874 <main+0x330>
+				}
+			}
+			else
+			{
+				//если нажали в процессе засветки - отключаемся
+				cli();
+ 836:	f8 94       	cli
+				//снимаем флаг
+				flagWork&=~(1<<WORK_TIME);
+ 838:	80 91 37 01 	lds	r24, 0x0137
+ 83c:	8f 77       	andi	r24, 0x7F	; 127
+ 83e:	80 93 37 01 	sts	0x0137, r24
+				//отключаем транзистор
+				MOSFET_PORT&=~(1<<MOSFET_GATE);
+ 842:	5f 98       	cbi	0x0b, 7	; 11
+				//выключаем прерывание
+				disableTimer2();
+ 844:	96 dd       	rcall	.-1236   	; 0x372 <disableTimer2>
+				sei();
+ 846:	78 94       	sei
+				//отображаем текущее время, т.к. флаг выставляется при -1 сек, бывают артефакты
+				flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
+ 848:	80 91 37 01 	lds	r24, 0x0137
+ 84c:	80 63       	ori	r24, 0x30	; 48
+ 84e:	80 93 37 01 	sts	0x0137, r24
+ 852:	84 ec       	ldi	r24, 0xC4	; 196
+ 854:	52 dc       	rcall	.-1884   	; 0xfa <LCDsendCommand>
+				//отображаем надпись canceled
+				LCDGotoXY(4,1);
+				LCDstring((uint8_t*)(namePreset[4]),8);
+ 856:	68 e0       	ldi	r22, 0x08	; 8
+ 858:	80 91 0a 01 	lds	r24, 0x010A
+ 85c:	90 91 0b 01 	lds	r25, 0x010B
+ 860:	d9 dc       	rcall	.-1614   	; 0x214 <LCDstring>
+ 862:	8f ef       	ldi	r24, 0xFF	; 255
+ 864:	94 e3       	ldi	r25, 0x34	; 52
+ 866:	2c e0       	ldi	r18, 0x0C	; 12
+ 868:	81 50       	subi	r24, 0x01	; 1
+ 86a:	90 40       	sbci	r25, 0x00	; 0
+ 86c:	20 40       	sbci	r18, 0x00	; 0
+ 86e:	e1 f7       	brne	.-8      	; 0x868 <main+0x324>
+ 870:	00 c0       	rjmp	.+0      	; 0x872 <main+0x32e>
+ 872:	00 00       	nop
 			}
 			
 		}
 		
 		//если время кончилось
 		if (flagTimeStop)
- 832:	80 91 2e 01 	lds	r24, 0x012E
- 836:	88 23       	and	r24, r24
- 838:	b1 f0       	breq	.+44     	; 0x866 <main+0x322>
+ 874:	80 91 38 01 	lds	r24, 0x0138
+ 878:	88 23       	and	r24, r24
+ 87a:	b1 f0       	breq	.+44     	; 0x8a8 <main+0x364>
 		{
 			cli();
- 83a:	f8 94       	cli
+ 87c:	f8 94       	cli
 			flagTimeStop=0;
- 83c:	10 92 2e 01 	sts	0x012E, r1
+ 87e:	10 92 38 01 	sts	0x0138, r1
 			
 			//обнуляем флаг экрана
 			flagWork=0;
- 840:	10 92 2d 01 	sts	0x012D, r1
+ 882:	10 92 37 01 	sts	0x0137, r1
 			//LCDclr();
 			ExpTime.hour=0;
- 844:	10 92 3e 01 	sts	0x013E, r1
+ 886:	10 92 48 01 	sts	0x0148, r1
 			ExpTime.minute=0;
- 848:	10 92 3d 01 	sts	0x013D, r1
+ 88a:	10 92 47 01 	sts	0x0147, r1
 			ExpTime.second=0;
- 84c:	10 92 3c 01 	sts	0x013C, r1
+ 88e:	10 92 46 01 	sts	0x0146, r1
 			//вырубаем MOSFET
 			MOSFET_PORT&=~(1<<MOSFET_GATE);
- 850:	5f 98       	cbi	0x0b, 7	; 11
+ 892:	5f 98       	cbi	0x0b, 7	; 11
 			
 			//пищим
 			buzz(40);
- 852:	88 e2       	ldi	r24, 0x28	; 40
- 854:	90 e0       	ldi	r25, 0x00	; 0
- 856:	9f dd       	rcall	.-1218   	; 0x396 <buzz>
+ 894:	88 e2       	ldi	r24, 0x28	; 40
+ 896:	90 e0       	ldi	r25, 0x00	; 0
+ 898:	7e dd       	rcall	.-1284   	; 0x396 <buzz>
 			
 			
 			//выключаем прерывание
 			disableTimer2();
- 858:	8c dd       	rcall	.-1256   	; 0x372 <disableTimer2>
+ 89a:	6b dd       	rcall	.-1322   	; 0x372 <disableTimer2>
 			sei();		
- 85a:	78 94       	sei
+ 89c:	78 94       	sei
 			//отображаем текущее время, т.к. флаг выставляется при -1 сек, бывают артефакты
 			flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
- 85c:	80 91 2d 01 	lds	r24, 0x012D
- 860:	80 63       	ori	r24, 0x30	; 48
- 862:	80 93 2d 01 	sts	0x012D, r24
+ 89e:	80 91 37 01 	lds	r24, 0x0137
+ 8a2:	80 63       	ori	r24, 0x30	; 48
+ 8a4:	80 93 37 01 	sts	0x0137, r24
 	
 		}
 		
 		//если выставлен флаг обновления экрана
 		if (flagWork&(1<<LCD_UPD))
- 866:	80 91 2d 01 	lds	r24, 0x012D
- 86a:	85 ff       	sbrs	r24, 5
- 86c:	99 ce       	rjmp	.-718    	; 0x5a0 <main+0x5c>
+ 8a8:	80 91 37 01 	lds	r24, 0x0137
+ 8ac:	85 ff       	sbrs	r24, 5
+ 8ae:	78 ce       	rjmp	.-784    	; 0x5a0 <main+0x5c>
 		{
 			//снимаем его
 			flagWork&=~(1<<LCD_UPD);
- 86e:	98 2f       	mov	r25, r24
- 870:	9f 7d       	andi	r25, 0xDF	; 223
- 872:	90 93 2d 01 	sts	0x012D, r25
+ 8b0:	98 2f       	mov	r25, r24
+ 8b2:	9f 7d       	andi	r25, 0xDF	; 223
+ 8b4:	90 93 37 01 	sts	0x0137, r25
 			//LCDclr();
 			
 			if (flagWork&(1<<PRESET))
- 876:	86 ff       	sbrs	r24, 6
- 878:	25 c0       	rjmp	.+74     	; 0x8c4 <main+0x380>
+ 8b8:	86 ff       	sbrs	r24, 6
+ 8ba:	25 c0       	rjmp	.+74     	; 0x906 <main+0x3c2>
 			{
 				//если не идет обратный отсчет, то загружаем время из пресета
 				if (!(flagWork&(1<<WORK_TIME)))
- 87a:	97 fd       	sbrc	r25, 7
- 87c:	17 c0       	rjmp	.+46     	; 0x8ac <main+0x368>
+ 8bc:	97 fd       	sbrc	r25, 7
+ 8be:	17 c0       	rjmp	.+46     	; 0x8ee <main+0x3aa>
 				{
 					ExpTime=presetTime[presetNameCur];
- 87e:	80 91 2f 01 	lds	r24, 0x012F
- 882:	99 27       	eor	r25, r25
- 884:	87 fd       	sbrc	r24, 7
- 886:	90 95       	com	r25
- 888:	fc 01       	movw	r30, r24
- 88a:	ee 0f       	add	r30, r30
- 88c:	ff 1f       	adc	r31, r31
- 88e:	e8 0f       	add	r30, r24
- 890:	f9 1f       	adc	r31, r25
- 892:	ed 5c       	subi	r30, 0xCD	; 205
- 894:	fe 4f       	sbci	r31, 0xFE	; 254
- 896:	80 81       	ld	r24, Z
- 898:	91 81       	ldd	r25, Z+1	; 0x01
- 89a:	a2 81       	ldd	r26, Z+2	; 0x02
- 89c:	80 93 3c 01 	sts	0x013C, r24
- 8a0:	90 93 3d 01 	sts	0x013D, r25
- 8a4:	a0 93 3e 01 	sts	0x013E, r26
+ 8c0:	80 91 39 01 	lds	r24, 0x0139
+ 8c4:	99 27       	eor	r25, r25
+ 8c6:	87 fd       	sbrc	r24, 7
+ 8c8:	90 95       	com	r25
+ 8ca:	fc 01       	movw	r30, r24
+ 8cc:	ee 0f       	add	r30, r30
+ 8ce:	ff 1f       	adc	r31, r31
+ 8d0:	e8 0f       	add	r30, r24
+ 8d2:	f9 1f       	adc	r31, r25
+ 8d4:	e3 5c       	subi	r30, 0xC3	; 195
+ 8d6:	fe 4f       	sbci	r31, 0xFE	; 254
+ 8d8:	80 81       	ld	r24, Z
+ 8da:	91 81       	ldd	r25, Z+1	; 0x01
+ 8dc:	a2 81       	ldd	r26, Z+2	; 0x02
+ 8de:	80 93 46 01 	sts	0x0146, r24
+ 8e2:	90 93 47 01 	sts	0x0147, r25
+ 8e6:	a0 93 48 01 	sts	0x0148, r26
 					
 					checkTime();
- 8a8:	02 de       	rcall	.-1020   	; 0x4ae <checkTime>
+ 8ea:	e1 dd       	rcall	.-1086   	; 0x4ae <checkTime>
 					showTime();
- 8aa:	b5 dd       	rcall	.-1174   	; 0x416 <showTime>
- 8ac:	84 ec       	ldi	r24, 0xC4	; 196
- 8ae:	25 dc       	rcall	.-1974   	; 0xfa <LCDsendCommand>
+ 8ec:	94 dd       	rcall	.-1240   	; 0x416 <showTime>
+ 8ee:	84 ec       	ldi	r24, 0xC4	; 196
+ 8f0:	04 dc       	rcall	.-2040   	; 0xfa <LCDsendCommand>
 /*
 				LCDstring((uint8_t*)(PGM_P)pgm_read_word(&(namePreset[presetNameCur])),8);
 				
 */
 				LCDGotoXY(4,1);
 				LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
- 8b0:	e0 91 2f 01 	lds	r30, 0x012F
- 8b4:	ee 0f       	add	r30, r30
- 8b6:	ff 0b       	sbc	r31, r31
- 8b8:	ee 5f       	subi	r30, 0xFE	; 254
- 8ba:	fe 4f       	sbci	r31, 0xFE	; 254
- 8bc:	68 e0       	ldi	r22, 0x08	; 8
- 8be:	80 81       	ld	r24, Z
- 8c0:	91 81       	ldd	r25, Z+1	; 0x01
- 8c2:	a8 dc       	rcall	.-1712   	; 0x214 <LCDstring>
+ 8f2:	e0 91 39 01 	lds	r30, 0x0139
+ 8f6:	ee 0f       	add	r30, r30
+ 8f8:	ff 0b       	sbc	r31, r31
+ 8fa:	ee 5f       	subi	r30, 0xFE	; 254
+ 8fc:	fe 4f       	sbci	r31, 0xFE	; 254
+ 8fe:	68 e0       	ldi	r22, 0x08	; 8
+ 900:	80 81       	ld	r24, Z
+ 902:	91 81       	ldd	r25, Z+1	; 0x01
+ 904:	87 dc       	rcall	.-1778   	; 0x214 <LCDstring>
 
 			}
 			
 			if (flagWork&(1<<CUR_TIME))
- 8c4:	80 91 2d 01 	lds	r24, 0x012D
- 8c8:	84 ff       	sbrs	r24, 4
- 8ca:	1d c0       	rjmp	.+58     	; 0x906 <main+0x3c2>
+ 906:	80 91 37 01 	lds	r24, 0x0137
+ 90a:	84 ff       	sbrs	r24, 4
+ 90c:	1d c0       	rjmp	.+58     	; 0x948 <main+0x404>
 			{
 				//отображаем текущее установленное время
 				showTime();
- 8cc:	a4 dd       	rcall	.-1208   	; 0x416 <showTime>
+ 90e:	83 dd       	rcall	.-1274   	; 0x416 <showTime>
 				//если установка времени - включаем курсор под текущим разрядом
 				if ((flagWork&(1<<CUR_TIME)) && (flagWork&((1<<BLINK_H)|(1<<BLINK_M)|(1<<BLINK_S))))
- 8ce:	80 91 2d 01 	lds	r24, 0x012D
- 8d2:	84 ff       	sbrs	r24, 4
- 8d4:	18 c0       	rjmp	.+48     	; 0x906 <main+0x3c2>
- 8d6:	98 2f       	mov	r25, r24
- 8d8:	9e 70       	andi	r25, 0x0E	; 14
- 8da:	a9 f0       	breq	.+42     	; 0x906 <main+0x3c2>
+ 910:	80 91 37 01 	lds	r24, 0x0137
+ 914:	84 ff       	sbrs	r24, 4
+ 916:	18 c0       	rjmp	.+48     	; 0x948 <main+0x404>
+ 918:	98 2f       	mov	r25, r24
+ 91a:	9e 70       	andi	r25, 0x0E	; 14
+ 91c:	a9 f0       	breq	.+42     	; 0x948 <main+0x404>
 				{
 					//отображаем мигающий курсор под изменяемой позицией
 					
 					pos=3*((flagWork&(1<<BLINK_H))>>BLINK_H)+3*((flagWork&(1<<BLINK_M))>>BLINK_M);
- 8dc:	83 fb       	bst	r24, 3
- 8de:	99 27       	eor	r25, r25
- 8e0:	90 f9       	bld	r25, 0
- 8e2:	c9 2f       	mov	r28, r25
- 8e4:	20 e0       	ldi	r18, 0x00	; 0
- 8e6:	d2 2f       	mov	r29, r18
- 8e8:	82 fb       	bst	r24, 2
- 8ea:	00 27       	eor	r16, r16
- 8ec:	00 f9       	bld	r16, 0
- 8ee:	10 e0       	ldi	r17, 0x00	; 0
- 8f0:	c0 0f       	add	r28, r16
- 8f2:	d1 1f       	adc	r29, r17
- 8f4:	8c 2f       	mov	r24, r28
- 8f6:	88 0f       	add	r24, r24
- 8f8:	8c 0f       	add	r24, r28
+ 91e:	83 fb       	bst	r24, 3
+ 920:	99 27       	eor	r25, r25
+ 922:	90 f9       	bld	r25, 0
+ 924:	c9 2f       	mov	r28, r25
+ 926:	20 e0       	ldi	r18, 0x00	; 0
+ 928:	d2 2f       	mov	r29, r18
+ 92a:	82 fb       	bst	r24, 2
+ 92c:	00 27       	eor	r16, r16
+ 92e:	00 f9       	bld	r16, 0
+ 930:	10 e0       	ldi	r17, 0x00	; 0
+ 932:	c0 0f       	add	r28, r16
+ 934:	d1 1f       	adc	r29, r17
+ 936:	8c 2f       	mov	r24, r28
+ 938:	88 0f       	add	r24, r24
+ 93a:	8c 0f       	add	r24, r28
 					LCDGotoXY(4+(8-pos),0);
- 8fa:	2e 2d       	mov	r18, r14
- 8fc:	28 1b       	sub	r18, r24
- 8fe:	82 2f       	mov	r24, r18
- 900:	80 68       	ori	r24, 0x80	; 128
- 902:	fb db       	rcall	.-2058   	; 0xfa <LCDsendCommand>
+ 93c:	2e 2d       	mov	r18, r14
+ 93e:	28 1b       	sub	r18, r24
+ 940:	82 2f       	mov	r24, r18
+ 942:	80 68       	ori	r24, 0x80	; 128
+ 944:	da db       	rcall	.-2124   	; 0xfa <LCDsendCommand>
 					LCDcursorOnBlink();
- 904:	a8 dc       	rcall	.-1712   	; 0x256 <LCDcursorOnBlink>
+ 946:	87 dc       	rcall	.-1778   	; 0x256 <LCDcursorOnBlink>
 					
 				}
 
 			}
 
 			if (flagWork&(1<<WORK_TIME))
- 906:	80 91 2d 01 	lds	r24, 0x012D
- 90a:	87 ff       	sbrs	r24, 7
- 90c:	49 ce       	rjmp	.-878    	; 0x5a0 <main+0x5c>
+ 948:	80 91 37 01 	lds	r24, 0x0137
+ 94c:	87 ff       	sbrs	r24, 7
+ 94e:	28 ce       	rjmp	.-944    	; 0x5a0 <main+0x5c>
 			{
 				//отображаем текущее время
 				showTime();
- 90e:	83 dd       	rcall	.-1274   	; 0x416 <showTime>
- 910:	47 ce       	rjmp	.-882    	; 0x5a0 <main+0x5c>
+ 950:	62 dd       	rcall	.-1340   	; 0x416 <showTime>
+ 952:	26 ce       	rjmp	.-948    	; 0x5a0 <main+0x5c>
 
-00000912 <__itoa_ncheck>:
- 912:	bb 27       	eor	r27, r27
- 914:	4a 30       	cpi	r20, 0x0A	; 10
- 916:	31 f4       	brne	.+12     	; 0x924 <__itoa_ncheck+0x12>
- 918:	99 23       	and	r25, r25
- 91a:	22 f4       	brpl	.+8      	; 0x924 <__itoa_ncheck+0x12>
- 91c:	bd e2       	ldi	r27, 0x2D	; 45
- 91e:	90 95       	com	r25
- 920:	81 95       	neg	r24
- 922:	9f 4f       	sbci	r25, 0xFF	; 255
- 924:	01 c0       	rjmp	.+2      	; 0x928 <__utoa_common>
+00000954 <__itoa_ncheck>:
+ 954:	bb 27       	eor	r27, r27
+ 956:	4a 30       	cpi	r20, 0x0A	; 10
+ 958:	31 f4       	brne	.+12     	; 0x966 <__itoa_ncheck+0x12>
+ 95a:	99 23       	and	r25, r25
+ 95c:	22 f4       	brpl	.+8      	; 0x966 <__itoa_ncheck+0x12>
+ 95e:	bd e2       	ldi	r27, 0x2D	; 45
+ 960:	90 95       	com	r25
+ 962:	81 95       	neg	r24
+ 964:	9f 4f       	sbci	r25, 0xFF	; 255
+ 966:	01 c0       	rjmp	.+2      	; 0x96a <__utoa_common>
 
-00000926 <__utoa_ncheck>:
- 926:	bb 27       	eor	r27, r27
+00000968 <__utoa_ncheck>:
+ 968:	bb 27       	eor	r27, r27
 
-00000928 <__utoa_common>:
- 928:	fb 01       	movw	r30, r22
- 92a:	55 27       	eor	r21, r21
- 92c:	aa 27       	eor	r26, r26
- 92e:	88 0f       	add	r24, r24
- 930:	99 1f       	adc	r25, r25
- 932:	aa 1f       	adc	r26, r26
- 934:	a4 17       	cp	r26, r20
- 936:	10 f0       	brcs	.+4      	; 0x93c <__utoa_common+0x14>
- 938:	a4 1b       	sub	r26, r20
- 93a:	83 95       	inc	r24
- 93c:	50 51       	subi	r21, 0x10	; 16
- 93e:	b9 f7       	brne	.-18     	; 0x92e <__utoa_common+0x6>
- 940:	a0 5d       	subi	r26, 0xD0	; 208
- 942:	aa 33       	cpi	r26, 0x3A	; 58
- 944:	08 f0       	brcs	.+2      	; 0x948 <__utoa_common+0x20>
- 946:	a9 5d       	subi	r26, 0xD9	; 217
- 948:	a1 93       	st	Z+, r26
- 94a:	00 97       	sbiw	r24, 0x00	; 0
- 94c:	79 f7       	brne	.-34     	; 0x92c <__utoa_common+0x4>
- 94e:	b1 11       	cpse	r27, r1
- 950:	b1 93       	st	Z+, r27
- 952:	11 92       	st	Z+, r1
- 954:	cb 01       	movw	r24, r22
- 956:	16 c0       	rjmp	.+44     	; 0x984 <strrev>
+0000096a <__utoa_common>:
+ 96a:	fb 01       	movw	r30, r22
+ 96c:	55 27       	eor	r21, r21
+ 96e:	aa 27       	eor	r26, r26
+ 970:	88 0f       	add	r24, r24
+ 972:	99 1f       	adc	r25, r25
+ 974:	aa 1f       	adc	r26, r26
+ 976:	a4 17       	cp	r26, r20
+ 978:	10 f0       	brcs	.+4      	; 0x97e <__utoa_common+0x14>
+ 97a:	a4 1b       	sub	r26, r20
+ 97c:	83 95       	inc	r24
+ 97e:	50 51       	subi	r21, 0x10	; 16
+ 980:	b9 f7       	brne	.-18     	; 0x970 <__utoa_common+0x6>
+ 982:	a0 5d       	subi	r26, 0xD0	; 208
+ 984:	aa 33       	cpi	r26, 0x3A	; 58
+ 986:	08 f0       	brcs	.+2      	; 0x98a <__utoa_common+0x20>
+ 988:	a9 5d       	subi	r26, 0xD9	; 217
+ 98a:	a1 93       	st	Z+, r26
+ 98c:	00 97       	sbiw	r24, 0x00	; 0
+ 98e:	79 f7       	brne	.-34     	; 0x96e <__utoa_common+0x4>
+ 990:	b1 11       	cpse	r27, r1
+ 992:	b1 93       	st	Z+, r27
+ 994:	11 92       	st	Z+, r1
+ 996:	cb 01       	movw	r24, r22
+ 998:	16 c0       	rjmp	.+44     	; 0x9c6 <strrev>
 
-00000958 <__eerd_byte_m88>:
- 958:	f9 99       	sbic	0x1f, 1	; 31
- 95a:	fe cf       	rjmp	.-4      	; 0x958 <__eerd_byte_m88>
- 95c:	92 bd       	out	0x22, r25	; 34
- 95e:	81 bd       	out	0x21, r24	; 33
- 960:	f8 9a       	sbi	0x1f, 0	; 31
- 962:	99 27       	eor	r25, r25
- 964:	80 b5       	in	r24, 0x20	; 32
- 966:	08 95       	ret
+0000099a <__eerd_byte_m88>:
+ 99a:	f9 99       	sbic	0x1f, 1	; 31
+ 99c:	fe cf       	rjmp	.-4      	; 0x99a <__eerd_byte_m88>
+ 99e:	92 bd       	out	0x22, r25	; 34
+ 9a0:	81 bd       	out	0x21, r24	; 33
+ 9a2:	f8 9a       	sbi	0x1f, 0	; 31
+ 9a4:	99 27       	eor	r25, r25
+ 9a6:	80 b5       	in	r24, 0x20	; 32
+ 9a8:	08 95       	ret
 
-00000968 <__eewr_byte_m88>:
- 968:	26 2f       	mov	r18, r22
+000009aa <__eewr_byte_m88>:
+ 9aa:	26 2f       	mov	r18, r22
 
-0000096a <__eewr_r18_m88>:
- 96a:	f9 99       	sbic	0x1f, 1	; 31
- 96c:	fe cf       	rjmp	.-4      	; 0x96a <__eewr_r18_m88>
- 96e:	1f ba       	out	0x1f, r1	; 31
- 970:	92 bd       	out	0x22, r25	; 34
- 972:	81 bd       	out	0x21, r24	; 33
- 974:	20 bd       	out	0x20, r18	; 32
- 976:	0f b6       	in	r0, 0x3f	; 63
- 978:	f8 94       	cli
- 97a:	fa 9a       	sbi	0x1f, 2	; 31
- 97c:	f9 9a       	sbi	0x1f, 1	; 31
- 97e:	0f be       	out	0x3f, r0	; 63
- 980:	01 96       	adiw	r24, 0x01	; 1
- 982:	08 95       	ret
+000009ac <__eewr_r18_m88>:
+ 9ac:	f9 99       	sbic	0x1f, 1	; 31
+ 9ae:	fe cf       	rjmp	.-4      	; 0x9ac <__eewr_r18_m88>
+ 9b0:	1f ba       	out	0x1f, r1	; 31
+ 9b2:	92 bd       	out	0x22, r25	; 34
+ 9b4:	81 bd       	out	0x21, r24	; 33
+ 9b6:	20 bd       	out	0x20, r18	; 32
+ 9b8:	0f b6       	in	r0, 0x3f	; 63
+ 9ba:	f8 94       	cli
+ 9bc:	fa 9a       	sbi	0x1f, 2	; 31
+ 9be:	f9 9a       	sbi	0x1f, 1	; 31
+ 9c0:	0f be       	out	0x3f, r0	; 63
+ 9c2:	01 96       	adiw	r24, 0x01	; 1
+ 9c4:	08 95       	ret
 
-00000984 <strrev>:
- 984:	dc 01       	movw	r26, r24
- 986:	fc 01       	movw	r30, r24
- 988:	67 2f       	mov	r22, r23
- 98a:	71 91       	ld	r23, Z+
- 98c:	77 23       	and	r23, r23
- 98e:	e1 f7       	brne	.-8      	; 0x988 <strrev+0x4>
- 990:	32 97       	sbiw	r30, 0x02	; 2
- 992:	04 c0       	rjmp	.+8      	; 0x99c <strrev+0x18>
- 994:	7c 91       	ld	r23, X
- 996:	6d 93       	st	X+, r22
- 998:	70 83       	st	Z, r23
- 99a:	62 91       	ld	r22, -Z
- 99c:	ae 17       	cp	r26, r30
- 99e:	bf 07       	cpc	r27, r31
- 9a0:	c8 f3       	brcs	.-14     	; 0x994 <strrev+0x10>
- 9a2:	08 95       	ret
+000009c6 <strrev>:
+ 9c6:	dc 01       	movw	r26, r24
+ 9c8:	fc 01       	movw	r30, r24
+ 9ca:	67 2f       	mov	r22, r23
+ 9cc:	71 91       	ld	r23, Z+
+ 9ce:	77 23       	and	r23, r23
+ 9d0:	e1 f7       	brne	.-8      	; 0x9ca <strrev+0x4>
+ 9d2:	32 97       	sbiw	r30, 0x02	; 2
+ 9d4:	04 c0       	rjmp	.+8      	; 0x9de <strrev+0x18>
+ 9d6:	7c 91       	ld	r23, X
+ 9d8:	6d 93       	st	X+, r22
+ 9da:	70 83       	st	Z, r23
+ 9dc:	62 91       	ld	r22, -Z
+ 9de:	ae 17       	cp	r26, r30
+ 9e0:	bf 07       	cpc	r27, r31
+ 9e2:	c8 f3       	brcs	.-14     	; 0x9d6 <strrev+0x10>
+ 9e4:	08 95       	ret
 
-000009a4 <_exit>:
- 9a4:	f8 94       	cli
+000009e6 <_exit>:
+ 9e6:	f8 94       	cli
 
-000009a6 <__stop_program>:
- 9a6:	ff cf       	rjmp	.-2      	; 0x9a6 <__stop_program>
+000009e8 <__stop_program>:
+ 9e8:	ff cf       	rjmp	.-2      	; 0x9e8 <__stop_program>

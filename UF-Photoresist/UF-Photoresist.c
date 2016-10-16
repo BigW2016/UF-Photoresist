@@ -72,13 +72,16 @@ const char string1[] = "preset-1";
 const char string2[] = "preset-2";
 const char string3[] = "preset-3";
 const char string4[] = "saved";
+const char string5[] = "canceled";
+
 
 const char* namePreset[] =
 {
 	string1,
 	string2,
 	string3,
-	string4
+	string4,
+	string5
 };
 
 //переменные
@@ -568,6 +571,25 @@ int main(void)
 					flagWork|=(1<<LCD_UPD);
 
 				}
+			}
+			else
+			{
+				//если нажали в процессе засветки - отключаемся
+				cli();
+				//снимаем флаг
+				flagWork&=~(1<<WORK_TIME);
+				//отключаем транзистор
+				MOSFET_PORT&=~(1<<MOSFET_GATE);
+				//выключаем прерывание
+				disableTimer2();
+				sei();
+				//отображаем текущее время, т.к. флаг выставляется при -1 сек, бывают артефакты
+				flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
+				//отображаем надпись canceled
+				LCDGotoXY(4,1);
+				LCDstring((uint8_t*)(namePreset[4]),8);
+				_delay_ms(500);
+
 			}
 			
 		}
