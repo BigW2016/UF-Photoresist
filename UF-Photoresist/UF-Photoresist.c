@@ -73,6 +73,8 @@ const char string2[] = "preset-2";
 const char string3[] = "preset-3";
 const char string4[] = "saved";
 const char string5[] = "canceled";
+const char string6[] = "FINISH";
+
 
 
 const char* namePreset[] =
@@ -81,7 +83,8 @@ const char* namePreset[] =
 	string2,
 	string3,
 	string4,
-	string5
+	string5,
+	string6
 };
 
 //переменные
@@ -546,8 +549,13 @@ int main(void)
 			//выключаем прерывание
 			disableTimer2();
 			sei();		
+			LCDclr();
 			//отображаем текущее время, т.к. флаг выставляется при -1 сек, бывают артефакты
 			flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
+			//отображаем надпись Finish
+			LCDGotoXY(5,1);
+			LCDstring((uint8_t*)(namePreset[5]),6);
+
 	
 		}
 		
