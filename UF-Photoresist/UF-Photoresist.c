@@ -51,6 +51,7 @@
 
 
 //константы наименований предустановок
+//свыше 5 думаю не стоит
 #define MAX_PRESET 3
 
 /*
@@ -68,23 +69,23 @@ PGM_P namePreset[] =
 };
 */
 
-const char string1[] = "preset-1";
-const char string2[] = "preset-2";
-const char string3[] = "preset-3";
-const char string4[] = "saved";
-const char string5[] = "canceled";
-const char string6[] = "FINISH";
+const char string0[] = "preset-1";
+const char string1[] = "preset-2";
+const char string2[] = "preset-3";
+const char string3[] = "saved";
+const char string4[] = "canceled";
+const char string5[] = "FINISH";
 
 
 
 const char* namePreset[] =
 {
+	string0,
 	string1,
 	string2,
 	string3,
 	string4,
-	string5,
-	string6
+	string5
 };
 
 //переменные
@@ -92,7 +93,7 @@ volatile uint8_t encCurState=0;//содержится состояние энкодера, нужно хранить дл
 volatile uint8_t encPushDown=1;//для работы с кнопкой энкодера
 		 uint8_t flagTact1=0;
 		 uint8_t flagTact2=0;
-		 int8_t presetNameCur=0;//текущий пресет
+		  int8_t presetNameCur=0;//текущий пресет
 		 uint8_t flagTimeStop=0;//флаг для определения окончания времени
 volatile uint8_t encCount=1;//кол-во нажатий энкодера для определения какую цифру в таймере меняем
 		 uint8_t flagWork=0;//флаг управления			1 1 1 1 1 1 1 1
@@ -153,15 +154,6 @@ ISR(INT0_vect)
 		//кнопка нажата
 		flagTact1=1;
 	}
-/*	else
-	{
-		//кнопка отпущена
-		if (Flag_tact1)
-		{
-			//кнопка была нажата
-			Flag_tact1=0;
-		}
-	}*/
 	sei();
 }
 
@@ -176,15 +168,6 @@ ISR(INT1_vect)
 		//кнопка нажата
 		flagTact2=1;
 	}
-/*	else
-	{
-		//кнопка отпущена
-		if (Flag_tact2)
-		{
-			//кнопка была нажата
-			Flag_tact2=0;
-		}
-	}*/
 	sei();
 }
 
@@ -247,7 +230,7 @@ int8_t	encPollDelta()//вычисляем смещение энкодера и направление
 	return pgm_read_byte(&(EncState[encCurState]));
 }
 
-void fillZero(char *d)
+void fillZero(char *d)//для выравнивания значений времени (если <10)
 {
 	if (!d[1]) 
 	{
@@ -295,12 +278,13 @@ void checkTime(void)
 
 }
 
-void loadEpprom(void)
+void loadPreset(void)
 {
 	uint8_t i;
 	
-	for (i=0;i<3;i++)
+	for (i=0;i<MAX_PRESET;i++)
 	{
+		// 3 т.к. 3 байта записываем, начиная с 10 байта EppRom
 		presetTime[i].hour=eeprom_read_byte((uint8_t*)10+i*3);
 		presetTime[i].minute=eeprom_read_byte((uint8_t*)11+i*3);
 		presetTime[i].second=eeprom_read_byte((uint8_t*)12+i*3);
@@ -308,6 +292,12 @@ void loadEpprom(void)
 	
 }
 
+void writePreset(void)
+{
+		eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.hour);
+		eeprom_write_byte((uint8_t*)11+presetNameCur*3,ExpTime.minute);
+		eeprom_write_byte((uint8_t*)12+presetNameCur*3,ExpTime.second);
+}
 
 int main(void)
 {
@@ -366,7 +356,7 @@ int main(void)
 	flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
 	
 	//читаем предустановки
-	loadEpprom();
+	loadPreset();
 	
 	sei();
 	
@@ -455,14 +445,14 @@ int main(void)
 					{
 						presetTime[presetNameCur]=ExpTime;
 			
-						eeprom_write_byte((uint8_t*)10+presetNameCur*3,ExpTime.hour);
-						eeprom_write_byte((uint8_t*)11+presetNameCur*3,ExpTime.minute);
-						eeprom_write_byte((uint8_t*)12+presetNameCur*3,ExpTime.second);
+						writePreset();
 						showTime();
+						//отображаем имя предустановки
 						LCDGotoXY(2,1);
 						LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
 						LCDGotoXY(11,1);
-						LCDstring((uint8_t*)(namePreset[3]),5);
+						//saved, MAX_PRESET-1+1 т.к. отсчет от нуля, но сохранить наглядность
+						LCDstring((uint8_t*)(namePreset[(MAX_PRESET-1+1)]),5);
 						_delay_ms(500);
 						LCDclr();
 
@@ -475,6 +465,7 @@ int main(void)
 				flagWork|=(1<<LCD_UPD);
 				//сбрасываем положение энкодера
 				encCount=1;
+				EncStep=0;
 			}
 		}
 
@@ -520,7 +511,7 @@ int main(void)
 				flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
 				//отображаем надпись canceled
 				LCDGotoXY(4,1);
-				LCDstring((uint8_t*)(namePreset[4]),8);
+				LCDstring((uint8_t*)(namePreset[(MAX_PRESET-1+2)]),8);
 				_delay_ms(500);
 
 			}
@@ -552,14 +543,15 @@ int main(void)
 			LCDclr();
 			//отображаем текущее время, т.к. флаг выставляется при -1 сек, бывают артефакты
 			flagWork|=(1<<LCD_UPD)|(1<<CUR_TIME);
+			
 			//отображаем надпись Finish
 			LCDGotoXY(5,1);
-			LCDstring((uint8_t*)(namePreset[5]),6);
+			LCDstring((uint8_t*)(namePreset[(MAX_PRESET-1+3)]),6);
 
 	
 		}
 		
-/*LCD_UPD Блок ниже выполняется только при поднятов флаге*/
+/*LCD_UPD Блок ниже выполняется только при поднятовм флаге*/
 		//если выставлен флаг обновления экрана
 		if (flagWork&(1<<LCD_UPD))
 		{
@@ -575,6 +567,13 @@ int main(void)
 			{
 				//отображаем текущее время
 				showTime();
+				//отображаем имя пресета
+				if (flagWork&(1<<PRESET))
+				{
+					LCDGotoXY(4,1);
+					LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
+				}
+				
 			}
 			else
 			{
@@ -612,15 +611,6 @@ int main(void)
 					checkTime();
 					showTime();
 					//отображаем имя пресета
-	/*
-					LCDclr();
-					LCDGotoXY(presetNameCur+5,1);
-					LCDsendChar(0x57);
-	*/
-	/*
-					LCDstring((uint8_t*)(PGM_P)pgm_read_word(&(namePreset[presetNameCur])),8);
-				
-	*/
 					LCDGotoXY(4,1);
 					LCDstring((uint8_t*)(namePreset[presetNameCur]),8);
 
@@ -684,6 +674,9 @@ int main(void)
 
 
 				}
+				//если ниодин флаг не поднят, а мы крутили энкодер - возникает небольшой баг
+				//например при нажатии на энкодер сразу увеличение времени на 1 сек
+				EncStep=0;
 			}
 			
 		}
