@@ -598,9 +598,9 @@ END GROUP
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x3dc UF-Photoresist.o
 
-.debug_line     0x00000000      0x8a5
+.debug_line     0x00000000      0x8a6
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000      0x8a5 UF-Photoresist.o
+ .debug_line    0x00000000      0x8a6 UF-Photoresist.o
 
 .debug_frame    0x00000000      0x308
  *(.debug_frame)
